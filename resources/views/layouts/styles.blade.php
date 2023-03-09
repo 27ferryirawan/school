@@ -33,6 +33,9 @@
     .navbar li a:hover {
         background-color: #614d43;
     }
+    .navbar li a.active {
+        background-color: #614d43;
+    }
     .login-button {
         background-color: white;
         color: #392A23 !important;
