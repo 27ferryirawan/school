@@ -15,7 +15,7 @@
 
 <style>
     .navbar {
-        background-color: #392b23;
+        background-color: #392A23;
         display: flex;
         align-items: center;
         height: 110px;
@@ -47,7 +47,7 @@
     }
     .login-button {
         background-color: white;
-        color: #392b23 !important;
+        color: #392A23 !important;
         margin-left: 20px;
         margin-right: 20px;
         text-align: center;
