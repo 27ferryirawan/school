@@ -1,21 +1,7 @@
-<nav class="navbar">
-    <a class="navbar-brand" href="#">
-        <img src="{{ asset('images/samanko.png') }}" alt="Logo" style="margin: 0px 0px 0px 30px; width: 110px; height: 90px;">
-    </a>
-    <ul class="navbar-nav">
-        <li><a href="#">HOME</a></li>
-        <li><a href="#">COFFEE</a></li>
-        <li><a href="#">BAKERY </a></li>
-        <li><a href="#">OUR MENU</a></li>
-        <li><a href="#">RESERVATION</a></li>
-        <li><a href="#">ABOUT US</a></li>
-        <li><a class="login-button" href="#">Login</a></li>
-    </ul>
-</nav>
-
 <style>
     body {
         margin: 0;
+        font-family: 'SourceSansPro';
     }
     .navbar {
         background-color: #392A23;
@@ -66,6 +52,58 @@
     @font-face {
         font-family: 'SourceSansPro';
         src: url('/font/Source_Sans_Pro/SourceSansPro-Regular.woff') format('woff');
+        font-weight: normal;
+    }
+    @font-face {
+        font-family: 'SourceSansPro';
+        src: url('/font/Source_Sans_Pro/SourceSansPro-Bold.woff') format('woff');
+        font-weight: bold;
+    }
+    @font-face {
+        font-family: 'Inter';
+        src: url('/font/Inter/Inter-Regular.woff') format('woff');
+        font-weight: normal;
+    }
+    @font-face {
+        font-family: 'Inter';
+        src: url('/font/Inter/Inter-Bold.woff') format('woff');
+        font-weight: bold;
+    }
+
+    .time-input{
+        margin: 30px 50px 0px 50px; 
+    }
+
+    .time-input label, .date-time input {
+        display: block;   
+    }
+    
+    .time-input input[type="text"] {
+        padding-left: 30px;
+        background-image: url('/images/clock.png');
+        background-repeat: no-repeat;
+        background-position: 5px center;
+        background-size: auto 50%;
+        height: 25px;
+        border: 1px solid black;
+    }
+
+    .date-input{
+        margin: 50px 50px 0px 50px; 
+    }
+
+    .date-input label, .date-input input {
+        display: block;   
+    }
+    
+    .date-input input[type="text"] {
+        padding-left: 30px;
+        background-image: url('/images/calendar.png');
+        background-repeat: no-repeat;
+        background-position: 5px center;
+        background-size: auto 50%;
+        height: 25px;
+        border: 1px solid black;
     }
 
 </style>
