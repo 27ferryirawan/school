@@ -2,16 +2,9 @@
 <html>
     <head>
         <title>Home Page</title>
-        <style>
-            body {
-                margin: 0;
-            }
-        </style>
     </head>
     <body>
-        <header>
-            @include('navbar')
-        </header>
+        @include('layouts/navbar')
         <main>
             <img src="{{ asset('images/samanko_bkg.jpeg') }}" alt="Logo" style="width: 100%;">
             <div style="margin: 100px 50px 100px 50px; display: flex;">
