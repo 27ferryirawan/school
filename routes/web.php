@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 Route::get('/reservation', 'App\Http\Controllers\ReservationController@index');
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -5,7 +5,7 @@
     </head>
     <body>
         <header>
-            @include('navbar')
+            @include('layouts/navbar')
         </header>
         <main>
             <div class="date-input">
