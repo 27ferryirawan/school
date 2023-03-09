@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home Page</title>
+        <title>Home</title>
     </head>
     <body>
         @include('layouts/navbar')
