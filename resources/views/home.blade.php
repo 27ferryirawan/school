@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home Page</title>
+        <title>Home</title>
         <style>
             body {
                 margin: 0;
+                font-family: 'SourceSansPro';
+            }
+            @font-face {
+                font-family: 'SourceSansPro';
+                src: url('/font/Source_Sans_Pro/SourceSansPro-Regular.woff') format('woff');
+                font-weight: normal;
+            }
+            @font-face {
+                font-family: 'SourceSansPro';
+                src: url('/font/Source_Sans_Pro/SourceSansPro-Bold.woff') format('woff');
+                font-weight: bold;
+            }
+            @font-face {
+                font-family: 'SourceSansPro';
+                src: url('/font/Inter/Inter-Regular.woff') format('woff');
+                font-weight: normal;
+            }
+            @font-face {
+                font-family: 'Inter';
+                src: url('/font/Inter/Inter-Bold.woff') format('woff');
+                font-weight: bold;
             }
         </style>
     </head>

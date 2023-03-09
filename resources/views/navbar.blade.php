@@ -1,14 +1,14 @@
 <nav class="navbar">
     <a class="navbar-brand" href="#">
-        <img src="{{ asset('images/samanko.jpeg') }}" alt="Logo" style="margin-left: 30px; width: 160px; height: 110px;">
+        <img src="{{ asset('images/samanko.png') }}" alt="Logo" style="margin: 0px 0px 0px 30px; width: 110px; height: 90px;">
     </a>
     <ul class="navbar-nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Coffee Menu</a></li>
-        <li><a href="#">Bakery Menu</a></li>
-        <li><a href="#">Our Menu</a></li>
-        <li><a href="#">Reservation</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">COFFEE</a></li>
+        <li><a href="#">BAKERY </a></li>
+        <li><a href="#">OUR MENU</a></li>
+        <li><a href="#">RESERVATION</a></li>
+        <li><a href="#">ABOUT US</a></li>
         <li><a class="login-button" href="#">Login</a></li>
     </ul>
 </nav>
@@ -19,9 +19,7 @@
         display: flex;
         align-items: center;
         height: 110px;
-    }
-    .navbar-brand {
-        margin-right: auto;
+        font-family: 'SourceSansPro';
     }
     .navbar-nav {
         list-style-type: none;
@@ -60,6 +58,11 @@
     .login-button:hover {
         background-color: #614d43 !important;
         color: white !important;
+    }
+
+    @font-face {
+        font-family: 'SourceSansPro';
+        src: url('/font/Source_Sans_Pro/SourceSansPro-Regular.woff') format('woff');
     }
 
 </style>

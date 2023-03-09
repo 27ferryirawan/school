@@ -17,3 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/', 'App\Http\Controllers\HomeController@index');
+Route::get('/reservation', 'App\Http\Controllers\ReservationController@index');
