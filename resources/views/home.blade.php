@@ -6,7 +6,7 @@
     <body>
         @include('layouts/navbar')
         <main>
-            <img src="{{ asset('images/samanko_bkg.jpeg') }}" alt="Logo" style="width: 100%;">
+            <img src="{{ asset('images/samanko_bkg.jpg') }}" alt="Logo" style="width: 100%;">
             <div style="margin: 100px 50px 100px 50px; display: flex;">
                 <div> 
                     <label style="font-weight: bold; font-size: 17px;">SAMANKO COFFEE ROASTER</label>
@@ -40,7 +40,7 @@
         </main>
         <footer>
             <div style="position: relative; color: white; font-size: 16px;">
-                <img src="{{ asset('images/samanko_footer.jpeg') }}" style="width: 100%;">
+                <img src="{{ asset('images/samanko_footer.jpg') }}" style="width: 100%;">
                 <div style="position: absolute; top: calc(50% - 24px); width: 100%; margin: 0px 50px 0px 50px;">
                     <label>"Every specially coffee drink you have here at Samanko Coffee Roaster is made special from</label>
                     <br>
