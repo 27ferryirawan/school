@@ -123,6 +123,7 @@
             if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )ketReservasiChange();
         }
     }
+    
     canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -276,7 +277,7 @@
                 const secondCellBr = document.createElement("br");
 
                 const secondCellLabel1 = document.createElement("label");
-                secondCellLabel1.textContent = 'Rp. ' + data['price'];
+                secondCellLabel1.textContent = data['price'].toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 
                 secondCell.appendChild(secondCellBr);
                 secondCell.appendChild(secondCellLabel1);
@@ -293,7 +294,7 @@
         firstCell.textContent = 'Total';
 
         const secondCell = document.createElement("td");
-        secondCell.textContent = 'Rp. ' + totalPrice;
+        secondCell.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 
         row.appendChild(firstCell);
         row.appendChild(secondCell);
