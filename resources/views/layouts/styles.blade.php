@@ -88,6 +88,7 @@
         background-position: 5px center;
         background-size: auto 50%;
         height: 25px;
+        width: 225px;
         border: 1px solid black;
     }
 
@@ -106,6 +107,7 @@
         background-position: 5px center;
         background-size: auto 50%;
         height: 25px;
+        width: 225px;
         border: 1px solid black;
     }
 
