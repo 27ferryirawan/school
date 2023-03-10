@@ -5,11 +5,11 @@
         </a>
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : ''}}" href="/">Home</a></li>
-            <li><a class="{{ request()->is('/coffee') ? 'active' : ''}}" href="/coffee">Coffee Menu</a></li>
-            <li><a class="{{ request()->is('/bakery') ? 'active' : ''}}" href="/bakery">Bakery Menu</a></li>
-            <li><a class="{{ request()->is('/menu') ? 'active' : ''}}" href="/menu">Our Menu</a></li>
-            <li><a class="{{ request()->is('/reservation') ? 'active' : ''}}" href="/reservation">Reservation</a></li>
-            <li><a class="{{ request()->is('/about-us') ? 'active' : ''}}" href="/about-us">About Us</a></li>
+            <li><a class="{{ request()->is('coffee') ? 'active' : ''}}" href="/coffee">Coffee Menu</a></li>
+            <li><a class="{{ request()->is('bakery') ? 'active' : ''}}" href="/bakery">Bakery Menu</a></li>
+            <li><a class="{{ request()->is('menu') ? 'active' : ''}}" href="/menu">Our Menu</a></li>
+            <li><a class="{{ request()->is('reservation') ? 'active' : ''}}" href="/reservation">Reservation</a></li>
+            <li><a class="{{ request()->is('about-us') ? 'active' : ''}}" href="/about-us">About Us</a></li>
             @guest
             <li><a class="login-button" href="/login">Login</a></li>
             @endguest

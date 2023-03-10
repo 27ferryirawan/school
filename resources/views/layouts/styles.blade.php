@@ -1,3 +1,6 @@
+
+<!-- Styles -->
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <style>
     body {
         margin: 0;
