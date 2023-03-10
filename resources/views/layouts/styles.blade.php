@@ -2,6 +2,9 @@
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <style>
+    html::-webkit-scrollbar {
+        display: none;
+    }
     body {
         margin: 0;
         font-family: 'SourceSansPro';
