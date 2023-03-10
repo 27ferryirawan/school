@@ -5,6 +5,7 @@
     body {
         margin: 0;
         font-family: 'SourceSansPro';
+        overflow-x: hidden;
     }
     .navbar {
         background-color: #392A23;
