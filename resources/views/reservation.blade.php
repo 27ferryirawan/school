@@ -4,9 +4,7 @@
         <title>Reservation</title>
     </head>
     <body>
-        <header>
-            @include('layouts/navbar')
-        </header>
+        @include('layouts/navbar')
         <main>
             <div class="date-input">
                 <label>Pilih Tanggal</label>        
