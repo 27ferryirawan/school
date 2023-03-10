@@ -33,7 +33,7 @@
         text-decoration: none;
     }
     .navbar li a:hover {
-        background-color: #614d43;
+        background-color: #614d43;  
     }
     .navbar li a.active {
         background-color: #614d43;
@@ -114,4 +114,22 @@
         border: 1px solid black;
     }
 
+    tr:last-child {
+        border-top: 1px solid black;
+    }
+
+    .map-canvas{
+        margin: 20px 50px 0px 50px; 
+    }
+
+    #mapCanvas{
+        background-image: url('/images/cafe-map.png'); 
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 900px;
+        height: 330px;
+        margin: -10px 39px 0px -11px;
+        display: block;
+    }
 </style>
