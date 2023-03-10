@@ -29,7 +29,7 @@
         display: block;
         color: white;
         text-align: center;
-        padding: 16px;
+        padding: 22px;
         text-decoration: none;
     }
     .navbar li a:hover {
@@ -77,7 +77,7 @@
     }
 
     .time-input{
-        margin: 30px 50px 0px 50px; 
+        margin: 10px 50px 0px 50px; 
     }
 
     .time-input label, .date-time input {
@@ -90,8 +90,8 @@
         background-repeat: no-repeat;
         background-position: 5px center;
         background-size: auto 50%;
-        height: 25px;
-        width: 225px;
+        height: 35px;
+        width: 325px;
         border: 1px solid black;
     }
 
@@ -109,8 +109,8 @@
         background-repeat: no-repeat;
         background-position: 5px center;
         background-size: auto 50%;
-        height: 25px;
-        width: 225px;
+        height: 35px;
+        width: 325px;
         border: 1px solid black;
     }
 
