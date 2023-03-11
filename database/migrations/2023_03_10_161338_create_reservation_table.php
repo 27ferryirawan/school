@@ -14,12 +14,12 @@ class CreateReservationTable extends Migration
     public function up()
     {
         Schema::create('reservation', function (Blueprint $table) {
-            $table->id();
-            $table->string('payment_status');
-            $table->string('payment_type');
-            $table->integer('total');
-            $table->smallinteger('created_by');
-            $table->timestamps();
+            $table  ->id()
+                    ->string('payment_status')
+                    ->string('payment_type')
+                    ->integer('total_fee')
+                    ->smallinteger('created_by')
+                    ->timestamps();
         });
     }
 

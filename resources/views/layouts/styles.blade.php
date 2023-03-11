@@ -81,11 +81,12 @@
     }
 
     .time-input{
-        margin: 10px 50px 0px 50px; 
+        margin: 10px 50px 0px 80px; 
     }
 
-    .time-input label, .date-time input {
+    .time-input label, .time-input input {
         display: block;   
+        font-size: 17px;
     }
     
     .time-input input[type="text"] {
@@ -100,11 +101,12 @@
     }
 
     .date-input{
-        margin: 50px 50px 0px 50px; 
+        margin: 50px 50px 0px 80px; 
     }
 
     .date-input label, .date-input input {
         display: block;   
+        font-size: 17px;
     }
     
     .date-input input[type="text"] {
@@ -123,7 +125,8 @@
     }
 
     .map-canvas{
-        margin: 20px 50px 0px 50px; 
+        margin: 20px 50px 0px 80px; 
+        font-size: 17px;
     }
 
     #mapCanvas{
@@ -131,9 +134,16 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        width: 900px;
-        height: 330px;
-        margin: -10px 39px 0px -11px;
+        width: 1300px;
+        height: 530px;
+        margin: -30px 39px 0px -11px;
         display: block;
+        /* background-color: blue; */
+    }
+
+    .reserve-div{
+        font-size: 17px;
+        margin: 50px 50px 0px 450px; 
+        width: 250px
     }
 </style>
