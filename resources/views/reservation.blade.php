@@ -19,13 +19,20 @@
                         <input type="text" id="reservationTime" name="reservationTime">
                     </div>
                 </div>
-                <div style="margin: 50px 50px 0px 150px;">
-                    <label>Keterangan Reservasi</label>  
+                <div class="reserve-div">
+                    <label class="ket-reserv-label">Keterangan Reservasi</label>  
                     <br><br>
                     <table id="reservationTable" style="border-collapse: collapse;">
-                    
-                        
                     </table>
+                    <button class="payment-button" onclick="showModal()">Payment</button>
+                </div>
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <h2>Confirm Payment</h2>
+                        <p>Are you sure you want to make the payment?</p>
+                        <button class="confirm-button" onclick="makePayment()">Confirm</button>
+                        <button class="cancel-button" onclick="hideModal()">Cancel</button>
+                    </div>
                 </div>
             </div>
             <div class="map-canvas">
@@ -59,11 +66,22 @@
 
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
+    const modal = document.getElementById("modal");
+    const paymentButton = document.querySelector(".payment-button");
+    const reserveLabel = document.querySelector(".ket-reserv-label");
+    const reservationDateInput = document.getElementById('reservationDate');
+    const reservationTimeInput = document.getElementById('reservationTime');
+
+    
+    
+
+    paymentButton.style.display = "none";
+    reserveLabel.style.display = "none";
     
     // ctx.fillStyle = "rgba(255, 0, 0, 0)";
-    // ctx.fillStyle = "red";
+    // ctx.fillStyle = "rgba(97, 77, 67, 0.7)";
     // const rects = [
-    //     {},
+    //     {table: "out1",  tableName: "out 1", price: 15000, isSelected: false, x: 8, y: 102.9, width: 10.5, height: 12.5},
     // ];
     
     // rects.forEach(rect => {
@@ -71,30 +89,30 @@
     // });
 
     var isTableSelected = [
-        {table: "out1",  tableName: "out 1", price: 15000, isSelected: false, x: 7.8, y: 105.2, width: 10.8, height: 15},
-        {table: "out2",  tableName: "out 2", price: 15000, isSelected: false, x: 7.8, y: 79.2, width: 10.8, height: 15},
-        {table: "out3",  tableName: "out 3", price: 15000, isSelected: false, x: 7.8, y: 53.2, width: 10.8, height: 15},
-        {table: "out4",  tableName: "out 4", price: 15000, isSelected: false, x: 7.8, y: 27.2, width: 10.8, height: 15},
-        {table: "out5",  tableName: "out 5", price: 15000, isSelected: false, x: 64.6, y: 16.8, width: 11, height: 14.7},
-        {table: "out6",  tableName: "out 6", price: 15000, isSelected: false, x: 85, y: 16.8, width: 11, height: 14.7},
-        {table: "out7",  tableName: "out 7", price: 15000, isSelected: false, x: 101.3, y: 56.5, width: 11, height: 14.5},
-        {table: "out8",  tableName: "out 8", price: 15000, isSelected: false, x: 101.3, y: 86.7, width: 11, height: 14.5},
-        {table: "out9",  tableName: "out 9", price: 15000, isSelected: false, x: 90.5, y: 117, width: 10.8, height: 14.5},
-        {table: "out10", tableName: "out 10",price: 15000, isSelected: false, x: 70.3, y: 116.7, width: 10.8, height: 15},
-        {table: "out11", tableName: "out 11",price: 15000, isSelected: false, x: 50.1, y: 116.7, width: 10.8, height: 15},
-        {table: "out12", tableName: "out 12",price: 15000, isSelected: false, x: 30.1, y: 116.7, width: 10.8, height: 15},
-        {table: "long1", tableName: "long 1",price: 15000, isSelected: false, x: 243, y: 79.8, width: 11, height: 48},
-        {table: "long2", tableName: "long 2",price: 15000, isSelected: false, x: 121.2, y: 20.8, width: 35.5, height: 15.5},
-        {table: "long3", tableName: "long 3",price: 15000, isSelected: false, x: 70.2, y: 68.1, width: 25.2, height: 15.5},
-        {table: "long4", tableName: "long 4",price: 15000, isSelected: false, x: 37.2, y: 68.1, width: 25.5, height: 15.5},
-        {table: "sofa1", tableName: "sofa 1",price: 15000, isSelected: false, x: 261.2, y: 79.8, width: 11.4, height: 48},
-        {table: "sofa2", tableName: "sofa 2",price: 15000, isSelected: false, x: 121.2, y: 117, width: 35.5, height: 15.5},
-        {table: "in6",   tableName: "in 6",  price: 15000, isSelected: false, x: 162, y: 17, width: 10.8, height: 14.9},
-        {table: "in5",   tableName: "in 5",  price: 15000, isSelected: false, x: 176.2, y: 17, width: 10.7, height: 14.8},
-        {table: "in4",   tableName: "in 4",  price: 15000, isSelected: false, x: 190.9, y: 17, width: 11, height: 14.8},
-        {table: "in3",   tableName: "in 3",  price: 15000, isSelected: false, x: 205.1, y: 16.9, width: 10.8, height: 14.9},
-        {table: "in2",   tableName: "in 2",  price: 15000, isSelected: false, x: 219.6, y: 17, width: 11, height: 14.9},
-        {table: "in1",   tableName: "in 1",  price: 15000, isSelected: false, x: 234.2, y: 17, width: 10.8, height: 14.9},
+        {table: "out1",  tableName: "out 1", price: 15000, isSelected: false, x: 8, y: 102.9, width: 10.5, height: 12.5},
+        {table: "out2",  tableName: "out 2", price: 15000, isSelected: false, x: 8, y: 79.3, width: 10.5, height: 12.5},
+        {table: "out3",  tableName: "out 3", price: 15000, isSelected: false, x: 8, y: 56.2, width: 10.5, height: 12.5},
+        {table: "out4",  tableName: "out 4", price: 15000, isSelected: false, x: 8, y: 32.7, width: 10.5, height: 12.5},
+        {table: "out5",  tableName: "out 5", price: 15000, isSelected: false, x: 64.8, y: 23.3, width: 10.5, height: 12.5},
+        {table: "out6",  tableName: "out 6", price: 15000, isSelected: false, x: 85.2, y: 23.3, width: 10.5, height: 12.5},
+        {table: "out7",  tableName: "out 7", price: 15000, isSelected: false, x: 101.6, y: 59.2, width: 10.5, height: 12.5},
+        {table: "out8",  tableName: "out 8", price: 15000, isSelected: false, x: 101.6, y: 86.2, width: 10.5, height: 12.5},
+        {table: "out9",  tableName: "out 9", price: 15000, isSelected: false, x: 90.5, y: 113.2, width: 10.8, height: 12.5},
+        {table: "out10", tableName: "out 10",price: 15000, isSelected: false, x: 70.5, y: 113.2, width: 10.5, height: 12.5},
+        {table: "out11", tableName: "out 11",price: 15000, isSelected: false, x: 50.4, y: 113.2, width: 10.5, height: 12.5},
+        {table: "out12", tableName: "out 12",price: 15000, isSelected: false, x: 30.3, y: 113.2, width: 10.5, height: 12.5},
+        {table: "long1", tableName: "long 1",price: 15000, isSelected: false, x: 243, y: 79.6, width: 11, height: 42.5},
+        {table: "long2", tableName: "long 2",price: 15000, isSelected: false, x: 121.3, y: 26.3, width: 35, height: 14},
+        {table: "long3", tableName: "long 3",price: 15000, isSelected: false, x: 70.2, y: 69.3, width: 25.5, height: 14},
+        {table: "long4", tableName: "long 4",price: 15000, isSelected: false, x: 37.2, y: 69.3, width: 25.5, height: 14},
+        {table: "sofa1", tableName: "sofa 1",price: 15000, isSelected: false, x: 261.6, y: 79.6, width: 11, height: 42.5},
+        {table: "sofa2", tableName: "sofa 2",price: 15000, isSelected: false, x: 121.3, y: 113, width: 35.3, height: 14},
+        {table: "in6",   tableName: "in 6",  price: 15000, isSelected: false, x: 161.9, y: 23.1, width: 10.7, height: 12.9},
+        {table: "in5",   tableName: "in 5",  price: 15000, isSelected: false, x: 176.2, y: 23.1, width: 10.7, height: 12.9},
+        {table: "in4",   tableName: "in 4",  price: 15000, isSelected: false, x: 190.9, y: 23.1, width: 10.7, height: 12.9},
+        {table: "in3",   tableName: "in 3",  price: 15000, isSelected: false, x: 205.1, y: 23.1, width: 10.7, height: 12.9},
+        {table: "in2",   tableName: "in 2",  price: 15000, isSelected: false, x: 219.6, y: 23.1, width: 10.7, height: 12.9},
+        {table: "in1",   tableName: "in 1",  price: 15000, isSelected: false, x: 234.2, y: 23.1, width: 10.7, height: 12.9},
     ];
 
     function drawOrRemoveSelected(tableId) {
@@ -111,7 +129,7 @@
             ctx.fillStyle = "rgba(97, 77, 67, 0.7)";
             ctx.fillRect(xTab, yTab, widthTab, heightTab);
             isTableSelected.find(table => table.table == tableId).isSelected = true;
-            if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )ketReservasiChange();
+            
         } else {
             var tableData = isTableSelected.find(table => table.table == tableId)
             var xTab = tableData.x - 2
@@ -120,115 +138,114 @@
             var heightTab = tableData.height + 4
             ctx.clearRect(xTab, yTab, widthTab, heightTab);
             isTableSelected.find(table => table.table == tableId).isSelected = false;
-            if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )ketReservasiChange();
         }
+        if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )
+        ketReservasiChange();
     }
     
     canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        if (x >= 24 && x <= 55 && y >= 62 && y <= 95) { 
+        console.log(x + ", " + y);
+        if (x >= 34 && x <= 80 && y >= 114.9 && y <= 160.9) { 
             //out 4
             var tabId = "out4"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 24 && x <= 55 && y >= 119 && y <= 152) {
+        } else if (x >= 34 && x <= 80 && y >= 197.9 && y <= 242.9) {
             //out 3
             var tabId = "out3"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 24 && x <= 55 && y >= 176 && y <= 209) {
+        } else if (x >= 34 && x <= 80 && y >= 280.9 && y <= 326.9) {
             //out 2
             var tabId = "out2"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 24 && x <= 55 && y >= 233 && y <= 266) {
+        } else if (x >= 34 && x <= 80 && y >= 361.9 && y <= 407.9) {
             //out 1
             var tabId = "out1"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 194.3 && x <= 225.3 && y >= 39 && y <= 71) {
+        } else if (x >= 280 && x <= 327 && y >= 81.9 && y <= 126.9) {
             //out 5
             var tabId = "out5"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 255.3 && x <= 286 && y >= 39 && y <= 71) {
+        } else if (x >= 368 && x <= 414 && y >= 81.9 && y <= 126.9) {
             //out 6
             var tabId = "out6"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 112 && x <= 188 && y >= 151.9 && y <= 183.1) {
+        } else if (x >= 161 && x <= 271 && y >= 243.9 && y <= 291.9) {
             //long 4
             var tabId = "long4"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 210 && x <= 287 && y >= 151.9 && y <= 183.1) {
+        } else if (x >= 304 && x <= 414 && y >= 243.9 && y <= 291.9) {
             //long 3
             var tabId = "long3"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 304 && x <= 336 && y >= 124.9 && y <= 157.9) {
+        } else if (x >= 440 && x <= 486 && y >= 207.9 && y <= 253.9) {
             //out 7
             var tabId = "out7"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 304 && x <= 336 && y >= 191.9 && y <= 223.9) {
+        } else if (x >= 440 && x <= 486 && y >= 302.9 && y <= 348.9) {
             //out 8
             var tabId = "out8"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 272 && x <= 303 && y >= 256.9 && y <= 288.9) {
+        } else if (x >= 393 && x <= 438 && y >= 398.9 && y <= 443.9) {
             //out 9
             var tabId = "out9"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 211 && x <= 243 && y >= 256.9 && y <= 288.9) {
+        } else if (x >= 305 && x <= 351 && y >= 398.9 && y <= 443.9) {
             //out 10
             var tabId = "out10"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 151 && x <= 182 && y >= 256.9 && y <= 288.9) {
+        } else if (x >= 218 && x <= 264 && y >= 398.9 && y <= 443.9) {
             //out 11
             var tabId = "out11"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 90 && x <= 122 && y >= 256.9 && y <= 288.9) {
+        } else if (x >= 131 && x <= 177 && y >= 398.9 && y <= 443.9) {
             //out 12
             var tabId = "out12"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 364 && x <= 468 && y >= 45.9 && y <= 77.9) {
+        } else if (x >= 526 && x <= 677 && y >= 92.9 && y <= 140.9) {
             //long 2
             var tabId = "long2"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 364 && x <= 468 && y >= 257.9 && y <= 289.9) {
+        } else if (x >= 526 && x <= 677 && y >= 298.9 && y <= 445.9) {
             //sofa 2
             var tabId = "sofa2"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 485 && x <= 518 && y >= 37.9 && y <= 69.9) {
+        } else if (x >= 701 && x <= 748 && y >= 81.9 && y <= 127.9) {
             //in 6
             var tabId = "in6"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 528 && x <= 561 && y >= 37.9 && y <= 69.9) {
+        } else if (x >= 763 && x <= 810 && y >= 81.9 && y <= 127.9) {
             //in 5
             var tabId = "in5"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 572 && x <= 604 && y >= 37.9 && y <= 69.9) {
+        } else if (x >= 826 && x <= 873 && y >= 81.9 && y <= 127.9) {
             //in 4
             var tabId = "in4"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 616 && x <= 648 && y >= 37.9 && y <= 69.9) {
+        } else if (x >= 889 && x <= 935 && y >= 81.9 && y <= 127.9) {
             //in 3
             var tabId = "in3"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 659 && x <= 691 && y >= 37.9 && y <= 69.9) {
+        } else if (x >= 951 && x <= 997 && y >= 81.9 && y <= 127.9) {
             //in 2
             var tabId = "in2"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 702 && x <= 734 && y >= 37.9 && y <= 69.9) {
+        } else if (x >= 1015 && x <= 1061 && y >= 81.9 && y <= 127.9) {
             //in 1
             var tabId = "in1"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 728 && x <= 761 && y >= 175.9 && y <= 280.9) {
+        } else if (x >= 1053 && x <= 1100 && y >= 281.9 && y <= 431.9) {
             //long 1
             var tabId = "long1"
             drawOrRemoveSelected(tabId);
-        } else if (x >= 784 && x <= 817 && y >= 175.9 && y <= 280.9) {
+        } else if (x >= 1133 && x <= 1181 && y >= 281.9 && y <= 431.9) {
             //long 2
             var tabId = "sofa1"
             drawOrRemoveSelected(tabId);
         }
     });
-    
-    const reservationDateInput = document.getElementById('reservationDate');
-    const reservationTimeInput = document.getElementById('reservationTime');
     
     reservationDateInput.addEventListener('change', (event) => {
         const reservationDateValue = reservationDateInput.value;
@@ -243,17 +260,19 @@
         if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )
         ketReservasiChange();
     });
+
     function ketReservasiChange(){
-        
         var tableContainer = document.getElementById("reservationTable");
         while (tableContainer.firstChild) {
             tableContainer.removeChild(tableContainer.firstChild);
         }
         var totalPrice = 0;
+        var countSelectedData = 0;
         isTableSelected.forEach((data) => {
             const reservationDateValue = reservationDateInput.value;
             const reservationTimeValue = reservationTimeInput.value;
             if(data['isSelected']){
+                countSelectedData += 1;
                 totalPrice += data['price'];
                 const row = document.createElement("tr");
 
@@ -261,7 +280,7 @@
                 firstCell.style.width = "300px";
                 
                 const firstCellLabel1 = document.createElement("label");
-                firstCellLabel1.textContent = data['tableName'] + ', ' + reservationDateValue + ' ' + reservationTimeValue;
+                firstCellLabel1.textContent = data['tableName']
                 
                 const firstCellBr = document.createElement("br");
 
@@ -288,17 +307,106 @@
                 tableContainer.appendChild(row);
             }
         });
-        const row = document.createElement("tr");
-        const firstCell = document.createElement("td");
-        firstCell.style.width = "300px";
-        firstCell.textContent = 'Total';
+        if(countSelectedData > 0){
+            const row = document.createElement("tr");
+            const firstCell = document.createElement("td");
+            firstCell.style.width = "300px";
+            firstCell.textContent = 'Total';
 
-        const secondCell = document.createElement("td");
-        secondCell.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            const secondCell = document.createElement("td");
+            secondCell.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 
-        row.appendChild(firstCell);
-        row.appendChild(secondCell);
+            row.appendChild(firstCell);
+            row.appendChild(secondCell);
 
-        tableContainer.appendChild(row);
+            tableContainer.appendChild(row);
+            paymentButton.style.display = "block";
+            reserveLabel.style.display = "block";
+        } else {
+            paymentButton.style.display = "none";
+            reserveLabel.style.display = "none";
+        }
     }
+
+    function showModal() {
+        modal.style.display = "block";
+    }
+
+    function hideModal() {
+        modal.style.display = "none";
+    }
+
+    function makePayment() {
+        alert("Payment confirmed!");
+        hideModal();
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            hideModal();
+        }
+    }
+
 </script>
+
+<style>
+    .payment-button {
+        background-color: white;
+        border: 1px solid black;
+        padding: 4px 0px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; 
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40%;
+    }
+
+    .confirm-button {
+        background-color: #392A23;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 17px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .cancel-button {
+        background-color: #D4B096;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 17px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+</style>

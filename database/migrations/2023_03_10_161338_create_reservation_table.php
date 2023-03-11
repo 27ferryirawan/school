@@ -17,7 +17,7 @@ class CreateReservationTable extends Migration
             $table->id();
             $table->string('payment_status');
             $table->string('payment_type');
-            $table->integer('total');
+            $table->integer('total_fee');
             $table->smallinteger('created_by');
             $table->timestamps();
         });

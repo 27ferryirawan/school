@@ -19,8 +19,12 @@ class CreateReservationDetailTable extends Migration
             $table->string('table_id');
             $table->datetime('reservation_date');
             $table->integer('fee');
-            $table->foreign('reservation_id')->references('id')->on('reservation');
             $table->timestamps();
+
+            $table->foreign('reservation_id')
+                ->references('id')
+                ->on('reservation')
+                ->onDelete('cascade');
         });
     }
 
