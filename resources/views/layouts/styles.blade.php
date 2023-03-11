@@ -45,6 +45,10 @@
         width:50%;
         display:block;
     }
+    .grid-item-coffee{
+        width:33%;
+        display:block;
+    }
     html::-webkit-scrollbar {
         display: none;
     }
