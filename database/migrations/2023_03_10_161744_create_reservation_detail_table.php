@@ -15,7 +15,7 @@ class CreateReservationDetailTable extends Migration
     {
         Schema::create('reservation_detail', function (Blueprint $table) {
             $table->id();
-            $table->smallinteger('reservation_id');
+            $table->unsignedBigInteger('reservation_id');
             $table->string('table_id');
             $table->datetime('reservation_date');
             $table->integer('fee');

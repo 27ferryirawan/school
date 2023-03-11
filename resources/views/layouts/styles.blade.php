@@ -2,6 +2,21 @@
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <style>
+    footer{
+        width:100%;
+        height:10%;
+        padding:20px;
+        background-color: #D4B0A0;
+    }
+    .grid{
+        display:inline-flex;
+        padding:4rem;
+        width:100%;
+    }
+    .grid-item{
+        width:50%;
+        display:block;
+    }
     html::-webkit-scrollbar {
         display: none;
     }

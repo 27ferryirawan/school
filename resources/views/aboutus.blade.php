@@ -31,15 +31,3 @@
         </main>
     </body>
 </html>
-
-<style>
-    .grid{
-        display:inline-flex;
-        padding:4rem;
-        width:100%;
-    }
-    .grid-item{
-        width:50%;
-        display:block;
-    }
-</style>
