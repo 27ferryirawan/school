@@ -14,18 +14,18 @@ class CreateReservationDetailTable extends Migration
     public function up()
     {
         Schema::create('reservation_detail', function (Blueprint $table) {
-            $table  ->id()
-                    ->unsignedBigInteger('reservation_id')
-                    ->string('table_id')
-                    ->datetime('reservation_date')
-                    ->integer('fee')
-                    ->timestamps();
+            $table->id();
+            $table->unsignedBigInteger('reservation_id');
+            $table->string('table_id');
+            $table->datetime('reservation_date');
+            $table->integer('fee');
+            $table->timestamps();
 
-            $table  ->foreign('reservation_id')
-                    ->references('id')
-                    ->on('reservation')
-                    ->onDelete('cascade');
-            });
+            $table->foreign('reservation_id')
+                ->references('id')
+                ->on('reservation')
+                ->onDelete('cascade');
+        });
     }
 
     /**
