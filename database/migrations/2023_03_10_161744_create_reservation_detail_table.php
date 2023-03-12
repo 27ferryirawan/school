@@ -18,12 +18,17 @@ class CreateReservationDetailTable extends Migration
             $table->unsignedBigInteger('reservation_id');
             $table->string('table_id');
             $table->datetime('reservation_date');
-            $table->integer('fee');
+            $table->integer('total_fee');
             $table->timestamps();
 
             $table->foreign('reservation_id')
                 ->references('id')
                 ->on('reservation')
+                ->onDelete('cascade');
+
+            $table->foreign('table_id')
+                ->references('id')
+                ->on('table_detail')
                 ->onDelete('cascade');
         });
     }
