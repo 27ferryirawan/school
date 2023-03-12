@@ -18,7 +18,9 @@ class CreateReservationDetailTable extends Migration
             $table->unsignedBigInteger('reservation_id');
             $table->string('table_id');
             $table->datetime('reservation_date');
-            $table->integer('total_fee');
+            $table->integer('fee');
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
 
             $table->foreign('reservation_id')

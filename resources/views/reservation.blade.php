@@ -34,6 +34,12 @@
                         <button class="cancel-button" onclick="hideModal()">Cancel</button>
                     </div>
                 </div>
+                <div id="successOrFailedModal" class="modal">
+                    <div class="modal-content">
+                        <p id="successOrFailedText" class="ajax-label"></p>
+                        <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
+                    </div>
+                </div>
             </div>
             <div class="map-canvas">
                 <label>Pilih Meja</label>        
@@ -69,11 +75,13 @@
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
     const modal = document.getElementById("modal");
+    const successOrFailedModal = document.getElementById("successOrFailedModal");
     const paymentButton = document.querySelector(".payment-button");
     const reserveLabel = document.querySelector(".ket-reserv-label");
     const reservationDateInput = document.getElementById('reservationDate');
     const reservationTimeInput = document.getElementById('reservationTime');
     var tableDetail = {!! $tableDetail !!}; 
+    var fetchTableDetail = [];
     var fixTablePaymentData = [];
     var totalPrice = 0;
 
@@ -117,14 +125,34 @@
         {table: "in1",   isSelected: false, x: 234.2, y: 23.1, width: 10.7, height: 12.9},
     ];
 
-    for (var i = 0; i < tableDetail.length; i++) {
-        if(tableDetail[i].id == isTableSelected.find(table => table.table == tableDetail[i].id).table){
-            isTableSelected.find(table => table.table == tableDetail[i].id).tableName = tableDetail[i].table_name;
-            isTableSelected.find(table => table.table == tableDetail[i].id).price = tableDetail[i].price;
-            isTableSelected.find(table => table.table == tableDetail[i].id).status = tableDetail[i].status;
-            drawOrRemoveSelected(tableDetail[i].id, true);
+    function clearAll(firstInit){
+        reservationDateInput.value = "";
+        reservationTimeInput.value = "";
+        var tableContainer = document.getElementById("reservationTable");
+        while (tableContainer.firstChild) {
+            tableContainer.removeChild(tableContainer.firstChild);
+        }
+        
+        paymentButton.style.display = "none";
+        reserveLabel.style.display = "none";
+        
+        if(firstInit){
+            for (var i = 0; i < tableDetail.length; i++) {
+                if(tableDetail[i].id == isTableSelected.find(table => table.table == tableDetail[i].id).table){
+                    isTableSelected.find(table => table.table == tableDetail[i].id).tableName = tableDetail[i].table_name;
+                    isTableSelected.find(table => table.table == tableDetail[i].id).price = tableDetail[i].price;
+                    isTableSelected.find(table => table.table == tableDetail[i].id).status = tableDetail[i].status;
+                    drawOrRemoveSelected(tableDetail[i].id, true);
+                }
+            }
+        }
+        else{
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            getTableDetailData();
         }
     }
+
+    clearAll(true);
 
     function drawOrRemoveSelected(tableId, firstInit) {
         var isSelected = isTableSelected.find(table => table.table == tableId).isSelected;
@@ -290,14 +318,18 @@
             tableContainer.removeChild(tableContainer.firstChild);
         }
         totalPrice = 0;
-        myArray = [];
+        fixTablePaymentData = [];
         var countSelectedData = 0;
         isTableSelected.forEach((data) => {
             if(data['isSelected']){
-                fixTablePaymentData.push([
-                    table_id => data.table,
-                    fee => data.fee
-                ]);
+                const reservationDateValue = reservationDateInput.value;
+                const reservationTimeValue = reservationTimeInput.value;
+                var concatDate = reservationDateValue + ' ' + reservationTimeValue;
+                fixTablePaymentData.push({
+                    table_id: data.table,
+                    fee: data.price,
+                    reservation_date: concatDate
+                });
                 countSelectedData += 1;
                 totalPrice += data['price'];
                 const row = document.createElement("tr");
@@ -362,31 +394,65 @@
         modal.style.display = "none";
     }
 
+    function showSuccessOrFailedModal() {
+        successOrFailedModal.style.display = "block";
+    }
+
+    function hideSuccessOrFailedModal() {
+        successOrFailedModal.style.display = "none";
+        clearAll(false);
+    }
+
+    function getTableDetailData() {
+        $.ajax({
+            url: '/reservation/getTableDetailData', 
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    if(data[i].id == isTableSelected.find(table => table.table == data[i].id).table){
+                        isTableSelected.find(table => table.table == tableDetail[i].id).status = data[i].status;
+                        drawOrRemoveSelected(data[i].id, true);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Failed to get tableDetail data:', errorThrown);
+            }
+        });
+    }
+
     function makePayment() {
         const reservationDateValue = reservationDateInput.value;
         const reservationTimeValue = reservationTimeInput.value;
-        var parseToDate = new Date(Date.parse(reservationDateValue + ' ' + reservationTimeValue));
+        var concatDate = reservationDateValue + ' ' + reservationTimeValue;
         $.ajax({
             url: '{{ route("insert-payment") }}',
             type: 'POST',
             data: {
                 PaymentDetail: fixTablePaymentData,
-                PaymentDate: parseToDate,
+                PaymentDate: concatDate,
                 PaymentTotalFee: totalPrice,
-                CreatedBy: {{ Auth::user()->username}},
+                CreatedBy: '{{ Auth::user()->id}}',
                 _token: '{{ csrf_token() }}'
             },
             success: function(response) {
-                console.log(response);
+                document.getElementById("successOrFailedText").innerHTML = "Reservation Success!";
+            },
+            error: function(xhr, status, error) {
+                document.getElementById("successOrFailedText").innerHTML = "Reservation Failed!";
             }
         })
-        alert("Payment confirmed!");
         hideModal();
+        showSuccessOrFailedModal();
     }
 
     window.onclick = function(event) {
         if (event.target == modal) {
             hideModal();
+        }
+        if (event.target == successOrFailedModal) {
+            hideSuccessOrFailedModal();
         }
     }
 
@@ -397,7 +463,7 @@
         background-color: white;
         border: 1px solid black;
         padding: 4px 0px;
-        font-size: 16px;
+        font-size: 17px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -450,6 +516,12 @@
         font-size: 17px;
         margin: 4px 2px;
         cursor: pointer;
+    }
+
+    .ajax-label{
+        text-align: center; 
+        font-weight: bold; 
+        font-size: 25px;
     }
 
 </style>
