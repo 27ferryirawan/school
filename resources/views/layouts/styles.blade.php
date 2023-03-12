@@ -73,6 +73,7 @@
         justify-content: flex-end;
         align-items: center;
         margin-left: auto;
+        font-size: 17px;
     }
     .navbar li {
         float: left;
@@ -262,8 +263,8 @@
     }
     .login{
         border: 3px solid #9B6E3F;
-        border-radius:40px;
-        width:60%;
+        border-radius: 40px;
+        width: 60%;
     }
 
     .login-header{
@@ -271,7 +272,7 @@
         font-weight: bold;
         font-size: 28px;
         border-bottom: 3px solid #9B6E3F;
-        padding:20px;
+        padding: 20px;
     }
 
     .login-body{
@@ -281,8 +282,7 @@
 
     .button-login{
         background-color:#9B6E3F;
-        border-radius:10px;
-        margin-left:60px;
+        border-radius: 20px;
         cursor: pointer;
     }
 
@@ -307,16 +307,12 @@
         color: #aaa;
     }
 
-    .form-group .form-control-icon-showw-password{
+    .form-control-icon-show-password {
         position: absolute;
-        z-index: 2;
-        display: block;
-        width: 2.375rem;
-        height: 2.375rem;
-        line-height: 2.375rem;
-        text-align: center;
-        pointer-events: none;
-        color: #aaa;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px; /* adjust this value as needed */
+        cursor: pointer;
     }
 </style>
 
@@ -339,7 +335,7 @@
 
 
     function showPassword() {
-        var x = document.getElementByType("password");
+        var x = document.getElementById("password");
         if (x.type === "password") {
             x.type = "text";
         } else {
