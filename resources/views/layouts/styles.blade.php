@@ -193,6 +193,20 @@
         margin: 50px 50px 0px 450px; 
         width: 250px
     }
+
+    .login{
+        border: 3px solid #9B6E3F;
+        border-radius:40px;
+        width:60%;
+    }
+
+    .login-header{
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+        border-bottom: 3px solid #9B6E3F;
+        padding:20px;
+    }
 </style>
 
 <script>

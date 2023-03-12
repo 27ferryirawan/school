@@ -18,3 +18,4 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/reservation', 'App\Http\Controllers\ReservationController@index')->name('reservation');
 Route::get('/about-us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about-us');
 Route::get('/coffee', [App\Http\Controllers\CoffeeController::class, 'index'])->name('coffee');
+Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
