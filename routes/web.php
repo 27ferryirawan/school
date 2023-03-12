@@ -19,3 +19,4 @@ Route::get('/reservation', [App\Http\Controllers\ReservationController::class, '
 Route::post('/reservation/insertPayment', [App\Http\Controllers\ReservationController::class, 'insertPayment'])->name('insert-payment');
 
 Route::get('/about-us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about-us');
+Route::get('/coffee', [App\Http\Controllers\CoffeeController::class, 'index'])->name('coffee');
