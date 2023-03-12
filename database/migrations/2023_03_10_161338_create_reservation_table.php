@@ -15,8 +15,8 @@ class CreateReservationTable extends Migration
     {
         Schema::create('reservation', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_status');
-            $table->string('payment_type');
+            $table->smallinteger('payment_status'); //0 = available, 1 = on reserve, 2 = guest in , 3 = guest out
+            $table->string('payment_type'); 
             $table->integer('total_fee');
             $table->smallinteger('created_by');
             $table->timestamps();

@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar">
         <a class="navbar-brand" href="/">
-            <img src="{{ asset('images/samanko.png') }}" alt="Logo" style="margin-left: 30px; width: 110px; height: 90px;">
+            <img src="{{ asset('images/samanko.png') }}" alt="Logo" style="margin-left: 30px; width: 100px; height: 80px;">
         </a>
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : ''}}" href="/">HOME</a></li>

@@ -1,3 +1,6 @@
+<a onclick="topFunction()" id="myBtn" title="Go to top">
+    <img src="{{ asset('images/up-arrow.png') }}" alt="Logo" style="width: 30px; height:30px">
+</a>
 <footer>
     <a style="background-color:#D9D9D9; border-radius:5px; padding:5px; margin-left:50px">
         Make a Reservation!
