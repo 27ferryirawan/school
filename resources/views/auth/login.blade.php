@@ -6,73 +6,67 @@
     @include('layouts/navbar')
     <body>
         <div class="container">
-            <div class="row justify-content-center" style="margin-top:3rem;">
-                <div class="col-md-8 ">
-                    <div class="card">
-                        <div class="card-header">{{ __('Login') }}</div>
-
-                        <div class="card-body">
+            <div class="row justify-content-center" style="margin-top:4rem;">
+                <div class="col-md-8 d-flex justify-content-center">
+                    <div class="login">
+                        <div class="login-header">
+                            Login
+                        </div>
+                        <div class="login-body">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
 
-                                <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                <div class="row mb-3 ">
+                                    <div class="col-md-10">
+                                        <div class="form-group" style="padding-left:100px;">
+                                            <span class="fa fa-user form-control-icon"></span>
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror " name="email" value="{{ old('email') }}" placeholder="Email"  required autocomplete="email" autofocus style="border-radius:30px;">
+                                        </div> 
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                    <div class="col-md-10">
+                                        <div class="form-group" style="padding-left:100px;">
+                                            <span class="fa fa-lock form-control-icon"></span>
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" style="border-radius:30px;">
+                                            <span class="fa fa-eye form-control-icon-showw-password" onclick="showPassword()"></span>
 
-                                    <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6 offset-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                            <label class="form-check-label" for="remember">
-                                                {{ __('Remember Me') }}
-                                            </label>
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row mb-0">
-                                    <div class="col-md-8 offset-md-5">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Login') }}
-                                        </button>
+                                    <div class="col-md-8 offset-md-3 pb-3">
+                                        {{ __("Don't Have an Account ?") }} <a href="/register" style="color:blue; text-decoration:underline; cursor: pointer;">Sign Up</a>
                                     </div>
                                 </div>
 
                                 <div class="row mb-0">
-                                    <div class="col-md-8 offset-md-4">
-                                        {{ __("Don't Have an Account ?") }} <a href="/register" style="color:blue; text-decoration:underline; cursor: pointer;">Sign Up</a>
+                                    <div class="col-md-8 offset-md-3">
+                                        <button type="submit" class="btn button-login">
+                                            <b style="letter-spacing:2px; margin: 0 20px 0 20px;">
+                                                Login
+                                            </b>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>
     </body>
 </html>
+

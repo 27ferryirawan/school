@@ -1,6 +1,7 @@
 
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <style>
     #myBtn {
         display: none;
@@ -194,7 +195,6 @@
         width: 250px
     }
 
-
     .payment-button {
         background-color: white;
         border: 1px solid black;
@@ -258,6 +258,65 @@
         text-align: center; 
         font-weight: bold; 
         font-size: 25px;
+
+    }
+    .login{
+        border: 3px solid #9B6E3F;
+        border-radius:40px;
+        width:60%;
+    }
+
+    .login-header{
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+        border-bottom: 3px solid #9B6E3F;
+        padding:20px;
+    }
+
+    .login-body{
+        padding:20px;
+        margin-top:20px;
+    }
+
+    .button-login{
+        background-color:#9B6E3F;
+        border-radius:10px;
+        margin-left:60px;
+        cursor: pointer;
+    }
+
+    .button-login:hover {
+        background-color:#9B6E3F;
+    }
+
+    .form-group .form-control {
+        padding-left: 2.375rem;
+        padding-right: 2.375rem;
+    }
+
+    .form-group .form-control-icon {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+    }
+
+    .form-group .form-control-icon-showw-password{
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
     }
 </style>
 
@@ -276,5 +335,15 @@
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+    }
+
+
+    function showPassword() {
+        var x = document.getElementByType("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
     }
 </script>

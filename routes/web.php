@@ -21,3 +21,4 @@ Route::post('/reservation/insertPayment', [App\Http\Controllers\ReservationContr
 Route::get('/reservation/getTableDetailData', [App\Http\Controllers\ReservationController::class, 'getTableDetailData'])->name('get-table-detail-data');
 Route::get('/about-us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about-us');
 Route::get('/coffee', [App\Http\Controllers\CoffeeController::class, 'index'])->name('coffee');
+Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
