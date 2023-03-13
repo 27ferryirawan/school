@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoodTable extends Migration
+class CreateMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,8 @@ class CreateFoodTable extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
             $table->string('menu_name');
-            $table->string('menu_image');
-            $table->string('menu_description');
-            $table->string('menu_type');
+            $table->string('menu_image')->nullable();
+            $table->string('menu_description')->nullable();
             $table->string('menu_type');
             $table->timestamps();
         });
