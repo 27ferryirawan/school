@@ -242,7 +242,7 @@
         color: #aaa;
     }
 
-    .form-group .form-control-icon-showw-password{
+    .form-group .form-control-icon-show-password{
         position: absolute;
         z-index: 2;
         display: block;

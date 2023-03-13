@@ -35,7 +35,10 @@
                                         <div class="form-group" style="padding-left:100px;">
                                             <span class="fa fa-lock form-control-icon"></span>
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" style="border-radius:30px;">
-                                            <span class="fa fa-eye form-control-icon-showw-password" onclick="showPassword()"></span>
+                                            <div class="form-group-append">
+                                                <span class="fa fa-eye form-control-icon" onclick="showPassword()"></span>
+                                            </div>
+                                            
 
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
