@@ -31,9 +31,6 @@
                 </p>
             </div>
         </div>
-        <a onclick="topFunction()" id="myBtn" title="Go to top">
-            <img src="{{ asset('images/up-arrow.png') }}" alt="Logo" style="width: 30px; height:30px">
-        </a>
         @include('layouts/footer')
     </body>
 </html>

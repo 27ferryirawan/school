@@ -73,6 +73,7 @@
         justify-content: flex-end;
         align-items: center;
         margin-left: auto;
+        font-size: 17px;
     }
     .navbar li {
         float: left;
@@ -195,10 +196,75 @@
         width: 250px
     }
 
+    .payment-button {
+        background-color: white;
+        border: 1px solid black;
+        padding: 4px 0px;
+        font-size: 17px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; 
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40%;
+    }
+
+    .confirm-button {
+        background-color: #392A23;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 17px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .cancel-button {
+        background-color: #D4B096;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 17px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .ajax-label{
+        text-align: center; 
+        font-weight: bold; 
+        font-size: 25px;
+
+    }
     .login{
         border: 3px solid #9B6E3F;
-        border-radius:40px;
-        width:60%;
+        border-radius: 40px;
+        width: 60%;
     }
 
     .login-header{
@@ -206,7 +272,7 @@
         font-weight: bold;
         font-size: 28px;
         border-bottom: 3px solid #9B6E3F;
-        padding:20px;
+        padding: 20px;
     }
 
     .login-body{
@@ -216,8 +282,7 @@
 
     .button-login{
         background-color:#9B6E3F;
-        border-radius:10px;
-        margin-left:60px;
+        border-radius: 20px;
         cursor: pointer;
     }
 
@@ -242,16 +307,12 @@
         color: #aaa;
     }
 
-    .form-group .form-control-icon-show-password{
+    .form-control-icon-show-password {
         position: absolute;
-        z-index: 2;
-        display: block;
-        width: 2.375rem;
-        height: 2.375rem;
-        line-height: 2.375rem;
-        text-align: center;
-        pointer-events: none;
-        color: #aaa;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px; /* adjust this value as needed */
+        cursor: pointer;
     }
 </style>
 
@@ -260,21 +321,21 @@
     window.onscroll = function() {scrollFunction()};
     function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("myBtn").style.display = "block";
-    } else {
-        document.getElementById("myBtn").style.display = "none";
-    }
+            document.getElementById("myBtn").style.display = "block";
+        } else {
+            document.getElementById("myBtn").style.display = "none";
+        }
     }
 
     // When the user clicks on the button, scroll to the top of the document
     function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
     }
 
 
     function showPassword() {
-        var x = document.getElementByType("password");
+        var x = document.getElementById("password");
         if (x.type === "password") {
             x.type = "text";
         } else {
