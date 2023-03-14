@@ -26,46 +26,86 @@
                     </table>
                     <button class="payment-button" onclick="showModal()">Payment</button>
                 </div>
-                <div id="modal" class="modal">
-                    <div class="modal-content">
-                        <h2>Confirm Payment</h2>
-                        <p>Are you sure you want to make the payment?</p>
-                        <button class="confirm-button" onclick="makePayment()">Confirm</button>
-                        <button class="cancel-button" onclick="hideModal()">Cancel</button>
-                    </div>
+            </div>
+            <div class="map-canvas">
+                <label>Pilih Meja</label>        
+                <canvas id="mapCanvas"></canvas>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h2>Confirm Payment</h2>
+                    <p>Are you sure you want to make the payment?</p>
+                    <button class="confirm-button" onclick="makePayment()">Confirm</button>
+                    <button class="cancel-button" onclick="hideModal()">Cancel</button>
                 </div>
-                <div id="paymentModal" class="modal">
-                    <div class="payment modal-content">
+            </div>
+            
+            <div id="paymentModal" class="modal">
+                <div class="payment modal-content">
+                    <div class="bg-color">
                         <div class="payment-header">
-                        SAMANKO COFFEE ROASTERS
+                            <img src="{{ asset('images/samanko.png') }}" style="width: 100px; height: 80px;">
                         </div>
                         <div class="line">
                             <div class="rectangle">
                                 <div class="label-style">
                                     <p>Total</p>
                                     <span id="totalPrice"></span>
-                                    <script>
-                                        const spanElement = document.getElementById('totalPrice');
-                                        var totalPrice = 15000
-                                        spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                                        const paymentModal = document.getElementById("paymentModal");
-                                        paymentModal.style.display = "block";
-                                    </script>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="successOrFailedModalz" class="modal">
-                    <div class="modal-content">
-                        <p id="successOrFailedText" class="ajax-label"></p>
-                        <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
+
+                    <div class="payment-table">
+                        @foreach($paymentTypes as $paymentType)
+                            <label id="paymentTypeName">{{ $paymentType->payment_type_name }}</label>
+                            <table>
+                                    @foreach($payments[$paymentType->id] as $payment)
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; flex-direction: row; height: 50px;">
+                                                <img src="{{ $payment->logo_path }}" style="width: 50px; height: 50px;">
+                                                <div id="payname-balance" style="display: flex; flex-direction: column; margin-left: 15px">
+                                                    @if($payment->payment_type_id == 2)
+                                                        <div class="paymentTypeName"> {{ $payment->payment_name }} </div>
+                                                        <div>Rp {{ number_format($payment->balance, 0, ',', '.') }},00</div>
+                                                    @else
+                                                        <div style="display: flex; align-items: center; height: 100%;">
+                                                            <div class="paymentTypeName"> {{ $payment->payment_name }} </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div style="display: flex; align-items: center; height: 100%; margin-left: auto;">
+                                                    <img src="{{ asset('images/right-arrow.svg') }}" style="width: 15px; height: 15px;">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                            </table>
+                        @endforeach
                     </div>
                 </div>
             </div>
-            <div class="map-canvas">
-                <label>Pilih Meja</label>        
-                <canvas id="mapCanvas"></canvas>
+
+            <script>
+
+                // const paymentBalnaceElm = document.getElementById('paymentBalance');
+                // var totalPrice = 15000
+                // paymentBalnaceElm.textContent = parseInt(paymentBalnaceElm.textContent).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                const spanElement = document.getElementById('totalPrice');
+                var totalPrice = 15000
+                spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                
+                const paymentModal = document.getElementById("paymentModal");
+                paymentModal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            </script>
+            <div id="successOrFailedModalz" class="modal">
+                <div class="modal-content">
+                    <p id="successOrFailedText" class="ajax-label"></p>
+                    <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
+                </div>
             </div>
         </main>
         @include('layouts/footer')      
@@ -75,10 +115,108 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 </html>
 
-<script>
-    
-    
 
+<style>
+    .payment {
+        background-color: white; 
+        overflow-y: auto; 
+        border: 3px solid #9B6E3F; 
+        border-radius: 40px; 
+        width: 25%;
+        height: 80%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -85%);
+    }
+
+    .payment::-webkit-scrollbar {
+        display: none;
+    }
+
+    .payment-header {
+        display: relative;
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
+        padding: 20px 20px 0px 20px;
+        
+    }
+
+    #paymentModal .modal-content{
+        padding: 0;
+    }
+    
+    .line {
+        height: 3px;
+        background-color: #9B6E3F;
+        position: relative;
+        margin: 40px 0;
+    }
+    
+    .rectangle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 5px;
+        border: 3px solid #9B6E3F; 
+        width: 80%;
+        border-radius: 15px; 
+    }
+    
+    .rectangle .label-style {
+        line-height: 0.2;
+        padding: 10px;
+    }
+    .rectangle p{
+        font-size: 17px;
+    }
+
+    .rectangle span{
+        font-size: 27px;
+        font-weight: bold;
+    }
+
+    .payment-table{
+        margin: 40px 20px;
+    }
+
+    .payment-table table{
+        width: 100%
+    }
+
+    .payment-table .paymentTypeName{
+        font-size: 17px;
+        font-weight: bold;
+    }
+    
+    .payment-table table tr:last-child {
+        border-bottom: 10px solid #F5F5F5;
+    }
+
+    .payment-table #paymentTypeName{
+        font-size: 17px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    
+    .payment-table tr {
+        border-bottom: 3px solid #F5F5F5; 
+    }
+
+    .bg-color {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 140px;
+        background-color: #392A23; 
+    }
+</style>
+
+<script>
     flatpickr("#reservationDate", {
         dateFormat: "d M Y", 
         // maxDate: "today", 
@@ -411,18 +549,22 @@
 
     function showModal() {
         modal.style.display = "block";
+        document.body.style.overflow = "hidden";
     }
 
     function hideModal() {
         modal.style.display = "none";
+        document.body.style.overflow = "auto";
     }
 
     function showSuccessOrFailedModal() {
         successOrFailedModal.style.display = "block";
+        document.body.style.overflow = "hidden";
     }
 
     function hideSuccessOrFailedModal() {
         successOrFailedModal.style.display = "none";
+        document.body.style.overflow = "auto";
         clearAll(false);
     }
 
@@ -430,10 +572,12 @@
         const spanElement = document.getElementById('totalPrice');
         spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
         paymentModal.style.display = "block";
+        document.body.style.overflow = "hidden";
     }
 
     function hidePaymentModal() {
         paymentModal.style.display = "none";
+        document.body.style.overflow = "auto";
         clearAll(false);
     }
 
@@ -494,57 +638,3 @@
     }
 
 </script>
-
-<style>
-    .payment {
-        background-color: white; 
-        overflow-y: hidden; 
-        border: 3px solid #9B6E3F; 
-        border-radius: 40px; 
-        width: 25%;
-        height: 50%;
-    }
-
-    .payment-header {
-        text-align: center;
-        font-weight: bold;
-        font-size: 17px;
-        padding: 20px 20px 0px 20px;
-    }
-
-    .modal-content {
-        padding: 0;
-    }
-    
-    .line {
-        height: 3px;
-        background-color: #9B6E3F;
-        position: relative;
-        margin: 40px 0;
-    }
-    
-    .rectangle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 5px;
-        border: 3px solid #9B6E3F; 
-        width: 80%;
-        border-radius: 15px; 
-    }
-    
-    .rectangle .label-style {
-        line-height: 0.2;
-        padding: 10px;
-    }
-    .rectangle p{
-        font-size: 17px;
-    }
-
-    .rectangle span{
-        font-size: 27px;
-        font-weight: bold;
-    }
-</style>

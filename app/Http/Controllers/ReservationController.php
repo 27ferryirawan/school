@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Models\ReservationDetail;
 use App\Models\TableDetail;
+use App\Models\Payment;
+use App\Models\PaymentType;
 
 class ReservationController extends Controller
 {
@@ -30,8 +32,9 @@ class ReservationController extends Controller
      */
     public function index(){
         $tableDetail = TableDetail::all();
-        return view('reservation', compact('tableDetail'));
-        // return view('reservation');
+        $paymentTypes = PaymentType::all();
+        $payments = Payment::orderBy('payment_type_id')->get()->groupBy('payment_type_id');
+        return view('reservation', compact('tableDetail', 'payments', 'paymentTypes'));
     }
 
     public function insertPayment(Request $request){

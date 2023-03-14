@@ -4,21 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenuTable extends Migration
+class CreatePaymentTypeTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('menu', function (Blueprint $table) {
+    public function up(){
+        Schema::create('payment_type', function (Blueprint $table) {
             $table->id();
-            $table->string('menu_name');
-            $table->string('menu_image');
-            $table->string('menu_description');
-            $table->string('menu_type');
+            $table->string('payment_type_name');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateMenuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::dropIfExists('payment_type');
     }
 }

@@ -167,7 +167,7 @@
         border: 1px solid black;
     }
 
-    tr:last-child {
+    #reservationTable tr:last-child {
         border-top: 1px solid black;
     }
 
