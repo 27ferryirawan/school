@@ -55,7 +55,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="payment-table">
                         @foreach($paymentTypes as $paymentType)
                             <label id="paymentTypeName">{{ $paymentType->payment_type_name }}</label>
@@ -63,7 +62,11 @@
                                     @foreach($payments[$paymentType->id] as $payment)
                                     <tr>
                                         <td>
-                                            <div style="display: flex; flex-direction: row; height: 50px;">
+                                            @if(!$payment->is_available)
+                                                <div style="display: flex; flex-direction: row; height: 50px;">
+                                            @else
+                                                <div style="display: flex; flex-direction: row; height: 50px;" onclick="showQRModal()">
+                                            @endif
                                                 <img src="{{ $payment->logo_path }}" style="width: 50px; height: 50px;">
                                                 <div id="payname-balance" style="display: flex; flex-direction: column; margin-left: 15px">
                                                     @if($payment->payment_type_id == 2)
@@ -76,7 +79,11 @@
                                                     @endif
                                                 </div>
                                                 <div style="display: flex; align-items: center; height: 100%; margin-left: auto;">
-                                                    <img src="{{ asset('images/right-arrow.svg') }}" style="width: 15px; height: 15px;">
+                                                    @if(!$payment->is_available)
+                                                        <img class="warning-hover" src="{{ asset('images/warning.svg') }}" style="width: 25px; height: 25px;" {{ Popper::size('large')->pop('Payment is not available   !');}}>
+                                                    @else
+                                                        <img src="{{ asset('images/right-arrow.svg') }}" style="width: 20px; height: 20px; margin-right: 4px;">
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>
@@ -87,7 +94,6 @@
                     </div>
                 </div>
             </div>
-
             <script>
 
                 // const paymentBalnaceElm = document.getElementById('paymentBalance');
@@ -97,18 +103,25 @@
                 var totalPrice = 15000
                 spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
                 
-                const paymentModal = document.getElementById("paymentModal");
-                paymentModal.style.display = "block";
-                document.body.style.overflow = "hidden";
+                // paymentModal.style.display = "block";
+                // document.body.style.overflow = "hidden";
             </script>
-            <div id="successOrFailedModalz" class="modal">
+            <div id="successOrFailedModal" class="modal">
                 <div class="modal-content">
                     <p id="successOrFailedText" class="ajax-label"></p>
                     <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
                 </div>
             </div>
+            <div id="QRModal" class="modal">
+                <div class="modal-content">
+                    <p class="ajax-label">QRIS</p>
+                    <img src="{{ asset('images/samanko_qr.png') }}">
+                    <button class="confirm-button" onclick="hideQRModal()">Confirm</button>
+                </div>
+            </div>
         </main>
         @include('layouts/footer')      
+        @include('popper::assets')
     </body>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -117,6 +130,7 @@
 
 
 <style>
+    
     .payment {
         background-color: white; 
         overflow-y: auto; 
@@ -191,7 +205,7 @@
         font-size: 17px;
         font-weight: bold;
     }
-    
+
     .payment-table table tr:last-child {
         border-bottom: 10px solid #F5F5F5;
     }
@@ -199,7 +213,7 @@
     .payment-table #paymentTypeName{
         font-size: 17px;
         font-weight: bold;
-        margin-top: 20px;
+        margin-top: 5px;
     }
     
     .payment-table tr {
@@ -214,9 +228,27 @@
         height: 140px;
         background-color: #392A23; 
     }
+
+    #QRModal .modal-content{
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+    }
+
+    #QRModal img{
+        width: 50%; 
+        height: 50%;
+        margin-right: 4px;
+    }
+
+    #QRModal .confirm-button{
+        width: 60%; 
+        margin-top: 20px;
+    }
 </style>
 
 <script>
+
     flatpickr("#reservationDate", {
         dateFormat: "d M Y", 
         // maxDate: "today", 
@@ -237,6 +269,7 @@
     const modal = document.getElementById("modal");
     const successOrFailedModal = document.getElementById("successOrFailedModal");
     const paymentModal = document.getElementById("paymentModal");
+    const QRModal = document.getElementById("QRModal");
     const paymentButton = document.querySelector(".payment-button");
     const reserveLabel = document.querySelector(".ket-reserv-label");
     const reservationDateInput = document.getElementById('reservationDate');
@@ -558,49 +591,6 @@
     }
 
     function showSuccessOrFailedModal() {
-        successOrFailedModal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    }
-
-    function hideSuccessOrFailedModal() {
-        successOrFailedModal.style.display = "none";
-        document.body.style.overflow = "auto";
-        clearAll(false);
-    }
-
-    function showPaymentModal() {
-        const spanElement = document.getElementById('totalPrice');
-        spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-        paymentModal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    }
-
-    function hidePaymentModal() {
-        paymentModal.style.display = "none";
-        document.body.style.overflow = "auto";
-        clearAll(false);
-    }
-
-    function getTableDetailData() {
-        $.ajax({
-            url: '/reservation/getTableDetailData', 
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                for (var i = 0; i < data.length; i++) {
-                    if(data[i].id == isTableSelected.find(table => table.table == data[i].id).table){
-                        isTableSelected.find(table => table.table == tableDetail[i].id).status = data[i].status;
-                        drawOrRemoveSelected(data[i].id, true);
-                    }
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Failed to get tableDetail data:', errorThrown);
-            }
-        });
-    }
-
-    function makePayment() {
         const reservationDateValue = reservationDateInput.value;
         const reservationTimeValue = reservationTimeInput.value;
         var concatDate = reservationDateValue + ' ' + reservationTimeValue;
@@ -621,6 +611,61 @@
                 document.getElementById("successOrFailedText").innerHTML = "Reservation Failed!";
             }
         })
+        successOrFailedModal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    function hideSuccessOrFailedModal() {
+        successOrFailedModal.style.display = "none";
+        document.body.style.overflow = "auto";
+        clearAll(false);
+    }
+
+    function showPaymentModal() {
+        const spanElement = document.getElementById('totalPrice');
+        spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+        paymentModal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    function hidePaymentModal() {
+        paymentModal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    function showQRModal() {
+        hidePaymentModal()
+        QRModal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    function hideQRModal() {
+        QRModal.style.display = "none";
+        document.body.style.overflow = "auto";
+        showSuccessOrFailedModal()
+    }
+
+    function getTableDetailData() {
+        $.ajax({
+            url: '/reservation/getTableDetailData', 
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    if(data[i].id == isTableSelected.find(table => table.table == data[i].id).table){
+                        isTableSelected.find(table => table.table == tableDetail[i].id).status = data[i].status;
+                        isTableSelected.find(table => table.table == tableDetail[i].id).isSelected = false
+                        drawOrRemoveSelected(data[i].id, true);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Failed to get tableDetail data:', errorThrown);
+            }
+        });
+    }
+
+    function makePayment() {
         hideModal();
         showPaymentModal()
     }
@@ -634,6 +679,9 @@
         }
         if (event.target == paymentModal) {
             hidePaymentModal();
+        }
+        if (event.target == QRModal) {
+            hideQRModal();
         }
     }
 
