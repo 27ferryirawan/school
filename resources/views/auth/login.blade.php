@@ -51,7 +51,6 @@
                                         <a href="/register" style="color: #D4B096; text-decoration:underline; cursor: pointer;">Sign Up</a>
                                     </div>
                                 </div>
-
                                 <div class="row mb-0">
                                     <div class="col-md-8 offset-md-2 text-center">
                                         <button type="submit" class="btn button-login">
@@ -61,7 +60,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>                    

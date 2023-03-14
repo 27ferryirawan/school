@@ -34,7 +34,29 @@
                         <button class="cancel-button" onclick="hideModal()">Cancel</button>
                     </div>
                 </div>
-                <div id="successOrFailedModal" class="modal">
+                <div id="paymentModal" class="modal">
+                    <div class="payment modal-content">
+                        <div class="payment-header">
+                        SAMANKO COFFEE ROASTERS
+                        </div>
+                        <div class="line">
+                            <div class="rectangle">
+                                <div class="label-style">
+                                    <p>Total</p>
+                                    <span id="totalPrice"></span>
+                                    <script>
+                                        const spanElement = document.getElementById('totalPrice');
+                                        var totalPrice = 15000
+                                        spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                                        const paymentModal = document.getElementById("paymentModal");
+                                        paymentModal.style.display = "block";
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="successOrFailedModalz" class="modal">
                     <div class="modal-content">
                         <p id="successOrFailedText" class="ajax-label"></p>
                         <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
@@ -76,6 +98,7 @@
     const ctx = canvas.getContext('2d');
     const modal = document.getElementById("modal");
     const successOrFailedModal = document.getElementById("successOrFailedModal");
+    const paymentModal = document.getElementById("paymentModal");
     const paymentButton = document.querySelector(".payment-button");
     const reserveLabel = document.querySelector(".ket-reserv-label");
     const reservationDateInput = document.getElementById('reservationDate');
@@ -403,6 +426,17 @@
         clearAll(false);
     }
 
+    function showPaymentModal() {
+        const spanElement = document.getElementById('totalPrice');
+        spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+        paymentModal.style.display = "block";
+    }
+
+    function hidePaymentModal() {
+        paymentModal.style.display = "none";
+        clearAll(false);
+    }
+
     function getTableDetailData() {
         $.ajax({
             url: '/reservation/getTableDetailData', 
@@ -444,7 +478,7 @@
             }
         })
         hideModal();
-        showSuccessOrFailedModal();
+        showPaymentModal()
     }
 
     window.onclick = function(event) {
@@ -454,6 +488,63 @@
         if (event.target == successOrFailedModal) {
             hideSuccessOrFailedModal();
         }
+        if (event.target == paymentModal) {
+            hidePaymentModal();
+        }
     }
 
 </script>
+
+<style>
+    .payment {
+        background-color: white; 
+        overflow-y: hidden; 
+        border: 3px solid #9B6E3F; 
+        border-radius: 40px; 
+        width: 25%;
+        height: 50%;
+    }
+
+    .payment-header {
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
+        padding: 20px 20px 0px 20px;
+    }
+
+    .modal-content {
+        padding: 0;
+    }
+    
+    .line {
+        height: 3px;
+        background-color: #9B6E3F;
+        position: relative;
+        margin: 40px 0;
+    }
+    
+    .rectangle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 5px;
+        border: 3px solid #9B6E3F; 
+        width: 80%;
+        border-radius: 15px; 
+    }
+    
+    .rectangle .label-style {
+        line-height: 0.2;
+        padding: 10px;
+    }
+    .rectangle p{
+        font-size: 17px;
+    }
+
+    .rectangle span{
+        font-size: 27px;
+        font-weight: bold;
+    }
+</style>

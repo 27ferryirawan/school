@@ -1,12 +1,10 @@
-
-<!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <style>
     #myBtn {
         display: none;
         position: fixed;
-        bottom: 30px;
+        bottom: 80px;
         right: 40px;
         z-index: 99;
         border: none;
@@ -320,7 +318,7 @@
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function() {scrollFunction()};
     function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
             document.getElementById("myBtn").style.display = "block";
         } else {
             document.getElementById("myBtn").style.display = "none";
@@ -332,7 +330,6 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
-
 
     function showPassword() {
         var x = document.getElementById("password");

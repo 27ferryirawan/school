@@ -1,5 +1,5 @@
 <a onclick="topFunction()" id="myBtn" title="Go to top">
-    <img src="{{ asset('images/up-arrow.png') }}" alt="Logo" style="width: 30px; height:30px; margin: 0px -24px 50px 0px;">
+    <img src="{{ asset('images/up-arrow.png') }}" alt="Logo" style="width: 30px; height:30px; margin: 0px -24px 0px 0px;">
 </a>
 <div style="display:block; width: 100%">
     <div style="position: relative; color: white; font-size: 16px;">
