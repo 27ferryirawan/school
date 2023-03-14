@@ -1,4 +1,5 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<script src="{{ asset('js/app.js') }}" defer></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <style>
     #myBtn {
@@ -444,6 +445,22 @@
     #QRModal .confirm-button{
         width: 60%; 
         margin-top: 20px;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+        top:87px;
+    }
+
+    .container-profile{
+        width: 80%;
+        margin: auto;
+        margin-top:2rem;
+    }
+
+    .image-container{
+        min-height: 4rem;
+        min-width: 4rem;
     }
 </style>
 

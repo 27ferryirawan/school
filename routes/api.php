@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// update user 
+// Route::post('/edit-profile', [App\Http\Controllers\ProfileController::class, 'editProfile']);
