@@ -5,7 +5,7 @@
     </head>
     @include('layouts/navbar')
     <body>
-        <div class="container">
+        <div class="container" style="padding-bottom:2.4%">
             <div class="row justify-content-center" style="margin-top:4rem;">
                 <div class="col-md-8 d-flex justify-content-center">
                     <div class="login">
@@ -66,6 +66,7 @@
                 </div>
             </div>
         </div>
+        @include('layouts/footer2')
     </body>
 </html>
 

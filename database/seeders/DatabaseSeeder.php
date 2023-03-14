@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TableDetailSeeder::class,
             PaymentTypeSeeder::class,
             PaymentSeeder::class,
+            MenuSeeder::class,
         ]);
     }
 }

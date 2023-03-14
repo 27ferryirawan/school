@@ -278,6 +278,25 @@
         margin-top:20px;
     }
 
+    .register{
+        border: 3px solid #9B6E3F;
+        border-radius: 40px;
+        width: 50%;
+    }
+
+    .register-header{
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+        border-bottom: 3px solid #9B6E3F;
+        padding: 15px;
+    }
+
+    .register-body{
+        padding:10px;
+        margin-top:5px;
+    }
+
     .button-login{
         background-color:#9B6E3F;
         border-radius: 20px;
