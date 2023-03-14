@@ -22,3 +22,5 @@ Route::get('/reservation/getTableDetailData', [App\Http\Controllers\ReservationC
 Route::get('/about-us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about-us');
 Route::get('/coffee', [App\Http\Controllers\CoffeeController::class, 'index'])->name('coffee');
 Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+Route::post('/edit-profile', [App\Http\Controllers\ProfileController::class, 'editProfile'])->name('edit-profile');
