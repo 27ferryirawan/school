@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+use App\Models\Menu;
+
 class CoffeeController extends Controller
 {
     public function index()
     {
-        return view('coffee');
+        $menu = Menu::all();
+        return view('coffee', compact('menu'));
     }
 }
