@@ -39,7 +39,6 @@ class ReservationController extends Controller
 
     public function insertPayment(Request $request){
         $reservationId = DB::table('reservation')->insertGetId([
-            'payment_status' => 1,
             'payment_id' => $request->input('PaymentId'),
             'payment_type_id' => $request->input('PaymentTypeId'),
             'total_fee' => $request->input('PaymentTotalFee'),
@@ -49,6 +48,7 @@ class ReservationController extends Controller
         $paymentDetail = $request->input('PaymentDetail');        
         foreach ($paymentDetail as &$element) {
             $element['reservation_id'] = $reservationId;
+            $element['status'] = 1;
             $element['created_by'] = $request->input('CreatedBy');
             $element['reservation_date'] = Carbon::createFromFormat('d M Y H:i', $request->input('PaymentDate'));
         }

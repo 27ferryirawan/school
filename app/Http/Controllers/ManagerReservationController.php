@@ -32,7 +32,7 @@ class ManagerReservationController extends Controller
      */
     public function index(){
         $tableDetail = TableDetail::all();
-        $reservations = Reservation::select('reservation.id', DB::raw("CASE WHEN reservation.payment_status = '1' THEN 'On Reserve' WHEN reservation.payment_status = '2' THEN 'Guest In' WHEN reservation.payment_status = '3' THEN 'Guest Out' ELSE '' END AS payment_status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email')
+        $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
                         ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
                         ->join('payment', 'reservation.payment_id', '=', 'payment.id')
                         ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
@@ -45,10 +45,23 @@ class ManagerReservationController extends Controller
     }
 
     public function updateReservationStatus(Request $request){
-        return "asd";
-        DB::table('reservation')
+        DB::table('reservation_detail')
         ->where('id', $request->input('ReservationId'))
-        ->update(['payment_status' => $request->input('ReservationStatus'), 'updated_by' => $request->input('UpdatedBy')]);
+        ->update(['status' => $request->input('ReservationStatus'), 'updated_by' => $request->input('UpdatedBy')]);
+
+        //0 = available, 1 = on reserve, 2 = guest in , 3 = guest out, 4 = cancel
+        //0 = available, 1 = on reserve, 2 = guest in 
+        $tabStatus = 0;
+        if($request->input('ReservationStatus') == 0 || $request->input('ReservationStatus') == 3 || $request->input('ReservationStatus') == 4){
+            $tabStatus = 0;
+        } else {
+            $tabStatus = $request->input('ReservationStatus');
+        } 
+
+        DB::table('table_detail')
+        ->where('id', $request->input('TableId'))
+        ->update(['status' => $tabStatus, 'updated_by' => $request->input('UpdatedBy')]);
+
 
         return response()->json(['success' => true]);
     }

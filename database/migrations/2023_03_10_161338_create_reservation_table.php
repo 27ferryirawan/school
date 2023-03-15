@@ -15,12 +15,11 @@ class CreateReservationTable extends Migration
     {
         Schema::create('reservation', function (Blueprint $table) {
             $table->id();
-            $table->smallinteger('payment_status'); //0 = available, 1 = on reserve, 2 = guest in , 3 = guest out
             $table->unsignedBigInteger('payment_type_id'); //1 = E-Money, 2 = Kartu Kredit, 3 = Virtual Acc, 4 = Transfer Bank
             $table->unsignedBigInteger('payment_id'); 
             $table->integer('total_fee');
             $table->unsignedBigInteger('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
             $table->foreign('payment_type_id')
@@ -34,6 +33,11 @@ class CreateReservationTable extends Migration
                 ->onDelete('cascade');
 
             $table->foreign('created_by')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('updated_by')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

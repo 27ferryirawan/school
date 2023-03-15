@@ -14,6 +14,7 @@ class ReservationDetail extends Model
         'table_id',
         'reservation_date',
         'fee',
+        'status'
     ];
 
     public function reservation()

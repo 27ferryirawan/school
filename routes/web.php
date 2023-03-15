@@ -18,7 +18,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/reservation', [App\Http\Controllers\ReservationController::class, 'index'])->name('reservation');
 Route::get('/manager-reservation', [App\Http\Controllers\ManagerReservationController::class, 'index'])->name('manager-reservation');
-Route::post('/reservation/updateReservationStatus', [App\Http\Controllers\ReservationController::class, 'updateReservationStatus'])->name('update-reservation-status');
+Route::post('/manager-reservation/updateReservationStatus', [App\Http\Controllers\ManagerReservationController::class, 'updateReservationStatus'])->name('update-reservation-status');
 
 Route::post('/reservation/insertPayment', [App\Http\Controllers\ReservationController::class, 'insertPayment'])->name('insert-payment');
 Route::get('/reservation/getTableDetailData', [App\Http\Controllers\ReservationController::class, 'getTableDetailData'])->name('get-table-detail-data');
@@ -28,4 +28,3 @@ Route::get('/bakery', [App\Http\Controllers\BakeryController::class, 'index'])->
 Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 Route::post('/edit-profile', [App\Http\Controllers\ProfileController::class, 'editProfile'])->name('edit-profile');
-Route::get('/manager-reservation', [App\Http\Controllers\ManagerReservationController::class, 'index'])->name('manager-reservation');

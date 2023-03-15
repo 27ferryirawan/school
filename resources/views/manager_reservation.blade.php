@@ -41,6 +41,7 @@
                         <td style="width: 17%">Status</td>
                         <td style="width: 14%; text-align: center">Action</td>
                     </tr>
+                    @php $counter = 0; @endphp
                     @foreach($reservations as $data)
                         <tr">
                             <td>
@@ -55,23 +56,26 @@
                             <td>{{ $data->table_name }}</td>
                             <td>{{ date('d M Y h:i', strtotime($data->reservation_date)); }}</td>
                             <td>Rp {{ number_format($data->fee, 0, ',', '.') }},00</td>
-                            <td>{{ $data->payment_status }}</td>
+                            <td>{{ $data->status }}</td>
                             <td>
                                 <div style="display: flex; justify-content: center; align-items: center;">
-                                    <button style="width: 125px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white" data-resid="{{$data->id}}" onclick="showUpdateModal(this)">Update</button>
+                                    <button style="width: 125px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white" data-resid="{{$data->id}}" data-tabid="{{$data->table_id}}" onclick="showUpdateModal(this)">Update</button>
                                 </div>
                             </td>
                         </tr>
+                        @php $counter++;   @endphp   
                     @endforeach
                 </table>
-                <div style="display: flex; flex-direction: row; margin-top: 10px"> 
-                    <label style="margin-left: 35%; width: 17%"> 
-                        Total Fee
-                    </label>
-                    <label> 
-                        Rp {{ number_format($totalFee, 0, ',', '.') }},00
-                    </label>
-                </div>
+                @if($counter > 0)
+                    <div style="display: flex; flex-direction: row; margin-top: 10px"> 
+                        <label style="margin-left: 35%; width: 17%"> 
+                            Total Fee
+                        </label>
+                        <label> 
+                            Rp {{ number_format($totalFee, 0, ',', '.') }},00
+                        </label>
+                    </div>
+                @endif
             </div> 
             <div id="modal" class="modal">
                 <div class="modal-content">
@@ -111,6 +115,7 @@
     const modal = document.getElementById("modal");
     const successOrFailedModal = document.getElementById("successOrFailedModal");
     var resId = 0;
+    var tabId = 0;
 
     var isTableSelected = [
         {table: "out1",  isSelected: false, x: 8, y: 102.9, width: 10.5, height: 12.5},
@@ -227,6 +232,7 @@
 
     function showUpdateModal(button) {
         resId = button.dataset.resid
+        tabId = button.dataset.tabid
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
     }
@@ -234,6 +240,25 @@
     function updateResStatus(){
         var statusDropdown = document.getElementById("statusDropdown");
         var selectedValue = statusDropdown.value;
+        $.ajax({
+            url: '{{ route("update-reservation-status") }}',
+            type: 'POST',
+            data: {
+                ReservationId: resId,
+                TableId: tabId,
+                ReservationStatus: selectedValue,
+                ReservationStatus: selectedValue,
+                UpdatedBy: '{{ Auth::user()->id}}',
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                document.getElementById("successOrFailedText").innerHTML = "Update Success!";
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr + " " + status + " " + errpr)
+                document.getElementById("successOrFailedText").innerHTML = "Update Failed!";
+            }
+        })
         showSuccessOrFailedModal()
     }
 

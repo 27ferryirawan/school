@@ -18,10 +18,16 @@ class CreateTableDetailTable extends Migration
             $table->string('table_name');
             $table->integer('price');
             $table->integer('status'); //0 = available, 1 = on reserve, 2 = guest in 
-            $table->integer('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
+
     }
 
     /**

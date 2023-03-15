@@ -11,7 +11,6 @@ class Reservation extends Model{
     protected $table = 'reservation';
 
     protected $fillable = [
-        'payment_status',
         'payment_type_id',
         'payment_id',
         'total_fee',

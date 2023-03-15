@@ -19,14 +19,14 @@ class TableDetailSeeder extends Seeder
                 'id' => 'out1',
                 'table_name' => 'out 1',
                 'price' => 15000,
-                'status' => 1,
+                'status' => 0,
                 'created_by' => 2
             ],
             [
                 'id' => 'out2',
                 'table_name' => 'out 2',
                 'price' => 15000,
-                'status' => 1,
+                'status' => 0,
                 'created_by' => 2
             ],
             [
@@ -47,7 +47,7 @@ class TableDetailSeeder extends Seeder
                 'id' => 'out5',
                 'table_name' => 'out 5',
                 'price' => 15000,
-                'status' => 1,
+                'status' => 0,
                 'created_by' => 2
             ],
             [
@@ -159,21 +159,21 @@ class TableDetailSeeder extends Seeder
                 'id' => 'in3',
                 'table_name' => 'in 3',
                 'price' => 15000,
-                'status' => 2,
+                'status' => 0,
                 'created_by' => 2
             ],
             [
                 'id' => 'in4',
                 'table_name' => 'in 4',
                 'price' => 15000,
-                'status' => 2,
+                'status' => 0,
                 'created_by' => 2
             ],
             [
                 'id' => 'in5',
                 'table_name' => 'in 5',
                 'price' => 15000,
-                'status' => 2,
+                'status' => 0,
                 'created_by' => 2
             ],
             [
