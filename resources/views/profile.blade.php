@@ -27,7 +27,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col mb-2 mx-auto">
                             <label for="name" class="row-md-4 row-form-label text-md-end p-1">{{ __('Name') }}</label>
 
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col mb-2 mx-auto">
                             <label for="username" class="row-md-4 row-form-label text-md-end p-1">{{ __('Username') }}</label>
 
@@ -75,7 +75,7 @@
                         <div class="col mb-2 mx-auto">
                             <label for="password" class="row-md-4 row-form-label text-md-end p-1">{{ __('Password') }}</label>
 
-                            <div class="row-md-3 mb-3">
+                            <div class="row-md-3 ">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" style="border-radius:30px; background-color: #F0F0F0;">
 
                                 @error('password')
@@ -88,7 +88,7 @@
 
                     </div>
 
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col mb-2 mx-auto">
                             <label for="address" class="row-md-4 row-form-label text-md-end p-1">{{ __('Address') }}</label>
 
