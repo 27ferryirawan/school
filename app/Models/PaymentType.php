@@ -17,4 +17,8 @@ class PaymentType extends Model
     public function payments(){
         return $this->hasMany(Payment::class, 'payment_type_id');
     }
+    
+    public function reservations(){
+        return $this->hasMany(Reservation::class);
+    }
 }

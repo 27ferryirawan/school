@@ -15,18 +15,18 @@
             @endguest
 
             @auth
-                <li class="nav-item dropdown" >
+                <li class="nav-item dropdown" style="margin-right: 20px">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <span class="fa fa-user form-control-icon" style="color: white"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/profile" style="color: black; font-weight:bold">
+                        <a class="dropdown-item" href="/profile" style="color: black; font-weight:bold; font-size: 17px">
                             {{ __('Profile') }}
                         </a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();" style="color: black; font-weight:bold">
+                                            document.getElementById('logout-form').submit();" style="color: black; font-weight:bold;  font-size: 17px">
                             {{ __('Logout') }}
                         </a>
 

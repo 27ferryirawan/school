@@ -40,7 +40,8 @@ class ReservationController extends Controller
     public function insertPayment(Request $request){
         $reservationId = DB::table('reservation')->insertGetId([
             'payment_status' => 1,
-            'payment_type' => 'BCA',
+            'payment_id' => $request->input('PaymentId'),
+            'payment_type_id' => $request->input('PaymentTypeId'),
             'total_fee' => $request->input('PaymentTotalFee'),
             'created_by' => $request->input('CreatedBy')
         ]);

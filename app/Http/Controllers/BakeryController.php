@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Menu;
 
-class CoffeeController extends Controller
+class BakeryController extends Controller
 {
     public function index(){
         $menu = Menu::all();
-        return view('coffee', compact('menu'));
+        return view('bakery', compact('menu'));
     }
 }

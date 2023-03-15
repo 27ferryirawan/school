@@ -72,7 +72,7 @@
         justify-content: flex-end;
         align-items: center;
         margin-left: auto;
-        font-size: 17px;
+        font-size: 19px;
     }
     .navbar li {
         float: left;

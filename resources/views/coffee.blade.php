@@ -15,8 +15,8 @@
                 <img src="{{ asset('images/0. banner samping 2.jpg') }}" alt="Logo Kiri" style="width: 100%; height: 33.3334%">
                 <img src="{{ asset('images/0. Banner samping 3.jpg') }}" alt="Logo Kiri" style="width: 100%; height: 33.3334%">
             </div>
-            <div style="width: 72%;  padding: 20px; display: flex; flex-direction: column; ">
-                <div style="text-align: justify; text-justify: inter-word; line-height: 1.2;">
+            <div class="menu-list" style="width: 72%;  padding: 20px; display: flex; flex-direction: column; ">
+                <div style="text-align: justify; line-height: 1.2;">
                     <p style="font-size: 17px; font-weight: bold;">SAMAKO COFEE REASTERS</p>
                     <p>
                         A Specialty cofee that offers arange of high-quality coffee blends for coffe lovers around the world. Our CoffeeShop is dedicated to providing our customers with exceptional coffee beans sources from the best coffe-growing regions around the world.
@@ -36,7 +36,7 @@
                     @foreach($menu->where('menu_type', 'Coffee') as $menuData)
                         <div style="height: 100%; display: flex; flex-direction: column; width: 16.6667%;">
                             <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
-                            <label style="font-size: 17px; margin-top: 5px; width: 99%">{{ $menuData->menu_name }}</label>
+                            <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                             <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                         </div> 
                         @if(($loop->index + 1) % 6 == 0)
@@ -54,7 +54,7 @@
                                 @if($counter < 2)
                                 <div style="height: 100%; display: flex; flex-direction: column; width: 33.3334%;">
                                     <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
-                                    <label style="font-size: 17px; margin-top: 5px; width: 99%">{{ $menuData->menu_name }}</label>
+                                    <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                     <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                                 </div> 
                                 @php $counter++; @endphp    
@@ -83,7 +83,7 @@
                                 @if($counter < 3)
                                 <div style="height: 100%; display: flex; flex-direction: column; width: 33.3334%;">
                                     <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
-                                    <label style="font-size: 17px; margin-top: 5px; width: 99%">{{ $menuData->menu_name }}</label>
+                                    <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                     <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                                 </div> 
                                 @php $counter++; @endphp    
@@ -101,7 +101,7 @@
                         @foreach($menu->where('menu_type', 'Frape') as $menuData)
                             <div style="height: 100%; display: flex; flex-direction: column; width: 16.6667%;">
                                 <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
-                                <label style="font-size: 17px; margin-top: 5px; width: 99%">{{ $menuData->menu_name }}</label>
+                                <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                 <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                             </div> 
                             @if(($loop->index + 1) % 6 == 0)
@@ -119,7 +119,7 @@
                             @if($counter < 5)
                             <div style="height: 100%; display: flex; flex-direction: column; width: 16.6667%;">
                                 <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
-                                <label style="font-size: 17px; margin-top: 5px; width: 99%">{{ $menuData->menu_name }}</label>
+                                <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                 <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                             </div> 
                             @php $counter++; @endphp    
@@ -173,6 +173,10 @@
 </html>
 
 <style>
+
+    .menu-list img:hover {
+        opacity: 0.8;
+    }
         
     #modalImage {
         border-radius: 5px;
@@ -250,6 +254,7 @@
 
 <script>
     function enlargeImage(img) {
+        document.body.style.overflow = "hidden";
         var modal = document.getElementById("enlargeModal");
         var modalImg = document.getElementById("modalImage");
         var captionHtml = document.getElementById("caption");
@@ -262,6 +267,7 @@
     function closeModal() {
         var modal = document.getElementById("enlargeModal");
         modal.style.display = "none";
+        document.body.style.overflow = "auto";
     }
     window.onclick = function(event) {
         if (event.target == enlargeModal) {

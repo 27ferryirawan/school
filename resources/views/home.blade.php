@@ -38,7 +38,7 @@
         </div>
         <div class="grid" >
             <div class="grid-item" >
-                <img src="{{ asset('images/banner bottom.jpg') }}" alt="Banner Bottom" style="width: 22em; height:30em">
+                <img src="{{ asset('images/banner bottom.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom" style="width: 22em; height:30em" data-caption="Stock up your Coffee Bean for the end of the year! Dont let your day messed up without Coffee. We do supplies Coffee / Syrup to Hotel / Coffee Shops with special offers, available for Tanjungpinang & Batam">
                 <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
                     <p>Stock up your Coffee Bean for the end of the year!</p> 
                     <p>Dont let your day messed up without Coffee.</p>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="grid-item">
-                <img src="{{ asset('images/banner bottom 2.jpg') }}" alt="Banner Bottom 2" style="width: 22em; height:30em">
+                <img src="{{ asset('images/banner bottom 2.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 2" style="width: 22em; height:30em" data-caption="Who doesnt love sourdough sandwiches ? Yes ! We add Breakfast Menu Available from 08:00 - 14:00 Everyday! Boost up your day by having breakfast with us!">
                 <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
                     <p>Who doesnt love sourdough sandwiches ?</p>
                     <p>Yes ! We add Breakfast Menu Available from</p>
@@ -57,18 +57,130 @@
                 </div>
             </div>
             <div class="grid-item">
-                <img src="{{ asset('images/banner bottom 4.jpg') }}" alt="Banner Bottom 4" style="width: 22em; height:30em">
+                <img src="{{ asset('images/banner bottom 4.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 4" style="width: 22em; height:30em" data-caption="Stress less and enjoy the best coffee in town">
                 <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
                     <p>Stress less and enjoy the best coffee in town</p>
                 </div>
             </div>
             <div class="grid-item">
-                <img src="{{ asset('images/banner bottom 3.jpg') }}" alt="Banner Bottom 3" style="width: 22em; height:30em">
+                <img src="{{ asset('images/banner bottom 3.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 3" style="width: 22em; height:30em" data-caption="Save your Weekend for the best !">
                 <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
                     <p>Save your Weekend for the best !</p>
                 </div>
+            </div>
+            <div id="enlargeModal" class="modal">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img class="modal-content" id="modalImage">
+                <div id="caption"></div>
             </div>
         </div>
         @include('layouts/footer')
     </body>
 </html>
+
+
+<script>
+    function enlargeImage(img) {
+        document.body.style.overflow = "hidden";
+        var modal = document.getElementById("enlargeModal");
+        var modalImg = document.getElementById("modalImage");
+        var captionHtml = document.getElementById("caption");
+
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        captionHtml.innerHTML = '<p style="font-size: 17px; line-height: 1.2; text-align: justify;">' + img.dataset.caption + '</p>'
+    }
+
+    function closeModal() {
+        var modal = document.getElementById("enlargeModal");
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+    window.onclick = function(event) {
+        if (event.target == enlargeModal) {
+            closeModal();
+        }
+    }
+
+</script>
+
+
+<style>
+    .grid-item img:hover {
+        opacity: 0.8;
+    }
+        
+    #modalImage {
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .modal {
+        display: none; 
+        position: fixed;
+        z-index: 1; 
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.9);
+        overflow: hidden;
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 400px;
+    }
+
+    #caption{
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    .modal-content, #caption {  
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+        from {-webkit-transform:scale(0)} 
+        to {-webkit-transform:scale(1)}
+    }
+
+    @keyframes zoom {
+        from {transform:scale(0)} 
+        to {transform:scale(1)}
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+

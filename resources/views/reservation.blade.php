@@ -65,7 +65,7 @@
                                             @if(!$payment->is_available)
                                                 <div style="display: flex; flex-direction: row; height: 50px;">
                                             @else
-                                                <div style="display: flex; flex-direction: row; height: 50px;" onclick="showQRModal()">
+                                                <div data-paymentTypeId="{{ $payment->payment_type_id }}" data-paymentId="{{ $payment->id }}" style="display: flex; flex-direction: row; height: 50px;" onclick="showQRModal(this)">
                                             @endif
                                                 <img src="{{ $payment->logo_path }}" style="width: 50px; height: 50px;">
                                                 <div id="payname-balance" style="display: flex; flex-direction: column; margin-left: 15px">
@@ -94,18 +94,6 @@
                     </div>
                 </div>
             </div>
-            <script>
-
-                // const paymentBalnaceElm = document.getElementById('paymentBalance');
-                // var totalPrice = 15000
-                // paymentBalnaceElm.textContent = parseInt(paymentBalnaceElm.textContent).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                const spanElement = document.getElementById('totalPrice');
-                var totalPrice = 15000
-                spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-                
-                // paymentModal.style.display = "block";
-                // document.body.style.overflow = "hidden";
-            </script>
             <div id="successOrFailedModal" class="modal">
                 <div class="modal-content">
                     <p id="successOrFailedText" class="ajax-label"></p>
@@ -159,9 +147,11 @@
     var fetchTableDetail = [];
     var fixTablePaymentData = [];
     var totalPrice = 0;
-
+    var paymentId = "";
+    var paymentTypeId = "";
     paymentButton.style.display = "none";
     reserveLabel.style.display = "none";
+    
     
     // ctx.fillStyle = "rgba(255, 0, 0, 0)";
     // ctx.fillStyle = "rgba(97, 77, 67, 0.7)";
@@ -482,6 +472,8 @@
                 PaymentDetail: fixTablePaymentData,
                 PaymentDate: concatDate,
                 PaymentTotalFee: totalPrice,
+                PaymentTypeId: paymentTypeId,
+                PaymentId: paymentId,
                 CreatedBy: '{{ Auth::user()->id}}',
                 _token: '{{ csrf_token() }}'
             },
@@ -514,7 +506,9 @@
         document.body.style.overflow = "auto";
     }
 
-    function showQRModal() {
+    function showQRModal(div) {
+        paymentTypeId = div.dataset.paymenttypeid;
+        paymentId = div.dataset.paymentid;
         hidePaymentModal()
         QRModal.style.display = "block";
         document.body.style.overflow = "hidden";

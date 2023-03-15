@@ -12,7 +12,8 @@ class Payment extends Model
     protected $table = 'payment';
     protected $fillable = [
         'payment_name',
-        'payment_type',
+        'payment_type_id',
+        'payment_id',
         'is_available',
         'is_connected',
         'balance',
@@ -21,5 +22,9 @@ class Payment extends Model
 
     public function paymentType(){
         return $this->belongsTo(PaymentType::class, 'payment_type_id');
+    }
+
+    public function reservation(){
+        return $this->belongsTo(Reservation::class);
     }
 }
