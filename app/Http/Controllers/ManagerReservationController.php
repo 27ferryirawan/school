@@ -44,9 +44,14 @@ class ManagerReservationController extends Controller
         return view('manager_reservation', compact('tableDetail', 'reservations', 'totalFee'));
     }
 
-    public function getTableDetailData(){
-        $tableDetail = TableDetail::all();
-        return response()->json($tableDetail);
+    public function updateReservationStatus(Request $request){
+        return "asd";
+        DB::table('reservation')
+        ->where('id', $request->input('ReservationId'))
+        ->update(['payment_status' => $request->input('ReservationStatus'), 'updated_by' => $request->input('UpdatedBy')]);
+
+        return response()->json(['success' => true]);
     }
+
 
 }

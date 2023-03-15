@@ -10,7 +10,7 @@
         <main>
             <div style="display: flex; flex-direction: column; margin: 20px 50px 20px 80px; font-size: 17px;">
                 <label style="font-weight: bold;">Table</label>     
-                <div style="display: flex; flex-direction: row;">
+                <div style="display: flex; flex-direction: row; margin-top: 5px;">
                     <!-- status 0 = available, 1 = on reserve, 2 = guest in  -->
                     <div style="display: flex; flex-direction: row;"> 
                         <div style="width: 25px; height: 25px; border: 1px solid black; background-color: rgba(0, 255, 0, 0.1)"></div>
@@ -30,7 +30,7 @@
                 </div>
                 <div style="display: flex; flex-direction: row; align-items: center;"> 
                     <label style="font-weight: bold;">Reservation</label>
-                    <button style="padding:0px 25px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="showUpdateModal()">Download Report</button>
+                    <button style="padding:0px 25px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="downloadReport()">Download Report</button>
                 </div>
                 <table class="reserv-tab"style="width: 100%;">
                     <tr>
@@ -58,7 +58,7 @@
                             <td>{{ $data->payment_status }}</td>
                             <td>
                                 <div style="display: flex; justify-content: center; align-items: center;">
-                                    <button style="width: 125px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white" onclick="showUpdateModal()">Update</button>
+                                    <button style="width: 125px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white" data-resid="{{$data->id}}" onclick="showUpdateModal(this)">Update</button>
                                 </div>
                             </td>
                         </tr>
@@ -73,7 +73,27 @@
                     </label>
                 </div>
             </div> 
-            
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h2>Update Reservation</h2>
+                    <label style="font-size: 17px; margin: 15px 0px 0px 3px">Status</label>
+                    <select id="statusDropdown" style="height: 35px; border: 1px black solid; margin: 0px 3px 45px 3px;">
+                        <option value="" disabled>Select Status</option>
+                        <option value="1">On Reserve</option>
+                        <option value="2">Guest In</option>
+                        <option value="3">Guest Out</option>
+                        <option value="4">Cancel Reservation</option>
+                    </select>
+                    <button class="confirm-button" onclick="updateResStatus()">Update</button>
+                    <button class="cancel-button" onclick="hideUpdateModal()">Cancel</button>
+                </div>
+            </div>
+            <div id="successOrFailedModal" class="modal">
+                <div class="modal-content">
+                    <p id="successOrFailedText" class="ajax-label"></p>
+                    <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
+                </div>
+            </div>
         </main>
         @include('layouts/footer')      
         @include('popper::assets')
@@ -88,6 +108,9 @@
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
     var tableDetail = {!! $tableDetail !!}; 
+    const modal = document.getElementById("modal");
+    const successOrFailedModal = document.getElementById("successOrFailedModal");
+    var resId = 0;
 
     var isTableSelected = [
         {table: "out1",  isSelected: false, x: 8, y: 102.9, width: 10.5, height: 12.5},
@@ -129,8 +152,9 @@
             }
         }
         else{
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            getTableDetailData();
+            // ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // getTableDetailData();
+            location.reload();
         }
     }
 
@@ -201,6 +225,39 @@
         });
     }
 
+    function showUpdateModal(button) {
+        resId = button.dataset.resid
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    function updateResStatus(){
+        var statusDropdown = document.getElementById("statusDropdown");
+        var selectedValue = statusDropdown.value;
+        showSuccessOrFailedModal()
+    }
+
+    function showSuccessOrFailedModal() {
+        successOrFailedModal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    function hideSuccessOrFailedModal() {
+        successOrFailedModal.style.display = "none";
+        document.body.style.overflow = "auto";
+        clearAll(false);
+    }
+
+    function hideUpdateModal() {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            hideUpdateModal();
+        }
+    }
 
 </script>
 
