@@ -1,14 +1,22 @@
+@php
+if (Auth::check() && Auth::user()->role == 'MANAJER') {
+    $reservation_url = '/manager-reservation';
+} else {
+    $reservation_url = '/reservation';
+}
+@endphp
+
 <header>
     <nav class="navbar">
         <a class="navbar-brand" href="/">
             <img src="{{ asset('images/samanko.png') }}" alt="Logo" style="margin-left: 30px; width: 100px; height: 80px;">
         </a>
         <ul class="navbar-nav">
-            <li><a class="{{ request()->is('/') ? 'active' : ''}}" href="/">HOME</a></li>
+            <li><a class="{{ request()->is('/') ? 'active' : ''}}" href="/">HOME </a></li>
             <li><a class="{{ request()->is('coffee') ? 'active' : ''}}" href="/coffee">COFFEE</a></li>
             <li><a class="{{ request()->is('bakery') ? 'active' : ''}}" href="/bakery">BAKERY</a></li>
             <li><a class="{{ request()->is('menu') ? 'active' : ''}}" href="/menu">OUR MENU</a></li>
-            <li><a class="{{ request()->is('reservation') ? 'active' : ''}}" href="/reservation">RESERVATION</a></li>
+            <li><a class="{{ request()->is($reservation_url) ? 'active' : ''}}" href="{{ $reservation_url }}">RESERVATION</a></li>
             <li><a class="{{ request()->is('about-us') ? 'active' : ''}}" href="/about-us">ABOUT US</a></li>
             @guest
             <li><a class="login-button" href="/login">Login</a></li>
