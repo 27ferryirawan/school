@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Login || Cafe Reservation</title>
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     </head>
     @include('layouts/navbar')
     <body>
@@ -17,8 +18,8 @@
                                 @csrf
 
                                 <div class="row mb-3 ">
-                                    <div class="col-md-10">
-                                        <div class="form-group" style="padding-left:100px;">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group">
                                             <span class="fa fa-user form-control-icon"></span>
                                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror " name="email" value="{{ old('email') }}" placeholder="Email"  required autocomplete="email" autofocus style="border-radius:30px; background-color: #F0F0F0;">
                                         </div> 
@@ -31,8 +32,8 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-md-10">
-                                        <div class="form-group" style="padding-left:100px; position: relative;">
+                                    <div class="col-md-10 offset-md-1">
+                                        <div class="form-group" style="position: relative;">
                                             <span class="fa fa-lock form-control-icon"></span>
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" style="border-radius:30px; background-color: #F0F0F0;">
                                             <span style="right: 10px;" class="fa fa-eye form-control-icon-show-password" onclick="showPassword()"></span>
