@@ -28,7 +28,7 @@
                 <img src="{{ asset('images/top5.jpg') }}" alt="Logo Kiri" style="width: 25%; height: 300px; object-fit: cover;">
                 <img src="{{ asset('images/top6.jpg') }}" alt="Logo Kanan" style="width: 25%; height: 300px; object-fit: cover;">
             </div> 
-            <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 60px 0px 60px">
+            <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 0px 0px 60px">
                 @php $counter = 0; @endphp  
                 @foreach($menu->where('menu_type', 'Burger') as $menuData)
                     @if($counter < 2)
@@ -51,8 +51,8 @@
                         @php $counter++; @endphp
                     @endforeach 
                 </div>
-                <div style="height: 100%; display: flex; flex-direction: column; width: 37.5%; margin-left: auto;"> 
-                    <img src="{{ asset('images/top7.jpg') }}" data-name="" data-desc="" style="width: 100%; height: 172px; border-top-left-radius: 100px;border-bottom-left-radius: 100px; object-fit: cover; position: relative; left: 180px;" onclick="enlargeImage(this)"> 
+                <div style="height: 100%; display: flex; flex-direction: column; width: 37.5%; margin-left: auto; margin-right: 0;"> 
+                    <img src="{{ asset('images/top7.jpg') }}" data-name="" data-desc="" style="width: 100% ;height: 172px; border-top-left-radius: 100px; border-bottom-left-radius: 100px; object-fit: cover"  onclick="enlargeImage(this)"> 
                 </div>
             </div>
             <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 60px 0px 60px">

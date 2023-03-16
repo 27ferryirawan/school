@@ -37,7 +37,7 @@
         background-color: #D4B0A0;
     }
     .grid{
-        display:inline-flex;
+        /* display:inline-flex; */
         padding:4rem;
         width:100%;
     }
@@ -64,6 +64,58 @@
         height: 110px;
         font-family: 'SourceSansPro';
     }
+
+    @media only screen and (max-width: 450px) {
+        .navbar {
+            height: auto;
+        }
+        .navbar-nav {
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            padding: 0;
+            background-color: #392A23;
+            position: absolute;
+            top: 110px;
+            left: 0;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
+        .navbar-nav.show {
+            height: auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .navbar li {
+            width: 100%;
+            float: none;
+        }
+        .navbar li a {
+            padding: 10px;
+            text-align: left;
+        }
+        .login-button {
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+
+    #mapCanvas{
+        background-image: url('/images/cafe-map.png'); 
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 1300px;
+        height: 530px;
+        margin: -30px 39px 0px -11px;
+        display: block;
+    }
+
+
     .navbar-nav {
         list-style-type: none;
         margin: 0;
@@ -200,19 +252,11 @@
     .map-canvas{
         margin: 20px 50px 0px 80px; 
         font-size: 17px;
+        width: 100vw;
+        overflow: scroll;
     }
 
-    #mapCanvas{
-        background-image: url('/images/cafe-map.png'); 
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 1300px;
-        height: 530px;
-        margin: -30px 39px 0px -11px;
-        display: block;
-        /* background-color: blue; */
-    }
+    
 
     .reserve-div{
         font-size: 17px;
@@ -514,4 +558,5 @@
             x.type = "password";
         }
     }
+
 </script>
