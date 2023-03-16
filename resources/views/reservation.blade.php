@@ -11,11 +11,11 @@
             <div style="display: flex;">
                 <div>
                     <div class="date-input">
-                        <label>Pilih Tanggal</label>        
+                        <label>Date</label>        
                         <input type="text" id="reservationDate" name="reservationDate">
                     </div>
                     <div class="time-input">
-                        <label>Pilih Waktu</label>        
+                        <label>Time</label>        
                         <input type="text" id="reservationTime" name="reservationTime">
                     </div>
                 </div>

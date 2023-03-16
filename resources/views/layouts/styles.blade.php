@@ -148,6 +148,31 @@
         border: 1px solid black;
     }
 
+    .download-date-input{
+        margin: 0px 5px 0px 0px; 
+        
+    }
+
+    .download-date-input label, .date-input input {
+        display: block;   
+        font-size: 17px;
+    }
+    
+    .download-date-input input[type="text"] {
+        padding-left: 30px;
+        background-image: url('/images/calendar.png');
+        background-repeat: no-repeat;
+        background-position: 5px center;
+        background-size: auto 50%;
+        height: 35px;
+        border: 1px black solid;
+        margin: 0px 3px 45px 3px;
+        width: 100%;
+        /* height: 35px;
+        width: 325px;
+        border: 1px solid black; */
+    }
+
     .date-input{
         margin: 50px 50px 0px 80px; 
     }

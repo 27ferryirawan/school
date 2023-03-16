@@ -30,7 +30,9 @@
                 </div>
                 <div style="display: flex; flex-direction: row; align-items: center;"> 
                     <label style="font-weight: bold;">Reservation</label>
-                    <button style="padding:0px 25px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="downloadReport()">Download Report</button>
+                    <button style="padding:0px 25px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="showDownloadModal(this)">
+                        Download Report
+                    </button>
                 </div>
                 <table class="reserv-tab"style="width: 100%;">
                     <tr>
@@ -98,6 +100,18 @@
                     <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
                 </div>
             </div>
+            <div id="downloadModal" class="modal">
+                <div class="modal-content">
+                    <h2>Download Report</h2>
+                    <div class="download-date-input">
+                        <label style="font-size: 17px; margin: 15px 0px 0px 3px">Date</label>
+                        <input type="text" id="reservationDate" name="reservationDate" style="height: 35px; border: 1px black solid; margin: 0px 3px 45px 3px;">
+                    </div>
+                    
+                    <button class="confirm-button" onclick="downloadReport()">Download</button>
+                    <button class="cancel-button" onclick="hideDownloadModal()">Cancel</button>
+                </div>
+            </div>
         </main>
         @include('layouts/footer')      
         @include('popper::assets')
@@ -109,10 +123,18 @@
 
 <script>
 
+    flatpickr("#reservationDate", {
+        dateFormat: "d M Y", 
+        // maxDate: "today", 
+        minDate: "today",
+    });
+
+
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
     var tableDetail = {!! $tableDetail !!}; 
     const modal = document.getElementById("modal");
+    const downloadModal = document.getElementById("downloadModal");
     const successOrFailedModal = document.getElementById("successOrFailedModal");
     var resId = 0;
     var tabId = 0;
@@ -230,13 +252,6 @@
         });
     }
 
-    function showUpdateModal(button) {
-        resId = button.dataset.resid
-        tabId = button.dataset.tabid
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    }
-
     function updateResStatus(){
         var statusDropdown = document.getElementById("statusDropdown");
         var selectedValue = statusDropdown.value;
@@ -262,8 +277,15 @@
         showSuccessOrFailedModal()
     }
 
+    function downloadReport(){
+        const reservationDate = document.getElementById('reservationDate').value;
+        console.log(reservationDate)
+        window.location.href = `/manager-reservation/exportReservation?ReservationDate=${reservationDate}`;
+    }
+
     function showSuccessOrFailedModal() {
         successOrFailedModal.style.display = "block";
+        successOrFailedModal.style.overflow = "hidden";
         document.body.style.overflow = "hidden";
     }
 
@@ -271,6 +293,25 @@
         successOrFailedModal.style.display = "none";
         document.body.style.overflow = "auto";
         clearAll(false);
+    }
+
+    function showDownloadModal() {
+        downloadModal.style.display = "block";
+        downloadModal.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+    }
+    
+    function hideDownloadModal() {
+        downloadModal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    function showUpdateModal(button) {
+        resId = button.dataset.resid
+        tabId = button.dataset.tabid
+        modal.style.display = "block";
+        modal.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
     }
 
     function hideUpdateModal() {
@@ -281,6 +322,14 @@
     window.onclick = function(event) {
         if (event.target == modal) {
             hideUpdateModal();
+        }
+
+        if (event.target == successOrFailedModal) {
+            hideSuccessOrFailedModal();
+        }
+
+        if (event.target == downloadModal) {
+            hideDownloadModal();
         }
     }
 

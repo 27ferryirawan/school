@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ReservationsExport;
+use Illuminate\Support\Collection;
 
 use App\Models\Reservation;
 use App\Models\ReservationDetail;
@@ -33,12 +36,15 @@ class ManagerReservationController extends Controller
     public function index(){
         $tableDetail = TableDetail::all();
         $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
-                        ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
-                        ->join('payment', 'reservation.payment_id', '=', 'payment.id')
-                        ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
-                        ->join('users', 'reservation.created_by', '=', 'users.id')
-                        ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
-                        ->get();
+                    ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
+                    ->join('payment', 'reservation.payment_id', '=', 'payment.id')
+                    ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
+                    ->join('users', 'reservation.created_by', '=', 'users.id')
+                    ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
+                    ->orderBy('reservation_detail.status', 'asc')
+                    ->orderBy('reservation_detail.reservation_date', 'desc')
+                    ->orderBy('table_detail.table_name', 'asc')
+                    ->get();
 
         $totalFee = Reservation::sum('total_fee');
         return view('manager_reservation', compact('tableDetail', 'reservations', 'totalFee'));
@@ -66,5 +72,53 @@ class ManagerReservationController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function exportReservation(Request $request){
+        if(!empty($request->input('ReservationDate'))){
+            $reservationDate = $request->input('ReservationDate') ? Carbon::parse($request->input('ReservationDate'))->format('Y-m-d') : null;
+
+            $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
+                            ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
+                            ->join('payment', 'reservation.payment_id', '=', 'payment.id')
+                            ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
+                            ->join('users', 'reservation.created_by', '=', 'users.id')
+                            ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
+                            ->when($reservationDate, function ($query) use ($reservationDate) {
+                                return $query->whereDate('reservation_detail.reservation_date', $reservationDate);
+                            })
+                            ->orderBy('reservation_detail.status', 'asc')
+                            ->orderBy('reservation_detail.reservation_date', 'desc')
+                            ->orderBy('table_detail.table_name', 'asc')
+                            ->get();
+
+        } else {
+            $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
+                            ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
+                            ->join('payment', 'reservation.payment_id', '=', 'payment.id')
+                            ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
+                            ->join('users', 'reservation.created_by', '=', 'users.id')
+                            ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
+                            ->orderBy('reservation_detail.status', 'asc')
+                            ->orderBy('reservation_detail.reservation_date', 'desc')
+                            ->orderBy('table_detail.table_name', 'asc')
+                            ->get();
+        }
+            
+        $data = [];
+
+        
+
+        foreach ($reservations as $reservation) {
+            $data[] = [
+                $reservation->name,
+                $reservation->email,
+                $reservation->table_name,
+                $reservation->reservation_date,
+                $reservation->fee,
+                $reservation->status,
+            ];
+        }
+
+        return Excel::download(new ReservationsExport($data), 'reservations.xlsx');
+    }
 
 }
