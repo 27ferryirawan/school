@@ -25,7 +25,7 @@
                         <label style="margin-left: 5px;">Guest</label>     
                     </div>
                 </div>
-                <div style="margin: 20px 0px 0px 0px; width: 90vw; overflow: scroll;">    
+                <div class="managerMapCanvas" style="">    
                     <canvas id="mapCanvas"></canvas>
                 </div>
                 <div style="display: flex; flex-direction: row; align-items: center;"> 

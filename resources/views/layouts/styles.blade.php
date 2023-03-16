@@ -114,7 +114,13 @@
         margin: -30px 39px 0px -11px;
         display: block;
     }
+    .managerMapCanvas{
+        margin: 20px 0px 0px 0px; width: 90vw; overflow: scroll;
+    }
 
+    .managerMapCanvas::-webkit-scrollbar {
+        display: none;
+    }
 
     .navbar-nav {
         list-style-type: none;
@@ -254,6 +260,10 @@
         font-size: 17px;
         width: 100vw;
         overflow: scroll;
+    }
+
+    .map-canvas::-webkit-scrollbar {
+        display: none;
     }
 
     

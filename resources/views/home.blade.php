@@ -9,24 +9,25 @@
         </header>
         <main>
             <img src="{{ asset('images/samanko_bkg.jpg') }}" alt="Logo" style="width: 100%;">
-            <div class="grid" style="display: flex; line-height: 0.2;">
-                <div class="grid-item">
-                    <p style="font-weight: bold; font-size: 17px; padding-bottom: 15px;">SAMANKO COFFEE ROASTER</p>
-                    <p style="font-size: 16px;">The increase in coffee consumption is also closely related to the urban lifestyle of social people.</p>
-                    <p style="font-size: 16px;">In 2019, Samanko Coffee Roaster appeared in Tanjungpinang, Riau island</p>
-                    <p style="font-size: 16px;">offering a wide variety of Indonesian coffee and different coffee brewing methods</p>
-                    <p style="font-size: 16px;">Not only that, but Samanko Coffee Roaster also has its own coffee production facility,</p>
-                    <p style="font-size: 16px;">making it a place for novice coffee entrepreneurs to start their coffee business.</p>
+            <div class="grid" style="display: flex;">
+                <div class="grid-item" style="line-height: 1.2;">
+                    <label style="font-weight: bold; font-size: 17px; padding-bottom: 15px;">SAMANKO COFFEE ROASTER</label>
+                    <p style="font-size: 16px;">
+                        The increase in coffee consumption is also closely related to the urban lifestyle of social people.
+                        In 2019, Samanko Coffee Roaster appeared in Tanjungpinang, Riau island
+                        offering a wide variety of Indonesian coffee and different coffee brewing methods
+                        Not only that, but Samanko Coffee Roaster also has its own coffee production facility,
+                        making it a place for novice coffee entrepreneurs to start their coffee business.
+                    </p>
                 </div>
-                <div style="margin-left: auto;">
+                <div style="margin-left: auto;  line-height: 1.2;">
                     <label style="font-weight: bold; font-size: 17px;">OPEN DAILY</label> 
-                    <label style="font-size: 16px; padding: 0px 0px 15px 20px;">08:00 - 23:00</label> 
-                    <p></p>
-                    <p style="font-size: 16px;">Coffee Supplier & Authorized dealer of Davinci Syrup /</p>
-                    <p style="font-size: 16px;">Twinnings Tea / ABACA Coffee Filter</p> <br>
-                    <p></p>
-                    <p style="font-size: 16px;">Jl. Raja H. Fisabililah No. 17, Batu IX Kota Tanjung Pinang</p>
-                    <p style="font-size: 16px;">Kepulauan Riau 29123</p>
+                    <label style="font-size: 16px; padding: 0px 0px 15px 20px;">08:00 - 23:00</label><br>
+                    <label style="font-size: 16px; ">Coffee Supplier & Authorized dealer of Davinci Syrup /</label><br>
+                    <label style="font-size: 16px;">Twinnings Tea / ABACA Coffee Filter</label> 
+                    <br><br>
+                    <label style="font-size: 16px; margin-top: 2px">Jl. Raja H. Fisabililah No. 17, Batu IX Kota Tanjung Pinang</label><br>
+                    <label style="font-size: 16px;">Kepulauan Riau 29123</label>
                 </div>
             </div>
             <div style="display:block; width: 100%;">
@@ -39,35 +40,38 @@
                     </div>        
                 </div>
             </div>
-            <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 20px 40px 20px">
-                <div style="height: 100%; display: flex; flex-direction: column; width: 24%; margin: 0px 5px">
-                    <img src="{{ asset('images/banner bottom.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom"  data-caption="Stock up your Coffee Bean for the end of the year! Dont let your day messed up without Coffee. We do supplies Coffee / Syrup to Hotel / Coffee Shops with special offers, available for Tanjungpinang & Batam">
-                    <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
-                        <p>Stock up your Coffee Bean for the end of the year!</p> 
-                        <p>Dont let your day messed up without Coffee.</p>
-                        <p>We do supplies Coffee / Syrup to Hotel / Coffee</p>
-                        <p>Shops with special offers, available for</p>
-                        <p>Tanjungpinang & Batam</p>
+            <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 20px 40px 20px;">
+                <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
+                    <img src="{{ asset('images/banner bottom.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom"  data-caption="Stock up your Coffee Bean for the end of the year! Dont let your day messed up without Coffee. We do supplies Coffee / Syrup to Hotel / Coffee Shops with special offers, available for Tanjungpinang & Batam" style="margin: 0px 5px;">
+                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
+                        <p>Stock up your Coffee Bean for the end of the year!
+                        Dont let your day messed up without Coffee.
+                        We do supplies Coffee / Syrup to Hotel / Coffee
+                        Shops with special offers, available for
+                        Tanjungpinang & Batam
+                    </p>
                     </div>
                 </div>
-                <div style="height: 100%; display: flex; flex-direction: column; width: 24%; margin: 0px 5px">
-                    <img src="{{ asset('images/banner bottom 2.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 2" data-caption="Who doesnt love sourdough sandwiches ? Yes ! We add Breakfast Menu Available from 08:00 - 14:00 Everyday! Boost up your day by having breakfast with us!">
-                    <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
-                        <p>Who doesnt love sourdough sandwiches ?</p>
-                        <p>Yes ! We add Breakfast Menu Available from</p>
-                        <p>08:00 - 14:00 Everyday!</p>
-                        <p>Boost up your day by having breakfast with us!</p>
+                <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
+                    <img src="{{ asset('images/banner bottom 2.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 2" data-caption="Who doesnt love sourdough sandwiches ? Yes ! We add Breakfast Menu Available from 08:00 - 14:00 Everyday! Boost up your day by having breakfast with us!" style="margin: 0px 5px;">
+                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
+                        <p>
+                            Who doesnt love sourdough sandwiches ?
+                            Yes ! We add Breakfast Menu Available from
+                            08:00 - 14:00 Everyday!
+                            Boost up your day by having breakfast with us!
+                        </p>
                     </div>
                 </div>
-                <div style="height: 100%; display: flex; flex-direction: column; width: 24%; margin: 0px 5px">
-                    <img src="{{ asset('images/banner bottom 4.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 4" data-caption="Stress less and enjoy the best coffee in town">
-                    <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
+                <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
+                    <img src="{{ asset('images/banner bottom 4.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 4" data-caption="Stress less and enjoy the best coffee in town" style="margin: 0px 5px;">
+                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
                         <p>Stress less and enjoy the best coffee in town</p>
                     </div>
                 </div>
-                <div style="height: 100%; display: flex; flex-direction: column; width: 24%; margin: 0px 5px">
-                    <img src="{{ asset('images/banner bottom 3.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 3" data-caption="Save your Weekend for the best !">
-                    <div class="grid-item" style="width: 22em; margin-top: 20px; line-height: 0.2;">
+                <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
+                    <img src="{{ asset('images/banner bottom 3.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 3" data-caption="Save your Weekend for the best !" style="margin: 0px 5px;">
+                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
                         <p>Save your Weekend for the best !</p>
                     </div>
                 </div>
