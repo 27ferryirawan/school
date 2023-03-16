@@ -23,14 +23,19 @@
                 <div style="margin-left: auto;  margin-right: 75px">
                     <label style="font-weight: bold; font-size: 17px;">FIND US</label> 
                     <p></p>
-                    <span style="display:flex">
+                    <a style="display:flex; text-decoration: none; color: black;" href="https://www.instagram.com/samanko.roasters/" target="_blank">
                         <img src="{{ asset('images/instagram.png') }}" alt="Logo" style="width: 20px; height:20px; margin-top:5px; margin-right:10px">
                         <p style="font-size: 16px; margin-top: 10px;">@samanko.roasters</p>
-                    </span>
-                    <span style="display:flex">
+                    </a>
+                    <a style="display:flex; text-decoration: none; color: black;" href="https://api.whatsapp.com/send/?phone=628117752933&text&type=phone_number&app_absent=0" target="_blank">
                         <img src="{{ asset('images/whatsapp.png') }}" alt="Logo" style="width: 20px; height:20px; margin-top:5px; margin-right:10px">
                         <p style="font-size: 16px; margin-top: 10px;">0811-7752-933</p>
-                    </span>
+                    </a>
+
+                    <a style="display:flex; text-decoration: none; color: black;" href="https://www.facebook.com/samanko.roasters" target="_blank">
+                        <img src="{{ asset('images/facebook.png') }}" alt="Logo" style="width: 20px; height:20px; margin-top:5px; margin-right:10px">
+                        <p style="font-size: 16px; margin-top: 10px;">Samanko Coffee Roasters</p>
+                    </a>
                 </div>
             </div>
         </main>
