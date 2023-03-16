@@ -30,11 +30,15 @@
                 </div>
                 <div style="display: flex; flex-direction: row; align-items: center;"> 
                     <label style="font-weight: bold;">Reservation</label>
-                    <button style="padding:0px 25px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="showDownloadModal(this)">
+                    <form action="#" method="get" class="search-form">
+                        <input id="searchInput" placeholder="Search...">
+                        <button id="searchBtn">Search</button>
+                    </form>
+                    <button style="padding:0px 25px; width: 250px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="showDownloadModal(this)">
                         Download Report
                     </button>
                 </div>
-                <table class="reserv-tab"style="width: 100%;">
+                <table id="reservationTable" class="reserv-tab"style="width: 100%;">
                     <tr>
                         <td style="width: 21%;">Name</td>
                         <td style="width: 14%">Table</td>
@@ -45,7 +49,7 @@
                     </tr>
                     @php $counter = 0; @endphp
                     @foreach($reservations as $data)
-                        <tr">
+                        <tr>
                             <td>
                                 <div style="display: flex; flex-direction: row; line-height: 1.2"> 
                                     <img style="width: 45px; height: 45px; border-radius: 45px;" src="storage/{{ $data->profile_picture }}"/>
@@ -73,7 +77,7 @@
                         <label style="margin-left: 35%; width: 17%"> 
                             Total Fee
                         </label>
-                        <label> 
+                        <label id="totFeeLbl"> 
                             Rp {{ number_format($totalFee, 0, ',', '.') }},00
                         </label>
                     </div>
@@ -129,7 +133,8 @@
         minDate: "today",
     });
 
-
+    const searchInput = document.getElementById("searchInput");
+    const reservationTable = document.getElementById("reservationTable");
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
     var tableDetail = {!! $tableDetail !!}; 
@@ -277,6 +282,33 @@
         showSuccessOrFailedModal()
     }
 
+    searchInput.addEventListener("input", () => {
+
+        search(searchInput.value);
+    });
+
+    function search(searchTerm) {
+        $.ajax({
+            url: '{{ route("search-reservation") }}',
+            type: 'POST',
+            data: {
+                SearchText: searchTerm,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log(response);
+                $('#reservationTable').empty();
+                $('#reservationTable').html(response.html);
+
+                const totFeeLbl = document.getElementById('totFeeLbl');
+                totFeeLbl.textContent = response.totalFee.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            },
+            error: function(xhr, status, error) {
+                // document.getElementById("successOrFailedText").innerHTML = "Reservation Failed!";
+            }
+        })
+    }
+
     function downloadReport(){
         const reservationDate = document.getElementById('reservationDate').value;
         console.log(reservationDate)
@@ -336,6 +368,35 @@
 </script>
 
 <style>
+    .search-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
+        width: 100%;
+    }
+
+    #searchInput {
+        padding: 0px 10px;
+        border-radius: 25px 0 0 25px;
+        border: none;
+        outline: none;
+        height: 35px;
+        width: 100%;
+        border: 1px black solid;
+    }
+
+    #searchBtn{
+        padding: 0px 25px;
+        border-radius: 0 25px 25px 0;
+        border: none;
+        background-color: #392A23;
+        color: #fff;
+        cursor: pointer;
+        height: 35px;
+        text-align: center;
+        padding
+    }
     .reserv-tab td{
         border-bottom: 1px black solid;
     }

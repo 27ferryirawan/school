@@ -40,10 +40,10 @@
                     </div>        
                 </div>
             </div>
-            <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 20px 40px 20px;">
+            <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 5px 40px 5px;">
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
                     <img src="{{ asset('images/banner bottom.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom"  data-caption="Stock up your Coffee Bean for the end of the year! Dont let your day messed up without Coffee. We do supplies Coffee / Syrup to Hotel / Coffee Shops with special offers, available for Tanjungpinang & Batam" style="margin: 0px 5px;">
-                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
+                    <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>Stock up your Coffee Bean for the end of the year!
                         Dont let your day messed up without Coffee.
                         We do supplies Coffee / Syrup to Hotel / Coffee
@@ -54,7 +54,7 @@
                 </div>
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
                     <img src="{{ asset('images/banner bottom 2.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 2" data-caption="Who doesnt love sourdough sandwiches ? Yes ! We add Breakfast Menu Available from 08:00 - 14:00 Everyday! Boost up your day by having breakfast with us!" style="margin: 0px 5px;">
-                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
+                    <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>
                             Who doesnt love sourdough sandwiches ?
                             Yes ! We add Breakfast Menu Available from
@@ -65,13 +65,13 @@
                 </div>
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
                     <img src="{{ asset('images/banner bottom 4.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 4" data-caption="Stress less and enjoy the best coffee in town" style="margin: 0px 5px;">
-                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
+                    <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>Stress less and enjoy the best coffee in town</p>
                     </div>
                 </div>
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
                     <img src="{{ asset('images/banner bottom 3.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 3" data-caption="Save your Weekend for the best !" style="margin: 0px 5px;">
-                    <div class="grid-item" style="width: 100%; margin-top: 20px; line-height: 1.2;">
+                    <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>Save your Weekend for the best !</p>
                     </div>
                 </div>

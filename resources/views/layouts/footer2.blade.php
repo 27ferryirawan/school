@@ -1,7 +1,7 @@
 <a onclick="topFunction()" id="myBtn" title="Go to top">
     <img src="{{ asset('images/up-arrow.png') }}" alt="Logo" style="width: 30px; height:30px; margin: 0px -24px 0px 0px;">
 </a>
-<div style="display:block; bottom:0; width: 100%;">
+<div style="display:block; width: 100%; margin-top: auto;">
     <div style="position: relative; color: white; font-size: 16px;">
         <img src="{{ asset('images/samanko_footer.jpg') }}" style="width: 100%; height: 130px; object-fit: cover;">
         <div style="position: absolute; top: 20px; width: 90%; margin: 0px 50px 0px 50px;">
@@ -12,4 +12,5 @@
             <label style="font-size:13px">This ensures freshness, quality control, and allows us to roast to taste."</label>
         </div>        
     </div>
+    @include('layouts/footer')
 </div>

@@ -8,7 +8,6 @@
         <main>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.314657406303!2d104.49086181460552!3d0.9104070993358732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d96df78e6c837d%3A0xb11b500e77e66827!2sSamanko%20Coffee%20Roasters!5e0!3m2!1sen!2sid!4v1678643314853!5m2!1sen!2sid" width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
             </iframe>
-            <br>
             <div class="grid" style="display: flex; line-height: 0.5;">
                 <div class="grid-item">
                     <p style="font-weight: bold; font-size: 17px;">SAMANKO COFFEE ROASTER</p> <br>
@@ -34,8 +33,7 @@
                     </span>
                 </div>
             </div>
-            @include('layouts/footer2')
-            @include('layouts/footer')
         </main>
+        @include('layouts/footer2')
     </body>
 </html>
