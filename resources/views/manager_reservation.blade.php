@@ -30,15 +30,15 @@
                 </div>
                 <div style="display: flex; flex-direction: row; align-items: center;"> 
                     <label style="font-weight: bold;">Reservation</label>
-                    <form action="#" method="get" class="search-form">
+                    <div class="search-form">
                         <input id="searchInput" placeholder="Search...">
-                        <button id="searchBtn">Search</button>
-                    </form>
+                        <button id="searchBtn" onclick="search()">Search</button>
+                    </div>
                     <button style="padding:0px 25px; width: 250px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px" onclick="showDownloadModal(this)">
                         Download Report
                     </button>
                 </div>
-                <table id="reservationTable" class="reserv-tab"style="width: 100%;">
+                <table id="managerReservationTable" class="reserv-tab"style="width: 100%;">
                     <tr>
                         <td style="width: 21%;">Name</td>
                         <td style="width: 14%">Table</td>
@@ -47,7 +47,6 @@
                         <td style="width: 17%">Status</td>
                         <td style="width: 14%; text-align: center">Action</td>
                     </tr>
-                    @php $counter = 0; @endphp
                     @foreach($reservations as $data)
                         <tr>
                             <td>
@@ -68,20 +67,17 @@
                                     <button style="width: 125px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white" data-resid="{{$data->id}}" data-tabid="{{$data->table_id}}" onclick="showUpdateModal(this)">Update</button>
                                 </div>
                             </td>
-                        </tr>
-                        @php $counter++;   @endphp   
+                        </tr> 
                     @endforeach
                 </table>
-                @if($counter > 0)
-                    <div style="display: flex; flex-direction: row; margin-top: 10px"> 
-                        <label style="margin-left: 35%; width: 17%"> 
-                            Total Fee
-                        </label>
-                        <label id="totFeeLbl"> 
-                            Rp {{ number_format($totalFee, 0, ',', '.') }},00
-                        </label>
-                    </div>
-                @endif
+                <div style="display: flex; flex-direction: row; margin-top: 10px"> 
+                    <label style="margin-left: 35%; width: 17%"> 
+                        Total Fee
+                    </label>
+                    <label id="totFeeLbl"> 
+                        Rp {{ number_format($totalFee, 0, ',', '.') }},00
+                    </label>
+                </div>
             </div> 
             <div id="modal" class="modal">
                 <div class="modal-content">
@@ -134,7 +130,7 @@
     });
 
     const searchInput = document.getElementById("searchInput");
-    const reservationTable = document.getElementById("reservationTable");
+    const managerReservationTable = document.getElementById("managerReservationTable");
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
     var tableDetail = {!! $tableDetail !!}; 
@@ -297,8 +293,8 @@
             },
             success: function(response) {
                 console.log(response);
-                $('#reservationTable').empty();
-                $('#reservationTable').html(response.html);
+                $('#managerReservationTable').empty();
+                $('#managerReservationTable').html(response.html);
 
                 const totFeeLbl = document.getElementById('totFeeLbl');
                 totFeeLbl.textContent = response.totalFee.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });

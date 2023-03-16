@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReservationsExport;
@@ -123,16 +125,18 @@ class ManagerReservationController extends Controller
 
     public function searchReservation(Request $request){
         $search = $request->input('SearchText');
-        if(strpos($search, 'On Reserve')){
-            $search = $search.' 1';
-        } else if(strpos($search, 'Guest In')){
-            $search = $search.' 2';
-        } else if(strpos($search, 'Guest Out')){
-            $search = $search.' 3';
-        } else if(strpos($search, 'Cancel Reservation')){
-            $search = $search.' 4';
-        }
-        $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
+
+        $reservations = Reservation::select('reservation_detail.id',
+        DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve'
+                      WHEN reservation_detail.status= '2' THEN 'Guest In'
+                      WHEN reservation_detail.status= '3' THEN 'Guest Out'
+                      WHEN reservation_detail.status= '4' THEN 'Cancel Reservation'
+                      ELSE '' END AS status"),
+                        'reservation.total_fee', 'payment.payment_name',
+                        'payment_type.payment_type_name', 'users.name',
+                        'table_detail.table_name', 'reservation_detail.reservation_date',
+                        'reservation_detail.fee', 'users.profile_picture', 'users.email',
+                        'table_detail.id as table_id')
                     ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
                     ->join('payment', 'reservation.payment_id', '=', 'payment.id')
                     ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
@@ -142,9 +146,13 @@ class ManagerReservationController extends Controller
                         $query->where('users.name', 'LIKE', '%' . $search . '%')
                             ->orWhere('users.email', 'LIKE', '%' . $search . '%')
                             ->orWhere('table_detail.table_name', 'LIKE', '%' . $search . '%')
-                            ->orWhere('reservation_detail.reservation_date', 'LIKE', '%' . $search . '%')
+                            ->orWhere(DB::raw("DATE_FORMAT(reservation_detail.reservation_date, '%d %b %Y %H:%i:%s')"), 'LIKE', '%' . $search . '%')
                             ->orWhere('reservation_detail.fee', 'LIKE', '%' . $search . '%')
-                            ->orWhere('reservation_detail.status', 'LIKE', '%' . $search . '%');
+                            ->orWhere(DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve'
+                                                        WHEN reservation_detail.status= '2' THEN 'Guest In'
+                                                        WHEN reservation_detail.status= '3' THEN 'Guest Out'
+                                                        WHEN reservation_detail.status= '4' THEN 'Cancel Reservation'
+                                                        ELSE '' END"), 'LIKE', '%' . $search . '%');
                     })
                     ->orderBy('reservation_detail.status', 'asc')
                     ->orderBy('reservation_detail.reservation_date', 'desc')

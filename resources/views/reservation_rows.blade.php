@@ -6,7 +6,6 @@
     <td style="width: 17%">Status</td>
     <td style="width: 14%; text-align: center">Action</td>
 </tr>
-@php $counter = 0; @endphp
 @foreach($reservations as $data)
 <tr>
     <td>
@@ -28,5 +27,4 @@
         </div>
     </td>
 </tr>
-@php $counter++;   @endphp   
 @endforeach
