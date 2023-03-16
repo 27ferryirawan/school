@@ -35,7 +35,7 @@
                 <div style="display: flex; flex-wrap: wrap; line-height: 1.2;">
                     @foreach($menu->where('menu_type', 'Coffee') as $menuData)
                         <div style="height: 100%; display: flex; flex-direction: column; width: 16.6667%;">
-                            <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                            <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                             <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                             <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                         </div> 
@@ -53,7 +53,7 @@
                             @foreach($menu->where('menu_type', 'Drip Coffee') as $menuData)
                                 @if($counter < 2)
                                 <div style="height: 100%; display: flex; flex-direction: column; width: 33.3334%;">
-                                    <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                                    <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                                     <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                     <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                                 </div> 
@@ -82,7 +82,7 @@
                             @foreach($menu->where('menu_type', 'Ice Cream') as $menuData)
                                 @if($counter < 3)
                                 <div style="height: 100%; display: flex; flex-direction: column; width: 33.3334%;">
-                                    <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                                    <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                                     <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                     <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                                 </div> 
@@ -100,7 +100,7 @@
                     <div style="display: flex; flex-wrap: wrap; width: 100%; line-height: 1.2;">                    
                         @foreach($menu->where('menu_type', 'Frape') as $menuData)
                             <div style="height: 100%; display: flex; flex-direction: column; width: 16.6667%;">
-                                <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                                <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                                 <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                 <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                             </div> 
@@ -118,7 +118,7 @@
                         @foreach($menu->where('menu_type', 'Smoothies and Milk or Mocktails') as $menuData)
                             @if($counter < 5)
                             <div style="height: 100%; display: flex; flex-direction: column; width: 16.6667%;">
-                                <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                                <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                                 <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                                 <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                             </div> 

@@ -33,7 +33,7 @@
                 @foreach($menu->where('menu_type', 'Burger') as $menuData)
                     @if($counter < 2)
                         <div style="height: 100%; display: flex; flex-direction: column; width: 12.5%;">
-                            <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                            <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                             <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                             <!-- <label style="font-size: 13px;">{{ $menuData->menu_description }}</label> -->
                         </div>
@@ -58,7 +58,7 @@
             <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 60px 0px 60px">
                 @foreach($menu->where('menu_type', 'Bakery') as $menuData)
                     <div style="height: 100%; display: flex; flex-direction: column; width: 12.5%;">
-                        <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 150px; height: 150px; border-radius: 15px;" onclick="enlargeImage(this)"> 
+                        <img src="{{ $menuData->menu_image_path }}" data-name="{{ $menuData->menu_name }}" data-desc="{{ $menuData->menu_description }}" style="width: 90%; height: auto; border-radius: 15px;" onclick="enlargeImage(this)"> 
                         <label style="font-size: 17px; margin-top: 5px; width: 98%">{{ $menuData->menu_name }}</label>
                         <label style="font-size: 13px;">{{ $menuData->menu_description }}</label>
                     </div> 
@@ -162,6 +162,8 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+    
 
 </style>
 
