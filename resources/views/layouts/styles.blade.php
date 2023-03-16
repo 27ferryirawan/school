@@ -136,7 +136,7 @@
         justify-content: flex-end;
         align-items: center;
         margin-left: auto;
-        font-size: 18px;
+        font-size: 17px;
     }
     .navbar li {
         float: left;

@@ -19,7 +19,7 @@ if (Auth::check() && Auth::user()->role == 'MANAJER') {
             <li><a class="{{ request()->is($reservation_url) ? 'active' : ''}}" href="{{ $reservation_url }}">RESERVATION</a></li>
             <li><a class="{{ request()->is('about-us') ? 'active' : ''}}" href="/about-us">ABOUT US</a></li>
             @guest
-            <li><a class="login-button" href="/login">Login</a></li>
+            <li><a class="login-button" href="/login">LOGIN</a></li>
             @endguest
 
             @auth
@@ -30,12 +30,12 @@ if (Auth::check() && Auth::user()->role == 'MANAJER') {
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/profile" style="color: black; font-weight:bold; font-size: 17px">
-                            {{ __('Profile') }}
+                            {{ __('PROFILE') }}
                         </a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();" style="color: black; font-weight:bold;  font-size: 17px">
-                            {{ __('Logout') }}
+                            {{ __('LOGOUT') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
