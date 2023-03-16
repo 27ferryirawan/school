@@ -118,15 +118,15 @@
                         </div>
                     </div>
 
-                    <div class="row pt-5">
-                        <div class="col-md-8 offset-md-7 text-center">
-                            <button type="submit" class="btn button-login">
-                                <b style="letter-spacing:2px; margin: 0 20px 0 20px; font-size: 20px;">
-                                    Save
-                                </b>
-                            </button>
-                        </div>
+                    <div class="col-md-12 pt-4 pb-5">
+                        <button type="submit" class="btn button-login float-end">
+                        <b style="letter-spacing:2px; margin: 0 20px 0 20px; font-size: 20px;">
+                            Save
+                        </b>
+                        </button>
                     </div>
+
+                    
                     
                 </form>
             </div>

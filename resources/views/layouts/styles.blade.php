@@ -53,10 +53,14 @@
         display: none;
     }
     body {
+        display:flex; 
+        flex-direction:column;
         margin: 0;
         font-family: 'SourceSansPro';
         overflow-x: hidden;
+        min-height: 100vh; 
     }
+
     .navbar {
         background-color: #392A23;
         display: flex;
@@ -115,7 +119,9 @@
         display: block;
     }
     .managerMapCanvas{
-        margin: 20px 0px 0px 0px; width: 90vw; overflow: scroll;
+        margin: 20px 0px 0px 0px; 
+        width: 90vw; 
+        overflow: scroll;
     }
 
     .managerMapCanvas::-webkit-scrollbar {
@@ -258,7 +264,7 @@
     .map-canvas{
         margin: 20px 50px 0px 80px; 
         font-size: 17px;
-        width: 100vw;
+        width: 90vw;
         overflow: scroll;
     }
 
