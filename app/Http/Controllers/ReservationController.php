@@ -13,6 +13,9 @@ use App\Models\TableDetail;
 use App\Models\Payment;
 use App\Models\PaymentType;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailAfterReservation;
+
 class ReservationController extends Controller
 {
     /**
@@ -62,6 +65,13 @@ class ReservationController extends Controller
             ]);
         }
 
+        // get user emails to send email notification
+        $email = DB::table('users')->where('id', $request->input('CreatedBy'))->first()->email;
+        $tableIds = collect($request->input('PaymentDetail'))->pluck('table_id')->implode(', ');
+        
+
+        // Mail::to($email)->send(new MailAfterReservation($tableIds, $request->input('PaymentDate')));
+        Mail::to('27ferryirawan@gmail.com')->send(new MailAfterReservation($tableIds, $request->input('PaymentDate')));
         return response()->json(['success' => true]);
     }
 

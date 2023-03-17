@@ -17,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
         // 2. ngrok http 8000 (8000 itu port dari serve laravel)
 
 
-        if (env('APP_ENV') !== 'local') {
-            URL::forceScheme('https');
-        }        
+        // if (env('APP_ENV') !== 'local') {
+        //     URL::forceScheme('https');
+        // }        
     }
 
     /**
