@@ -25,7 +25,7 @@ if (Auth::check() && Auth::user()->role == 'MANAJER') {
             @endguest
 
             @auth
-            @if (Auth::user()->role == 'MANAJER')
+            @if (Auth::user()->role == 'MANAJER' && !request()->is('manager-reservation'))
                 <script>window.location.href = '/manager-reservation';</script>
             @else
                 <li><a class="{{ request()->is($reservation_url) ? 'active' : ''}}" href="{{ $reservation_url }}">RESERVATION</a></li>
