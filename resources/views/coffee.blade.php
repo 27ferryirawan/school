@@ -2,9 +2,10 @@
 <html>
     <head>
         <title>Coffee</title>
+        @include('layouts/navbar')
     </head>
     <body>
-        @include('layouts/navbar')
+        
         <div style="display: flex;">
             <img src="{{ asset('images/bannerKiri.jpg') }}" alt="Logo Kiri" style="width: 50%; height:500px">
             <img src="{{ asset('images/bannerKanan.jpg') }}" alt="Logo Kanan" style="width: 50%; height:500px">

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Coffee</title>
+        <title>Bakery</title>
+        @include('layouts/navbar')
     </head>
     <body>
-        @include('layouts/navbar')
         <div style="display: flex; flex-direction: column;">
             <div style="display: flex; flex-direction: column; column; justify-content: center; align-items: center;line-height: 1.2; font-size: 17px; text-align: center; margin-bottom: 20px;0">
                 <img src="{{ asset('images/the-rolling-pin.png') }}" alt="Logo Kiri" style="width: 35%;">

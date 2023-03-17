@@ -2,11 +2,9 @@
 <html>
     <head>
         <title>Home</title>
+        @include('layouts/navbar')
     </head>
     <body>
-        <header>
-            @include('layouts/navbar')
-        </header>
         <main>
             <img src="{{ asset('images/samanko_bkg.jpg') }}" alt="Logo" style="width: 100%;">
             <div class="grid" style="display: flex;">

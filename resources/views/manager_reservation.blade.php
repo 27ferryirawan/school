@@ -2,11 +2,9 @@
 <html>
     <head>
         <title>Reservation</title>
+        @include('layouts/navbar')
     </head>
     <body>
-        <header>
-            @include('layouts/navbar')
-        </header>
         <main>
             <div style="display: flex; flex-direction: column; margin: 20px 50px 20px 80px; font-size: 17px;">
                 <label style="font-weight: bold;">Table</label>     

@@ -5,7 +5,9 @@ if (Auth::check() && Auth::user()->role == 'MANAJER') {
     $reservation_url = '/reservation';
 }
 @endphp
-
+<head>
+    <link rel="icon" type="image/png" href="{{ asset('images/coffee_favicon.png') }}">
+</head>
 <header>
     <nav class="navbar">
         <a class="navbar-brand" href="/">
@@ -48,3 +50,23 @@ if (Auth::check() && Auth::user()->role == 'MANAJER') {
     </nav>
 </header>
 @include('layouts/styles')
+
+<script>
+    
+    var title = document.title;
+    var link = document.querySelector("link[rel~='icon']");
+    
+    window.addEventListener("blur", () => {
+        document.title = "SAMANKO KUY";
+        link.href = "{{ asset('images/angry_favicon.png') }}";
+        // document.head.appendChild(link);
+    });
+
+    window.addEventListener("focus", () => {
+        document.title = title;
+        link.href = "{{ asset('images/coffee_favicon.png') }}";
+    });
+
+    
+
+</script>
