@@ -154,6 +154,11 @@
     .navbar li a.active {
         background-color: #614d43;
     }
+
+    .navbar li a.login-button.active {
+        background-color: #614d43;;
+        color: white !important;
+    }
     .login-button {
         background-color: white;
         color: #392A23 !important;
@@ -208,7 +213,7 @@
         background-position: 5px center;
         background-size: auto 50%;
         height: 35px;
-        width: 325px;
+        width: 100%;
         border: 1px solid black;
     }
 
@@ -253,7 +258,27 @@
         background-position: 5px center;
         background-size: auto 50%;
         height: 35px;
-        width: 325px;
+        width: 200%;
+        border: 1px solid black;
+    }
+
+    .time-input{
+        margin: 10px 50px 0px 80px; 
+    }
+
+    .time-input label, .time-input input {
+        display: block;   
+        font-size: 17px;
+    }
+    
+    .time-input input[type="text"] {
+        padding-left: 30px;
+        background-image: url('/images/clock.png');
+        background-repeat: no-repeat;
+        background-position: 5px center;
+        background-size: auto 50%;
+        height: 35px;
+        width: 200%;
         border: 1px solid black;
     }
 
@@ -272,12 +297,10 @@
         display: none;
     }
 
-    
-
     .reserve-div{
         font-size: 17px;
-        margin: 50px 50px 0px 450px; 
-        width: 250px
+        margin: 50px 20% 0px auto; 
+        width: 15%;
     }
 
     .payment-button {

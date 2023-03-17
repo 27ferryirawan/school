@@ -21,14 +21,12 @@ if (Auth::check() && Auth::user()->role == 'MANAJER') {
             <li><a class="{{ request()->is($reservation_url) ? 'active' : ''}}" href="{{ $reservation_url }}">RESERVATION</a></li>
             <li><a class="{{ request()->is('about-us') ? 'active' : ''}}" href="/about-us">ABOUT US</a></li>
             @guest
-            <li><a class="login-button" href="/login">LOGIN</a></li>
+            <li><a class="login-button {{ request()->is('login') ? 'active' : ''}}" href="/login">LOGIN</a></li>
             @endguest
 
             @auth
-            @if (Auth::user()->role == 'MANAJER' && !request()->is('manager-reservation'))
+            @if (Auth::user()->role == 'MANAJER' && request()->is('reservation'))
                 <script>window.location.href = '/manager-reservation';</script>
-            @else
-                <li><a class="{{ request()->is($reservation_url) ? 'active' : ''}}" href="{{ $reservation_url }}">RESERVATION</a></li>
             @endif
                 <li class="nav-item dropdown" style="margin-right: 20px">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
