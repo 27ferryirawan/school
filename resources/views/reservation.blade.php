@@ -107,6 +107,7 @@
         <div id="successOrFailedModal" class="modal">
             <div class="modal-content">
                 <p id="successOrFailedText" class="ajax-label"></p>
+                <p id="successOrFailedDescriptionText" class="ajax-label-description"></p>
                 <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
             </div>
         </div>
@@ -675,6 +676,10 @@
             },
             success: function(response) {
                 document.getElementById("successOrFailedText").innerHTML = "Reservation Success!";
+                document.getElementById("successOrFailedDescriptionText").innerHTML =
+                    "Terima kasih telah melakukan reservasi pada " + reservationDateValue + ", jam " +
+                    reservationTimeValue +
+                    ". Harap datang tepat waktu, apabila datang lewat dari 15 menit, maka reservasi akan dibatalkan. Terima kasih.";
             },
             error: function(xhr, status, error) {
                 document.getElementById("successOrFailedText").innerHTML = "Reservation Failed!";

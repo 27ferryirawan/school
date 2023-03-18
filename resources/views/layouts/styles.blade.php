@@ -396,6 +396,11 @@
 
     }
 
+    .ajax-label-description {
+        text-align: justify;
+        font-size: 16px;
+    }
+
     .login {
         border: 3px solid #9B6E3F;
         border-radius: 40px;
