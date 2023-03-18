@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
-        @include('layouts/navbar')
-    </head>
-    <body>
-        <main>
-            <img src="{{ asset('images/samanko_bkg.jpg') }}" alt="Logo" style="width: 100%;">
+
+<head>
+    <title>Home</title>
+    @include('layouts/navbar')
+</head>
+
+<body>
+    <main>
+        <div>
+            @if (Request::segment(1) === null && Request::segment(2) === null)
+                @if (isset($_SERVER['HTTP_USER_AGENT']) &&
+                        (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false ||
+                            strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false))
+                    @include('mobile_home_image_slider')
+                @else
+                    @include('web_home_image_slider')
+                @endif
+            @else
+                @include('web_home_image_slider')
+            @endif
             <div class="grid" style="display: flex;">
                 <div class="grid-item" style="line-height: 1.2;">
-                    <label style="font-weight: bold; font-size: 17px; padding-bottom: 15px;">SAMANKO COFFEE ROASTER</label>
+                    <label style="font-weight: bold; font-size: 17px; padding-bottom: 15px;">SAMANKO COFFEE
+                        ROASTER</label>
                     <p style="font-size: 16px;">
-                        The increase in coffee consumption is also closely related to the urban lifestyle of social people.
+                        The increase in coffee consumption is also closely related to the urban lifestyle of social
+                        people.
                         In 2019, Samanko Coffee Roaster appeared in Tanjungpinang, Riau island
                         offering a wide variety of Indonesian coffee and different coffee brewing methods
                         Not only that, but Samanko Coffee Roaster also has its own coffee production facility,
@@ -19,39 +34,50 @@
                     </p>
                 </div>
                 <div style="margin-left: auto;  line-height: 1.2;">
-                    <label style="font-weight: bold; font-size: 17px;">OPEN DAILY</label> 
+                    <label style="font-weight: bold; font-size: 17px;">OPEN DAILY</label>
                     <label style="font-size: 16px; padding: 0px 0px 15px 20px;">08:00 - 23:00</label><br>
                     <label style="font-size: 16px; ">Coffee Supplier & Authorized dealer of Davinci Syrup /</label><br>
-                    <label style="font-size: 16px;">Twinnings Tea / ABACA Coffee Filter</label> 
+                    <label style="font-size: 16px;">Twinnings Tea / ABACA Coffee Filter</label>
                     <br><br>
-                    <label style="font-size: 16px; margin-top: 2px">Jl. Raja H. Fisabililah No. 17, Batu IX Kota Tanjung Pinang</label><br>
+                    <label style="font-size: 16px; margin-top: 2px">Jl. Raja H. Fisabililah No. 17, Batu IX Kota Tanjung
+                        Pinang</label><br>
                     <label style="font-size: 16px;">Kepulauan Riau 29123</label>
                 </div>
             </div>
             <div style="display:block; width: 100%;">
                 <div style="position: relative; color: white; font-size: 16px;">
-                    <img src="{{ asset('images/samanko_footer.jpg') }}" style="width: 100%; height:300px; object-fit: cover;">
-                    <div style="position: absolute; top: 20px; width: 90%; margin: 25px 50px 0px 50px; line-height: 0.2;">
-                        <p>"Every specially coffee drink you have here at Samanko Coffee Roaster is made special from</p> 
-                        <p>un-roasted green beans sourced ethically from the farmer from all over the world to roasted fresh onsite on our roaster.</p>
+                    <img src="{{ asset('images/samanko_footer.jpg') }}"
+                        style="width: 100%; height:300px; object-fit: cover;">
+                    <div
+                        style="position: absolute; top: 20px; width: 90%; margin: 25px 50px 0px 50px; line-height: 0.2;">
+                        <p>"Every specially coffee drink you have here at Samanko Coffee Roaster is made special from
+                        </p>
+                        <p>un-roasted green beans sourced ethically from the farmer from all over the world to roasted
+                            fresh
+                            onsite on our roaster.</p>
                         <lapbel>This ensures freshness, quality control, and allows us to roast to taste."</p>
-                    </div>        
+                    </div>
                 </div>
             </div>
             <div style="display: flex; flex-wrap: wrap; line-height: 1.2; margin: 20px 5px 40px 5px;">
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
-                    <img src="{{ asset('images/banner bottom.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom"  data-caption="Stock up your Coffee Bean for the end of the year! Dont let your day messed up without Coffee. We do supplies Coffee / Syrup to Hotel / Coffee Shops with special offers, available for Tanjungpinang & Batam" style="margin: 0px 5px;">
+                    <img src="{{ asset('images/banner bottom.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom"
+                        data-caption="Stock up your Coffee Bean for the end of the year! Dont let your day messed up without Coffee. We do supplies Coffee / Syrup to Hotel / Coffee Shops with special offers, available for Tanjungpinang & Batam"
+                        style="margin: 0px 5px;">
                     <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>Stock up your Coffee Bean for the end of the year!
-                        Dont let your day messed up without Coffee.
-                        We do supplies Coffee / Syrup to Hotel / Coffee
-                        Shops with special offers, available for
-                        Tanjungpinang & Batam
-                    </p>
+                            Dont let your day messed up without Coffee.
+                            We do supplies Coffee / Syrup to Hotel / Coffee
+                            Shops with special offers, available for
+                            Tanjungpinang & Batam
+                        </p>
                     </div>
                 </div>
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
-                    <img src="{{ asset('images/banner bottom 2.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 2" data-caption="Who doesnt love sourdough sandwiches ? Yes ! We add Breakfast Menu Available from 08:00 - 14:00 Everyday! Boost up your day by having breakfast with us!" style="margin: 0px 5px;">
+                    <img src="{{ asset('images/banner bottom 2.jpg') }}" onclick="enlargeImage(this)"
+                        alt="Banner Bottom 2"
+                        data-caption="Who doesnt love sourdough sandwiches ? Yes ! We add Breakfast Menu Available from 08:00 - 14:00 Everyday! Boost up your day by having breakfast with us!"
+                        style="margin: 0px 5px;">
                     <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>
                             Who doesnt love sourdough sandwiches ?
@@ -62,13 +88,16 @@
                     </div>
                 </div>
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
-                    <img src="{{ asset('images/banner bottom 4.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 4" data-caption="Stress less and enjoy the best coffee in town" style="margin: 0px 5px;">
+                    <img src="{{ asset('images/banner bottom 4.jpg') }}" onclick="enlargeImage(this)"
+                        alt="Banner Bottom 4" data-caption="Stress less and enjoy the best coffee in town"
+                        style="margin: 0px 5px;">
                     <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>Stress less and enjoy the best coffee in town</p>
                     </div>
                 </div>
                 <div style="height: 100%; display: flex; flex-direction: column; width: 25%; margin: 0px 0px">
-                    <img src="{{ asset('images/banner bottom 3.jpg') }}" onclick="enlargeImage(this)" alt="Banner Bottom 3" data-caption="Save your Weekend for the best !" style="margin: 0px 5px;">
+                    <img src="{{ asset('images/banner bottom 3.jpg') }}" onclick="enlargeImage(this)"
+                        alt="Banner Bottom 3" data-caption="Save your Weekend for the best !" style="margin: 0px 5px;">
                     <div class="grid-item" style="width: 100%; padding: 20px 10px; line-height: 1.2;">
                         <p>Save your Weekend for the best !</p>
                     </div>
@@ -79,9 +108,10 @@
                     <div id="caption"></div>
                 </div>
             </div>
-        </main>
-        @include('layouts/footer')
-    </body>
+    </main>
+    @include('layouts/footer')
+</body>
+
 </html>
 
 
@@ -94,7 +124,8 @@
 
         modal.style.display = "block";
         modalImg.src = img.src;
-        captionHtml.innerHTML = '<p style="font-size: 17px; line-height: 1.2; text-align: justify;">' + img.dataset.caption + '</p>'
+        captionHtml.innerHTML = '<p style="font-size: 17px; line-height: 1.2; text-align: justify;">' + img.dataset
+            .caption + '</p>'
     }
 
     function closeModal() {
@@ -107,7 +138,6 @@
             closeModal();
         }
     }
-
 </script>
 
 
@@ -115,24 +145,24 @@
     .grid-item img:hover {
         opacity: 0.8;
     }
-        
+
     #modalImage {
         border-radius: 5px;
         transition: 0.3s;
     }
 
     .modal {
-        display: none; 
+        display: none;
         position: fixed;
-        z-index: 1; 
+        z-index: 1;
         padding-top: 100px;
         left: 0;
         top: 0;
-        width: 100%; 
+        width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.9);
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.9);
         overflow: hidden;
     }
 
@@ -143,7 +173,7 @@
         max-width: 400px;
     }
 
-    #caption{
+    #caption {
         margin: auto;
         display: block;
         width: 80%;
@@ -154,7 +184,8 @@
         height: 150px;
     }
 
-    .modal-content, #caption {  
+    .modal-content,
+    #caption {
         -webkit-animation-name: zoom;
         -webkit-animation-duration: 0.6s;
         animation-name: zoom;
@@ -162,13 +193,23 @@
     }
 
     @-webkit-keyframes zoom {
-        from {-webkit-transform:scale(0)} 
-        to {-webkit-transform:scale(1)}
+        from {
+            -webkit-transform: scale(0)
+        }
+
+        to {
+            -webkit-transform: scale(1)
+        }
     }
 
     @keyframes zoom {
-        from {transform:scale(0)} 
-        to {transform:scale(1)}
+        from {
+            transform: scale(0)
+        }
+
+        to {
+            transform: scale(1)
+        }
     }
 
     /* The Close Button */
@@ -188,5 +229,20 @@
         text-decoration: none;
         cursor: pointer;
     }
-</style>
 
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-color: #ffffff;
+    }
+</style>

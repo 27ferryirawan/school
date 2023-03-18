@@ -1,125 +1,144 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Reservation</title>
-    </head>
-    <body>
-        <header>
-            @include('layouts/navbar')
-        </header>
-        <main>
-            <div style="display: flex;">
-                <div>
-                    <div class="date-input">
-                        <label>Date</label>        
-                        <input type="text" id="reservationDate" name="reservationDate">
+
+<head>
+    <title>Reservation</title>
+</head>
+
+<body>
+    <header>
+        @include('layouts/navbar')
+    </header>
+    <main>
+        <div style="display: flex;">
+            <div>
+                <div class="date-input">
+                    <label>Date</label>
+                    <input type="text" id="reservationDate" name="reservationDate">
+                </div>
+                <div class="time-input">
+                    <label>Time</label>
+                    <input type="text" id="reservationTime" name="reservationTime">
+                </div>
+            </div>
+            <div class="reserve-div">
+                <label class="ket-reserv-label">Keterangan Reservasi</label>
+                <br>
+                <table id="reservationTable" style="border-collapse: collapse;">
+                </table>
+                <button class="payment-button" onclick="showModal()">Payment</button>
+            </div>
+        </div>
+        <div class="map-canvas">
+            <label>Pilih Meja</label>
+            <canvas id="mapCanvas"></canvas>
+        </div>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <h2>Confirm Payment</h2>
+                <p>Are you sure you want to make the payment?</p>
+                <button class="confirm-button" onclick="makePayment()">Confirm</button>
+                <button class="cancel-button" onclick="hideModal()">Cancel</button>
+            </div>
+        </div>
+
+        <div id="paymentModal" class="modal">
+            <div class="payment modal-content">
+                <div class="bg-color">
+                    <div class="payment-header">
+                        <img src="{{ asset('images/samanko.png') }}" style="width: 100px; height: 80px;">
                     </div>
-                    <div class="time-input">
-                        <label>Time</label>        
-                        <input type="text" id="reservationTime" name="reservationTime">
-                    </div>
-                </div>
-                <div class="reserve-div">
-                    <label class="ket-reserv-label">Keterangan Reservasi</label>  
-                    <br>
-                    <table id="reservationTable" style="border-collapse: collapse;">
-                    </table>
-                    <button class="payment-button" onclick="showModal()">Payment</button>
-                </div>
-            </div>
-            <div class="map-canvas">
-                <label>Pilih Meja</label>        
-                <canvas id="mapCanvas"></canvas>
-            </div>
-            <div id="modal" class="modal">
-                <div class="modal-content">
-                    <h2>Confirm Payment</h2>
-                    <p>Are you sure you want to make the payment?</p>
-                    <button class="confirm-button" onclick="makePayment()">Confirm</button>
-                    <button class="cancel-button" onclick="hideModal()">Cancel</button>
-                </div>
-            </div>
-            
-            <div id="paymentModal" class="modal">
-                <div class="payment modal-content">
-                    <div class="bg-color">
-                        <div class="payment-header">
-                            <img src="{{ asset('images/samanko.png') }}" style="width: 100px; height: 80px;">
-                        </div>
-                        <div class="line">
-                            <div class="rectangle">
-                                <div class="label-style">
-                                    <p>Total</p>
-                                    <span id="totalPrice"></span>
-                                </div>
+                    <div class="line">
+                        <div class="rectangle">
+                            <div class="label-style">
+                                <p>Total</p>
+                                <span id="totalPrice"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="payment-table">
-                        @foreach($paymentTypes as $paymentType)
-                            <label id="paymentTypeName">{{ $paymentType->payment_type_name }}</label>
-                            <table>
-                                    @foreach($payments[$paymentType->id] as $payment)
-                                    <tr>
-                                        <td>
-                                            @if(!$payment->is_available)
-                                                <div style="display: flex; flex-direction: row; height: 50px;">
+                </div>
+                <div class="payment-table">
+                    @foreach ($paymentTypes as $paymentType)
+                        <label id="paymentTypeName">{{ $paymentType->payment_type_name }}</label>
+                        <table>
+                            @foreach ($payments[$paymentType->id] as $payment)
+                                <tr>
+                                    <td>
+                                        @if (!$payment->is_available)
+                                            <div style="display: flex; flex-direction: row; height: 50px;">
                                             @else
-                                                <div data-paymentTypeId="{{ $payment->payment_type_id }}" data-paymentId="{{ $payment->id }}" style="display: flex; flex-direction: row; height: 50px;" onclick="showQRModal(this)">
+                                                <div data-paymentTypeId="{{ $payment->payment_type_id }}"
+                                                    data-paymentId="{{ $payment->id }}"
+                                                    style="display: flex; flex-direction: row; height: 50px;"
+                                                    onclick="showQRModal(this)">
+                                        @endif
+                                        <img src="{{ $payment->logo_path }}" style="width: 50px; height: 50px;">
+                                        <div id="payname-balance"
+                                            style="display: flex; flex-direction: column; margin-left: 15px">
+                                            @if ($payment->payment_type_id == 2)
+                                                <div class="paymentTypeName"> {{ $payment->payment_name }} </div>
+                                                <div>Rp {{ number_format($payment->balance, 0, ',', '.') }},00</div>
+                                            @else
+                                                <div style="display: flex; align-items: center; height: 100%;">
+                                                    <div class="paymentTypeName"> {{ $payment->payment_name }} </div>
+                                                </div>
                                             @endif
-                                                <img src="{{ $payment->logo_path }}" style="width: 50px; height: 50px;">
-                                                <div id="payname-balance" style="display: flex; flex-direction: column; margin-left: 15px">
-                                                    @if($payment->payment_type_id == 2)
-                                                        <div class="paymentTypeName"> {{ $payment->payment_name }} </div>
-                                                        <div>Rp {{ number_format($payment->balance, 0, ',', '.') }},00</div>
-                                                    @else
-                                                        <div style="display: flex; align-items: center; height: 100%;">
-                                                            <div class="paymentTypeName"> {{ $payment->payment_name }} </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div style="display: flex; align-items: center; height: 100%; margin-left: auto;">
-                                                    @if(!$payment->is_available)
-                                                        <img class="warning-hover" src="{{ asset('images/warning.svg') }}" style="width: 25px; height: 25px;" {{ Popper::size('large')->pop('Payment is not available   !');}}>
-                                                    @else
-                                                        <img src="{{ asset('images/right-arrow.svg') }}" style="width: 20px; height: 20px; margin-right: 4px;">
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                            </table>
-                        @endforeach
-                    </div>
+                                        </div>
+                                        <div
+                                            style="display: flex; align-items: center; height: 100%; margin-left: auto;">
+                                            @if (!$payment->is_available)
+                                                <img class="warning-hover" src="{{ asset('images/warning.svg') }}"
+                                                    style="width: 25px; height: 25px;"
+                                                    {{ Popper::size('large')->pop('Payment is not available   !') }}>
+                                            @else
+                                                <img src="{{ asset('images/right-arrow.svg') }}"
+                                                    style="width: 20px; height: 20px; margin-right: 4px;">
+                                            @endif
+                                        </div>
                 </div>
+                </td>
+                </tr>
+                @endforeach
+                </table>
+                @endforeach
             </div>
-            <div id="successOrFailedModal" class="modal">
-                <div class="modal-content">
-                    <p id="successOrFailedText" class="ajax-label"></p>
-                    <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
-                </div>
+        </div>
+        </div>
+        <div id="successOrFailedModal" class="modal">
+            <div class="modal-content">
+                <p id="successOrFailedText" class="ajax-label"></p>
+                <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Confirm</button>
             </div>
-            <div id="QRModal" class="modal">
-                <div class="modal-content">
-                    <p class="ajax-label">QRIS</p>
-                    <img src="{{ asset('images/samanko_qr.png') }}">
-                    <button class="confirm-button" onclick="hideQRModal()">Confirm</button>
-                </div>
+        </div>
+        <div id="QRModal" class="modal">
+            <div class="modal-content">
+                <p class="ajax-label">QRIS</p>
+                <img src="{{ asset('images/samanko_qr.png') }}">
+                <button class="confirm-button" onclick="hideQRModal()">Confirm</button>
             </div>
-        </main>
-        @include('layouts/footer')      
-        @include('popper::assets')
-    </body>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+        </div>
+    </main>
+    <div class="loading">
+        <div class="center-body">
+            <div class="loader-circle-11">
+                <div class="arc"></div>
+                <div class="arc"></div>
+                <div class="arc"></div>
+            </div>
+        </div>
+    </div>
+    @include('layouts/footer')
+    @include('popper::assets')
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </html>
 
 <script>
-
     flatpickr("#reservationDate", {
-        dateFormat: "d M Y", 
+        dateFormat: "d M Y",
         // maxDate: "today", 
         minDate: "today",
     });
@@ -143,7 +162,7 @@
     const reserveLabel = document.querySelector(".ket-reserv-label");
     const reservationDateInput = document.getElementById('reservationDate');
     const reservationTimeInput = document.getElementById('reservationTime');
-    var tableDetail = {!! $tableDetail !!}; 
+    var tableDetail = {!! $tableDetail !!};
     var fetchTableDetail = [];
     var fixTablePaymentData = [];
     var totalPrice = 0;
@@ -151,67 +170,234 @@
     var paymentTypeId = "";
     paymentButton.style.display = "none";
     reserveLabel.style.display = "none";
-    
-    
+
+
     // ctx.fillStyle = "rgba(255, 0, 0, 0)";
     // ctx.fillStyle = "rgba(97, 77, 67, 0.7)";
     // const rects = [
     //     {table: "out1",  tableName: "out 1", price: 15000, isSelected: false, x: 8, y: 102.9, width: 10.5, height: 12.5},
     // ];
-    
+
     // rects.forEach(rect => {
     //     ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
     // });
 
-    var isTableSelected = [
-        {table: "out1",  isSelected: false, x: 8, y: 102.9, width: 10.5, height: 12.5},
-        {table: "out2",  isSelected: false, x: 8, y: 79.3, width: 10.5, height: 12.5},
-        {table: "out3",  isSelected: false, x: 8, y: 56.2, width: 10.5, height: 12.5},
-        {table: "out4",  isSelected: false, x: 8, y: 32.7, width: 10.5, height: 12.5},
-        {table: "out5",  isSelected: false, x: 64.8, y: 23.3, width: 10.5, height: 12.5},
-        {table: "out6",  isSelected: false, x: 85.2, y: 23.3, width: 10.5, height: 12.5},
-        {table: "out7",  isSelected: false, x: 101.6, y: 59.2, width: 10.5, height: 12.5},
-        {table: "out8",  isSelected: false, x: 101.6, y: 86.2, width: 10.5, height: 12.5},
-        {table: "out9",  isSelected: false, x: 90.5, y: 113.2, width: 10.8, height: 12.5},
-        {table: "out10", isSelected: false, x: 70.5, y: 113.2, width: 10.5, height: 12.5},
-        {table: "out11", isSelected: false, x: 50.4, y: 113.2, width: 10.5, height: 12.5},
-        {table: "out12", isSelected: false, x: 30.3, y: 113.2, width: 10.5, height: 12.5},
-        {table: "long1", isSelected: false, x: 243, y: 79.6, width: 11, height: 42.5},
-        {table: "long2", isSelected: false, x: 121.3, y: 26.3, width: 35, height: 14},
-        {table: "long3", isSelected: false, x: 70.2, y: 69.3, width: 25.5, height: 14},
-        {table: "long4", isSelected: false, x: 37.2, y: 69.3, width: 25.5, height: 14},
-        {table: "sofa1", isSelected: false, x: 261.6, y: 79.6, width: 11, height: 42.5},
-        {table: "sofa2", isSelected: false, x: 121.3, y: 113, width: 35.3, height: 14},
-        {table: "in6",   isSelected: false, x: 161.9, y: 23.1, width: 10.7, height: 12.9},
-        {table: "in5",   isSelected: false, x: 176.2, y: 23.1, width: 10.7, height: 12.9},
-        {table: "in4",   isSelected: false, x: 190.9, y: 23.1, width: 10.7, height: 12.9},
-        {table: "in3",   isSelected: false, x: 205.1, y: 23.1, width: 10.7, height: 12.9},
-        {table: "in2",   isSelected: false, x: 219.6, y: 23.1, width: 10.7, height: 12.9},
-        {table: "in1",   isSelected: false, x: 234.2, y: 23.1, width: 10.7, height: 12.9},
+    var isTableSelected = [{
+            table: "out1",
+            isSelected: false,
+            x: 8,
+            y: 102.9,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out2",
+            isSelected: false,
+            x: 8,
+            y: 79.3,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out3",
+            isSelected: false,
+            x: 8,
+            y: 56.2,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out4",
+            isSelected: false,
+            x: 8,
+            y: 32.7,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out5",
+            isSelected: false,
+            x: 64.8,
+            y: 23.3,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out6",
+            isSelected: false,
+            x: 85.2,
+            y: 23.3,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out7",
+            isSelected: false,
+            x: 101.6,
+            y: 59.2,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out8",
+            isSelected: false,
+            x: 101.6,
+            y: 86.2,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out9",
+            isSelected: false,
+            x: 90.5,
+            y: 113.2,
+            width: 10.8,
+            height: 12.5
+        },
+        {
+            table: "out10",
+            isSelected: false,
+            x: 70.5,
+            y: 113.2,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out11",
+            isSelected: false,
+            x: 50.4,
+            y: 113.2,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "out12",
+            isSelected: false,
+            x: 30.3,
+            y: 113.2,
+            width: 10.5,
+            height: 12.5
+        },
+        {
+            table: "long1",
+            isSelected: false,
+            x: 243,
+            y: 79.6,
+            width: 11,
+            height: 42.5
+        },
+        {
+            table: "long2",
+            isSelected: false,
+            x: 121.3,
+            y: 26.3,
+            width: 35,
+            height: 14
+        },
+        {
+            table: "long3",
+            isSelected: false,
+            x: 70.2,
+            y: 69.3,
+            width: 25.5,
+            height: 14
+        },
+        {
+            table: "long4",
+            isSelected: false,
+            x: 37.2,
+            y: 69.3,
+            width: 25.5,
+            height: 14
+        },
+        {
+            table: "sofa1",
+            isSelected: false,
+            x: 261.6,
+            y: 79.6,
+            width: 11,
+            height: 42.5
+        },
+        {
+            table: "sofa2",
+            isSelected: false,
+            x: 121.3,
+            y: 113,
+            width: 35.3,
+            height: 14
+        },
+        {
+            table: "in6",
+            isSelected: false,
+            x: 161.9,
+            y: 23.1,
+            width: 10.7,
+            height: 12.9
+        },
+        {
+            table: "in5",
+            isSelected: false,
+            x: 176.2,
+            y: 23.1,
+            width: 10.7,
+            height: 12.9
+        },
+        {
+            table: "in4",
+            isSelected: false,
+            x: 190.9,
+            y: 23.1,
+            width: 10.7,
+            height: 12.9
+        },
+        {
+            table: "in3",
+            isSelected: false,
+            x: 205.1,
+            y: 23.1,
+            width: 10.7,
+            height: 12.9
+        },
+        {
+            table: "in2",
+            isSelected: false,
+            x: 219.6,
+            y: 23.1,
+            width: 10.7,
+            height: 12.9
+        },
+        {
+            table: "in1",
+            isSelected: false,
+            x: 234.2,
+            y: 23.1,
+            width: 10.7,
+            height: 12.9
+        },
     ];
 
-    function clearAll(firstInit){
+    function clearAll(firstInit) {
         reservationDateInput.value = "";
         reservationTimeInput.value = "";
         var tableContainer = document.getElementById("reservationTable");
         while (tableContainer.firstChild) {
             tableContainer.removeChild(tableContainer.firstChild);
         }
-        
+
         paymentButton.style.display = "none";
         reserveLabel.style.display = "none";
-        
-        if(firstInit){
+
+        if (firstInit) {
             for (var i = 0; i < tableDetail.length; i++) {
-                if(tableDetail[i].id == isTableSelected.find(table => table.table == tableDetail[i].id).table){
-                    isTableSelected.find(table => table.table == tableDetail[i].id).tableName = tableDetail[i].table_name;
+                if (tableDetail[i].id == isTableSelected.find(table => table.table == tableDetail[i].id).table) {
+                    isTableSelected.find(table => table.table == tableDetail[i].id).tableName = tableDetail[i]
+                        .table_name;
                     isTableSelected.find(table => table.table == tableDetail[i].id).price = tableDetail[i].price;
                     isTableSelected.find(table => table.table == tableDetail[i].id).status = tableDetail[i].status;
                     drawOrRemoveSelected(tableDetail[i].id, true);
                 }
             }
-        }
-        else{
+        } else {
             location.reload();
             // ctx.clearRect(0, 0, canvas.width, canvas.height);
             // getTableDetailData();
@@ -223,12 +409,12 @@
     function drawOrRemoveSelected(tableId, firstInit) {
         var isSelected = isTableSelected.find(table => table.table == tableId).isSelected;
         var isAvailable = isTableSelected.find(table => table.table == tableId).status == 0 ? true : false;
-        
+
         const reservationDateValue = reservationDateInput.value;
         const reservationTimeValue = reservationTimeInput.value;
-        
-        if(isAvailable && !firstInit){
-            if(!isSelected){
+
+        if (isAvailable && !firstInit) {
+            if (!isSelected) {
                 var tableData = isTableSelected.find(table => table.table == tableId)
                 var xTab = tableData.x
                 var yTab = tableData.y
@@ -237,19 +423,19 @@
                 ctx.fillStyle = "rgba(0, 255, 0, 0.4)";
                 ctx.fillRect(xTab, yTab, widthTab, heightTab);
                 isTableSelected.find(table => table.table == tableId).isSelected = true;
-                
+
             } else {
                 var tableData = isTableSelected.find(table => table.table == tableId)
                 var xTab = tableData.x - 2
-                var yTab = tableData.y - 2 
+                var yTab = tableData.y - 2
                 var widthTab = tableData.width + 4
                 var heightTab = tableData.height + 4
                 ctx.clearRect(xTab, yTab, widthTab, heightTab);
                 isTableSelected.find(table => table.table == tableId).isSelected = false;
             }
-            if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )
-            ketReservasiChange();
-        } else if(!isAvailable && firstInit){
+            if (reservationDateValue.length != 0 && reservationTimeValue.length != 0)
+                ketReservasiChange();
+        } else if (!isAvailable && firstInit) {
             var tableData = isTableSelected.find(table => table.table == tableId)
             var xTab = tableData.x
             var yTab = tableData.y
@@ -259,13 +445,13 @@
             ctx.fillRect(xTab, yTab, widthTab, heightTab);
         }
     }
-    
+
     canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         // console.log(x + ", " + y);
-        if (x >= 34 && x <= 80 && y >= 114.9 && y <= 160.9) { 
+        if (x >= 34 && x <= 80 && y >= 114.9 && y <= 160.9) {
             //out 4
             var tabId = "out4"
             drawOrRemoveSelected(tabId, false);
@@ -363,22 +549,22 @@
             drawOrRemoveSelected(tabId, false);
         }
     });
-    
+
     reservationDateInput.addEventListener('change', (event) => {
         const reservationDateValue = reservationDateInput.value;
         const reservationTimeValue = reservationTimeInput.value;
-        if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )
-        ketReservasiChange();
+        if (reservationDateValue.length != 0 && reservationTimeValue.length != 0)
+            ketReservasiChange();
     });
 
     reservationTimeInput.addEventListener('change', (event) => {
         const reservationDateValue = reservationDateInput.value;
         const reservationTimeValue = reservationTimeInput.value;
-        if(reservationDateValue.length != 0 && reservationTimeValue.length != 0 )
-        ketReservasiChange();
+        if (reservationDateValue.length != 0 && reservationTimeValue.length != 0)
+            ketReservasiChange();
     });
 
-    function ketReservasiChange(){
+    function ketReservasiChange() {
         var tableContainer = document.getElementById("reservationTable");
         while (tableContainer.firstChild) {
             tableContainer.removeChild(tableContainer.firstChild);
@@ -387,7 +573,7 @@
         fixTablePaymentData = [];
         var countSelectedData = 0;
         isTableSelected.forEach((data) => {
-            if(data['isSelected']){
+            if (data['isSelected']) {
                 const reservationDateValue = reservationDateInput.value;
                 const reservationTimeValue = reservationTimeInput.value;
                 var concatDate = reservationDateValue + ' ' + reservationTimeValue;
@@ -402,25 +588,28 @@
 
                 const firstCell = document.createElement("td");
                 firstCell.style.width = "300px";
-                
+
                 const firstCellLabel1 = document.createElement("label");
                 firstCellLabel1.textContent = data['tableName']
-                
+
                 const firstCellBr = document.createElement("br");
 
                 const firstCellLabel2 = document.createElement("label");
                 firstCellLabel2.textContent = 'fee';
-                
+
                 firstCell.appendChild(firstCellLabel1);
                 firstCell.appendChild(firstCellBr);
                 firstCell.appendChild(firstCellLabel2);
-                
+
                 const secondCell = document.createElement("td");
 
                 const secondCellBr = document.createElement("br");
 
                 const secondCellLabel1 = document.createElement("label");
-                secondCellLabel1.textContent = data['price'].toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                secondCellLabel1.textContent = data['price'].toLocaleString('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                });
 
                 secondCell.appendChild(secondCellBr);
                 secondCell.appendChild(secondCellLabel1);
@@ -431,14 +620,17 @@
                 tableContainer.appendChild(row);
             }
         });
-        if(countSelectedData > 0){
+        if (countSelectedData > 0) {
             const row = document.createElement("tr");
             const firstCell = document.createElement("td");
             firstCell.style.width = "300px";
             firstCell.textContent = 'Total';
 
             const secondCell = document.createElement("td");
-            secondCell.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+            secondCell.textContent = totalPrice.toLocaleString('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            });
 
             row.appendChild(firstCell);
             row.appendChild(secondCell);
@@ -467,7 +659,7 @@
         const reservationTimeValue = reservationTimeInput.value;
         var concatDate = reservationDateValue + ' ' + reservationTimeValue;
         $.ajax({
-            url: '{{ route("insert-payment") }}',
+            url: '{{ route('insert-payment') }}',
             type: 'POST',
             data: {
                 PaymentDetail: fixTablePaymentData,
@@ -475,18 +667,24 @@
                 PaymentTotalFee: totalPrice,
                 PaymentTypeId: paymentTypeId,
                 PaymentId: paymentId,
-                CreatedBy: '{{ Auth::user()->id}}',
+                CreatedBy: '{{ Auth::user()->id }}',
                 _token: '{{ csrf_token() }}'
+            },
+            beforeSend: function() {
+                $('.loading').show();
             },
             success: function(response) {
                 document.getElementById("successOrFailedText").innerHTML = "Reservation Success!";
             },
             error: function(xhr, status, error) {
                 document.getElementById("successOrFailedText").innerHTML = "Reservation Failed!";
+            },
+            complete: function() {
+                $('.loading').hide();
+                successOrFailedModal.style.display = "block";
+                document.body.style.overflow = "hidden";
             }
         })
-        successOrFailedModal.style.display = "block";
-        document.body.style.overflow = "hidden";
     }
 
     function hideSuccessOrFailedModal() {
@@ -497,7 +695,10 @@
 
     function showPaymentModal() {
         const spanElement = document.getElementById('totalPrice');
-        spanElement.textContent = totalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+        spanElement.textContent = totalPrice.toLocaleString('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        });
         paymentModal.style.display = "block";
         document.body.style.overflow = "hidden";
     }
@@ -523,13 +724,14 @@
 
     function getTableDetailData() {
         $.ajax({
-            url: '/reservation/getTableDetailData', 
+            url: '/reservation/getTableDetailData',
             type: 'GET',
             dataType: 'json',
             success: function(data) {
                 for (var i = 0; i < data.length; i++) {
-                    if(data[i].id == isTableSelected.find(table => table.table == data[i].id).table){
-                        isTableSelected.find(table => table.table == tableDetail[i].id).status = data[i].status;
+                    if (data[i].id == isTableSelected.find(table => table.table == data[i].id).table) {
+                        isTableSelected.find(table => table.table == tableDetail[i].id).status = data[i]
+                            .status;
                         isTableSelected.find(table => table.table == tableDetail[i].id).isSelected = false
                         drawOrRemoveSelected(data[i].id, true);
                     }
@@ -560,5 +762,106 @@
             hideQRModal();
         }
     }
-
 </script>
+<style>
+    .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99999;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+
+    .center-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        /****** center box
+ width: 300px;
+ height: 300px;
+ border: solid 1px #aaa;
+ ******/
+    }
+
+    /* body {
+        background-color: #202628;
+    } */
+
+    .loader-circle-11 {
+        position: relative;
+        width: 70px;
+        height: 70px;
+        transform-style: preserve-3d;
+        perspective: 400px;
+    }
+
+    .loader-circle-11 .arc {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border-bottom: 5px solid #D4B096;
+    }
+
+    .loader-circle-11 .arc:nth-child(1) {
+        animation: rotate1 1.15s linear infinite;
+    }
+
+    .loader-circle-11 .arc:nth-child(2) {
+        animation: rotate2 1.15s linear infinite;
+    }
+
+    .loader-circle-11 .arc:nth-child(3) {
+        animation: rotate3 1.15s linear infinite;
+    }
+
+    .loading .arc:nth-child(1) {
+        animation-delay: -0.8s;
+    }
+
+    .loader-circle-11 .arc:nth-child(2) {
+        animation-delay: -0.4s;
+    }
+
+    .loader-circle-11 .arc:nth-child(3) {
+        animation-delay: 0s;
+    }
+
+    @keyframes rotate1 {
+        from {
+            transform: rotateX(35deg) rotateY(-45deg) rotateZ(0);
+        }
+
+        to {
+            transform: rotateX(35deg) rotateY(-45deg) rotateZ(1turn);
+        }
+    }
+
+    @keyframes rotate2 {
+        from {
+            transform: rotateX(50deg) rotateY(10deg) rotateZ(0);
+        }
+
+        to {
+            transform: rotateX(50deg) rotateY(10deg) rotateZ(1turn);
+        }
+    }
+
+    @keyframes rotate3 {
+        from {
+            transform: rotateX(35deg) rotateY(55deg) rotateZ(0);
+        }
+
+        to {
+            transform: rotateX(35deg) rotateY(55deg) rotateZ(1turn);
+        }
+    }
+</style>

@@ -21,44 +21,51 @@
         /* background-color: black; */
         animation: spin 1s ease-in-out;
     }
+
     @keyframes spin {
         0% {
             transform: rotate(0deg);
         }
+
         100% {
             transform: rotate(360deg);
         }
     }
 
-    footer{
-        width:100%;
-        height:10%;
-        padding:20px;
+    footer {
+        width: 100%;
+        height: 10%;
+        padding: 20px;
         background-color: #D4B0A0;
     }
-    .grid{
+
+    .grid {
         /* display:inline-flex; */
-        padding:4rem;
-        width:100%;
+        padding: 4rem;
+        width: 100%;
     }
-    .grid-item{
-        width:50%;
-        display:block;
+
+    .grid-item {
+        width: 50%;
+        display: block;
     }
-    .grid-item-coffee{
-        width:33%;
-        display:block;
+
+    .grid-item-coffee {
+        width: 33%;
+        display: block;
     }
+
     html::-webkit-scrollbar {
         display: none;
     }
+
     body {
-        display:flex; 
-        flex-direction:column;
+        display: flex;
+        flex-direction: column;
         margin: 0;
         font-family: 'SourceSansPro';
         overflow-x: hidden;
-        min-height: 100vh; 
+        min-height: 100vh;
     }
 
     .navbar {
@@ -73,6 +80,7 @@
         .navbar {
             height: auto;
         }
+
         .navbar-nav {
             flex-direction: column;
             justify-content: center;
@@ -88,19 +96,23 @@
             overflow: hidden;
             transition: height 0.3s ease;
         }
+
         .navbar-nav.show {
             height: auto;
             padding-top: 10px;
             padding-bottom: 10px;
         }
+
         .navbar li {
             width: 100%;
             float: none;
         }
+
         .navbar li a {
             padding: 10px;
             text-align: left;
         }
+
         .login-button {
             margin-top: 10px;
             margin-left: 10px;
@@ -108,8 +120,8 @@
         }
     }
 
-    #mapCanvas{
-        background-image: url('/images/cafe-map.png'); 
+    #mapCanvas {
+        background-image: url('/images/cafe-map.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -118,9 +130,10 @@
         margin: -30px 39px 0px -11px;
         display: block;
     }
-    .managerMapCanvas{
-        margin: 20px 0px 0px 0px; 
-        width: 90vw; 
+
+    .managerMapCanvas {
+        margin: 20px 0px 0px 0px;
+        width: 90vw;
         overflow: scroll;
     }
 
@@ -138,9 +151,11 @@
         margin-left: auto;
         font-size: 17px;
     }
+
     .navbar li {
         float: left;
     }
+
     .navbar li a {
         display: block;
         color: white;
@@ -148,17 +163,21 @@
         padding: 22px;
         text-decoration: none;
     }
+
     .navbar li a:hover {
-        background-color: #614d43;  
+        background-color: #614d43;
     }
+
     .navbar li a.active {
         background-color: #614d43;
     }
 
     .navbar li a.login-button.active {
-        background-color: #614d43;;
+        background-color: #614d43;
+        ;
         color: white !important;
     }
+
     .login-button {
         background-color: white;
         color: #392A23 !important;
@@ -167,7 +186,8 @@
         text-align: center;
         font-size: 15px;
         height: 0.5px;
-        line-height: 0.5px; /* Should match the height value */
+        line-height: 0.5px;
+        /* Should match the height value */
         font-weight: bold;
     }
 
@@ -181,31 +201,35 @@
         src: url('/font/Source_Sans_Pro/SourceSansPro-Regular.woff') format('woff');
         font-weight: normal;
     }
+
     @font-face {
         font-family: 'SourceSansPro';
         src: url('/font/Source_Sans_Pro/SourceSansPro-Bold.woff') format('woff');
         font-weight: bold;
     }
+
     @font-face {
         font-family: 'Inter';
         src: url('/font/Inter/Inter-Regular.woff') format('woff');
         font-weight: normal;
     }
+
     @font-face {
         font-family: 'Inter';
         src: url('/font/Inter/Inter-Bold.woff') format('woff');
         font-weight: bold;
     }
 
-    .time-input{
-        margin: 10px 50px 0px 80px; 
+    .time-input {
+        margin: 10px 50px 0px 80px;
     }
 
-    .time-input label, .time-input input {
-        display: block;   
+    .time-input label,
+    .time-input input {
+        display: block;
         font-size: 17px;
     }
-    
+
     .time-input input[type="text"] {
         padding-left: 30px;
         background-image: url('/images/clock.png');
@@ -217,16 +241,17 @@
         border: 1px solid black;
     }
 
-    .download-date-input{
-        margin: 0px 5px 0px 0px; 
-        
+    .download-date-input {
+        margin: 0px 5px 0px 0px;
+
     }
 
-    .download-date-input label, .date-input input {
-        display: block;   
+    .download-date-input label,
+    .date-input input {
+        display: block;
         font-size: 17px;
     }
-    
+
     .download-date-input input[type="text"] {
         padding-left: 30px;
         background-image: url('/images/calendar.png');
@@ -242,15 +267,16 @@
         border: 1px solid black; */
     }
 
-    .date-input{
-        margin: 50px 50px 0px 80px; 
+    .date-input {
+        margin: 50px 50px 0px 80px;
     }
 
-    .date-input label, .date-input input {
-        display: block;   
+    .date-input label,
+    .date-input input {
+        display: block;
         font-size: 17px;
     }
-    
+
     .date-input input[type="text"] {
         padding-left: 30px;
         background-image: url('/images/calendar.png');
@@ -262,15 +288,16 @@
         border: 1px solid black;
     }
 
-    .time-input{
-        margin: 10px 50px 0px 80px; 
+    .time-input {
+        margin: 10px 50px 0px 80px;
     }
 
-    .time-input label, .time-input input {
-        display: block;   
+    .time-input label,
+    .time-input input {
+        display: block;
         font-size: 17px;
     }
-    
+
     .time-input input[type="text"] {
         padding-left: 30px;
         background-image: url('/images/clock.png');
@@ -286,8 +313,8 @@
         border-top: 1px solid black;
     }
 
-    .map-canvas{
-        margin: 20px 50px 0px 80px; 
+    .map-canvas {
+        margin: 20px 50px 0px 80px;
         font-size: 17px;
         width: 90vw;
         overflow: scroll;
@@ -297,9 +324,9 @@
         display: none;
     }
 
-    .reserve-div{
+    .reserve-div {
         font-size: 17px;
-        margin: 50px 20% 0px auto; 
+        margin: 50px 20% 0px auto;
         width: 15%;
     }
 
@@ -325,12 +352,12 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, 0.4);
     }
 
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto; 
+        margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
         width: 40%;
@@ -362,19 +389,20 @@
         cursor: pointer;
     }
 
-    .ajax-label{
-        text-align: center; 
-        font-weight: bold; 
+    .ajax-label {
+        text-align: center;
+        font-weight: bold;
         font-size: 25px;
 
     }
-    .login{
+
+    .login {
         border: 3px solid #9B6E3F;
         border-radius: 40px;
         width: 60%;
     }
 
-    .login-header{
+    .login-header {
         text-align: center;
         font-weight: bold;
         font-size: 28px;
@@ -382,18 +410,18 @@
         padding: 20px;
     }
 
-    .login-body{
-        padding:20px;
-        margin-top:20px;
+    .login-body {
+        padding: 20px;
+        margin-top: 20px;
     }
 
-    .register{
+    .register {
         border: 3px solid #9B6E3F;
         border-radius: 40px;
         width: 50%;
     }
 
-    .register-header{
+    .register-header {
         text-align: center;
         font-weight: bold;
         font-size: 28px;
@@ -401,19 +429,19 @@
         padding: 15px;
     }
 
-    .register-body{
-        padding:10px;
-        margin-top:5px;
+    .register-body {
+        padding: 10px;
+        margin-top: 5px;
     }
 
-    .button-login{
-        background-color:#9B6E3F;
+    .button-login {
+        background-color: #9B6E3F;
         border-radius: 20px;
         cursor: pointer;
     }
 
     .button-login:hover {
-        background-color:#9B6E3F;
+        background-color: #9B6E3F;
     }
 
     .form-group .form-control {
@@ -437,14 +465,16 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        right: 10px; /* adjust this value as needed */
+        right: 10px;
+        /* adjust this value as needed */
         cursor: pointer;
     }
+
     .payment {
-        background-color: white; 
-        overflow-y: auto; 
-        border: 3px solid #9B6E3F; 
-        border-radius: 40px; 
+        background-color: white;
+        overflow-y: auto;
+        border: 3px solid #9B6E3F;
+        border-radius: 40px;
         width: 25%;
         height: 80%;
         position: fixed;
@@ -463,20 +493,20 @@
         font-weight: bold;
         font-size: 17px;
         padding: 20px 20px 0px 20px;
-        
+
     }
 
-    #paymentModal .modal-content{
+    #paymentModal .modal-content {
         padding: 0;
     }
-    
+
     .line {
         height: 3px;
         background-color: #9B6E3F;
         position: relative;
         margin: 40px 0;
     }
-    
+
     .rectangle {
         position: absolute;
         top: 50%;
@@ -484,33 +514,34 @@
         transform: translate(-50%, -50%);
         background-color: #fff;
         padding: 5px;
-        border: 3px solid #9B6E3F; 
+        border: 3px solid #9B6E3F;
         width: 80%;
-        border-radius: 15px; 
+        border-radius: 15px;
     }
-    
+
     .rectangle .label-style {
         line-height: 0.2;
         padding: 10px;
     }
-    .rectangle p{
+
+    .rectangle p {
         font-size: 17px;
     }
 
-    .rectangle span{
+    .rectangle span {
         font-size: 27px;
         font-weight: bold;
     }
 
-    .payment-table{
+    .payment-table {
         margin: 40px 20px;
     }
 
-    .payment-table table{
+    .payment-table table {
         width: 100%
     }
 
-    .payment-table .paymentTypeName{
+    .payment-table .paymentTypeName {
         font-size: 17px;
         font-weight: bold;
     }
@@ -519,14 +550,14 @@
         border-bottom: 10px solid #F5F5F5;
     }
 
-    .payment-table #paymentTypeName{
+    .payment-table #paymentTypeName {
         font-size: 17px;
         font-weight: bold;
         margin-top: 5px;
     }
-    
+
     .payment-table tr {
-        border-bottom: 3px solid #F5F5F5; 
+        border-bottom: 3px solid #F5F5F5;
     }
 
     .bg-color {
@@ -535,38 +566,38 @@
         left: 0;
         right: 0;
         height: 140px;
-        background-color: #392A23; 
+        background-color: #392A23;
     }
 
-    #QRModal .modal-content{
-        display: flex; 
-        align-items: center; 
+    #QRModal .modal-content {
+        display: flex;
+        align-items: center;
         justify-content: center;
     }
 
-    #QRModal img{
-        width: 50%; 
+    #QRModal img {
+        width: 50%;
         height: 50%;
         margin-right: 4px;
     }
 
-    #QRModal .confirm-button{
-        width: 60%; 
+    #QRModal .confirm-button {
+        width: 60%;
         margin-top: 20px;
     }
 
     .navbar-nav .dropdown-menu {
         position: absolute;
-        top:87px;
+        top: 87px;
     }
 
-    .container-profile{
+    .container-profile {
         width: 80%;
         margin: auto;
-        margin-top:2rem;
+        margin-top: 2rem;
     }
 
-    .image-container{
+    .image-container {
         min-height: 4rem;
         min-width: 4rem;
     }
@@ -574,7 +605,10 @@
 
 <script>
     // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
+    window.onscroll = function() {
+        scrollFunction()
+    };
+
     function scrollFunction() {
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
             document.getElementById("myBtn").style.display = "block";
@@ -597,5 +631,4 @@
             x.type = "password";
         }
     }
-
 </script>
