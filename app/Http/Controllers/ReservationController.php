@@ -70,8 +70,8 @@ class ReservationController extends Controller
         $tableIds = collect($request->input('PaymentDetail'))->pluck('table_id')->implode(', ');
         
 
-        // Mail::to($email)->send(new MailAfterReservation($tableIds, $request->input('PaymentDate')));
-        Mail::to('27ferryirawan@gmail.com')->send(new MailAfterReservation($tableIds, $request->input('PaymentDate')));
+        Mail::to($email)->send(new MailAfterReservation($tableIds, $request->input('PaymentDate')));
+        // Mail::to('27ferryirawan@gmail.com')->send(new MailAfterReservation($tableIds, $request->input('PaymentDate')));
         return response()->json(['success' => true]);
     }
 
