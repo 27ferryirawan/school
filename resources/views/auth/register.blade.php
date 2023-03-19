@@ -7,7 +7,7 @@
     <body>
     <div class="container" style="padding-bottom:2.4%">
             <div class="row justify-content-center" style="margin-top:2rem;">
-                <div class="col-md-8 d-flex justify-content-center">
+                <div class="col-sm-10 d-flex justify-content-center">
                     <div class="register">
                         <div class="register-header">
                             Register
@@ -16,7 +16,7 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
-                                <div class="col mb-2 w-50 mx-auto">
+                                <div class="col mb-2">
                                     <label for="name" class="row-md-4 row-form-label text-md-end">{{ __('Name') }}</label>
 
                                     <div class="row-md-3">
@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col mb-2 w-50 mx-auto">
+                                <div class="col mb-2">
                                     <label for="username" class="row-md-4 row-form-label text-md-end">{{ __('Username') }}</label>
 
                                     <div class="row-md-3">
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col mb-2 w-50 mx-auto">
+                                <div class="col mb-2">
                                     <label for="email" class="row-md-4 row-form-label text-md-end">{{ __('Email Address') }}</label>
 
                                     <div class="row-md-3">
@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col mb-2 w-50 mx-auto">
+                                <div class="col mb-2">
                                     <label for="password" class="row-md-4 row-form-label text-md-end">{{ __('Password') }}</label>
 
                                     <div class="row-md-3 mb-3">
