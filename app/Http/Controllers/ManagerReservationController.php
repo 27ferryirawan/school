@@ -93,16 +93,40 @@ class ManagerReservationController extends Controller
                             ->get();
 
         } else {
-            $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
-                            ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
-                            ->join('payment', 'reservation.payment_id', '=', 'payment.id')
-                            ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
-                            ->join('users', 'reservation.created_by', '=', 'users.id')
-                            ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
-                            ->orderBy('reservation_detail.status', 'asc')
-                            ->orderBy('reservation_detail.reservation_date', 'desc')
-                            ->orderBy('table_detail.table_name', 'asc')
-                            ->get();
+            $search = $request->input('SearchText');
+
+            $reservations = Reservation::select('reservation_detail.id',
+            DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve'
+                        WHEN reservation_detail.status= '2' THEN 'Guest In'
+                        WHEN reservation_detail.status= '3' THEN 'Guest Out'
+                        WHEN reservation_detail.status= '4' THEN 'Cancel Reservation'
+                        ELSE '' END AS status"),
+                            'reservation.total_fee', 'payment.payment_name',
+                            'payment_type.payment_type_name', 'users.name',
+                            'table_detail.table_name', 'reservation_detail.reservation_date',
+                            'reservation_detail.fee', 'users.profile_picture', 'users.email',
+                            'table_detail.id as table_id')
+                        ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
+                        ->join('payment', 'reservation.payment_id', '=', 'payment.id')
+                        ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
+                        ->join('users', 'reservation.created_by', '=', 'users.id')
+                        ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
+                        ->where(function ($query) use ($search) {
+                            $query->where('users.name', 'LIKE', '%' . $search . '%')
+                                ->orWhere('users.email', 'LIKE', '%' . $search . '%')
+                                ->orWhere('table_detail.table_name', 'LIKE', '%' . $search . '%')
+                                ->orWhere(DB::raw("DATE_FORMAT(reservation_detail.reservation_date, '%d %b %Y %H:%i:%s')"), 'LIKE', '%' . $search . '%')
+                                ->orWhere('reservation_detail.fee', 'LIKE', '%' . $search . '%')
+                                ->orWhere(DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve'
+                                                            WHEN reservation_detail.status= '2' THEN 'Guest In'
+                                                            WHEN reservation_detail.status= '3' THEN 'Guest Out'
+                                                            WHEN reservation_detail.status= '4' THEN 'Cancel Reservation'
+                                                            ELSE '' END"), 'LIKE', '%' . $search . '%');
+                        })
+                        ->orderBy('reservation_detail.status', 'asc')
+                        ->orderBy('reservation_detail.reservation_date', 'desc')
+                        ->orderBy('table_detail.table_name', 'asc')
+                        ->get();
         }
             
         $data = [];
