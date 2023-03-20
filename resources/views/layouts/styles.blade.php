@@ -118,6 +118,9 @@
             margin-left: 10px;
             margin-right: 10px;
         }
+        .register {
+            width: 40%;
+        }
     }
 
     #mapCanvas {
@@ -423,7 +426,7 @@
     .register {
         border: 3px solid #9B6E3F;
         border-radius: 40px;
-        width: 50%;
+        width: 60%;
     }
 
     .register-header {
@@ -435,7 +438,7 @@
     }
 
     .register-body {
-        padding: 10px;
+        padding: 20px;
         margin-top: 5px;
     }
 
