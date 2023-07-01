@@ -40,11 +40,13 @@
                     <input id="searchInput" placeholder="Search...">
                     <button id="searchBtn" onclick="search()">Search</button>
                 </div>
-                <button
-                    style="padding:0px 25px; width: 250px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px"
-                    onclick="showDownloadModal(this)">
-                    Download Report
-                </button>
+                @if (Auth::check() && Auth::user()->role != 'KASIR')
+                    <button
+                        style="padding:0px 25px; width: 250px; height: 35px; border-radius: 25px; background-color: #392A23; border: none; color: white; margin-left: 10px"
+                        onclick="showDownloadModal(this)">
+                        Download Report
+                    </button>
+                @endif
             </div>
             <table id="managerReservationTable" class="reserv-tab"style="width: 100%;">
                 <tr>

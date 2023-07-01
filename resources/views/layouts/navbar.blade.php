@@ -1,5 +1,5 @@
 @php
-    if (Auth::check() && Auth::user()->role == 'MANAJER') {
+    if ((Auth::check() && Auth::user()->role == 'MANAJER') || (Auth::check() && Auth::user()->role == 'KASIR')) {
         $reservation_url = '/manager-reservation';
     } else {
         $reservation_url = '/reservation';
@@ -28,7 +28,9 @@
             @endguest
 
             @auth
-                @if (Auth::user()->role == 'MANAJER' && request()->is('reservation'))
+                @if (
+                    (\Auth::user()->role == 'MANAJER' || (Auth::check() && Auth::user()->role == 'KASIR')) &&
+                        request()->is('reservation'))
                     <script>
                         window.location.href = '/manager-reservation';
                     </script>
