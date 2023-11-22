@@ -75,6 +75,26 @@ class ReservationController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function updateTable(Request $request){
+        // Get today's date
+        $todayDate = Carbon::now()->toDateString();
+
+        // Update records in the TableDetail model
+        $tableDetail = TableDetail::where(function($query) use ($todayDate) {
+            $query->where('updated_at', '!=', $todayDate)
+                ->orWhereNull('updated_at');
+        })->get();
+
+        foreach ($tableDetail as $table) {
+            $table->update([
+                'status' => 0,
+                'updated_at' => $todayDate
+            ]);
+        }
+        return response()->json(['success' => true]);
+    }
+    
+
     public function getTableDetailData(){
         $tableDetail = TableDetail::all();
         return response()->json($tableDetail);

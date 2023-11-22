@@ -111,11 +111,33 @@
     </main>
     @include('layouts/footer')
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </html>
 
 
 <script>
+    var currentDate = new Date();
+
+    // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    var dayOfWeek = currentDate.getDay();
+    // Check if today is Sunday
+    if (dayOfWeek == 0) {
+        $.ajax({
+            url: '{{ route('update-table') }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            beforeSend: function() {},
+            success: function(response) {
+
+            },
+            error: function(xhr, status, error) {},
+            complete: function() {}
+        })
+    }
+
     function enlargeImage(img) {
         document.body.style.overflow = "hidden";
         var modal = document.getElementById("enlargeModal");

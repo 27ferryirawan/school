@@ -21,6 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\Cors::class,
     ];
 
     /**
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'is_kasir' => \App\Http\Middleware\IsKasir::class,
         'is_manajer' => \App\Http\Middleware\IsManajer::class,
         'is_customer' => \App\Http\Middleware\IsCustomer::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

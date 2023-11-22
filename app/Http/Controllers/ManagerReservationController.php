@@ -75,22 +75,70 @@ class ManagerReservationController extends Controller
     }
 
     public function exportReservation(Request $request){
-        if(!empty($request->input('ReservationDate'))){
-            $reservationDate = $request->input('ReservationDate') ? Carbon::parse($request->input('ReservationDate'))->format('Y-m-d') : null;
+        $reservationStartDate = null;
+        $reservationEndDate = null;
 
-            $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
+        if(!empty($request->input('ReservationStartDate')) || !empty($request->input('reservationEndDate'))){
+            if (empty($request->input('ReservationStartDate')) && !empty($request->input('ReservationEndDate'))) {
+                // If ReservationStartDate is empty and ReservationEndDate is not empty,
+                // set reservationStartDate and reservationEndDate to the parsed ReservationEndDate.
+                $reservationStartDate = $request->input('ReservationEndDate') ? Carbon::parse($request->input('ReservationEndDate'))->format('Y-m-d') : null;
+                $reservationEndDate = $request->input('ReservationEndDate') ? Carbon::parse($request->input('ReservationEndDate'))->format('Y-m-d') : null;
+
+                $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
                             ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
                             ->join('payment', 'reservation.payment_id', '=', 'payment.id')
                             ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
                             ->join('users', 'reservation.created_by', '=', 'users.id')
                             ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
-                            ->when($reservationDate, function ($query) use ($reservationDate) {
-                                return $query->whereDate('reservation_detail.reservation_date', $reservationDate);
+                            ->when($reservationStartDate && $reservationEndDate, function ($query) use ($reservationStartDate, $reservationEndDate) {
+                                return $query->whereBetween('reservation_detail.reservation_date', [$reservationStartDate, $reservationEndDate]);
                             })
                             ->orderBy('reservation_detail.status', 'asc')
                             ->orderBy('reservation_detail.reservation_date', 'desc')
                             ->orderBy('table_detail.table_name', 'asc')
                             ->get();
+            } else if (!empty($request->input('ReservationStartDate')) && empty($request->input('ReservationEndDate'))) {
+                // If ReservationStartDate is not empty and ReservationEndDate is empty,
+                // set reservationStartDate and reservationEndDate to the parsed ReservationStartDate.
+                $reservationStartDate = $request->input('ReservationStartDate') ? Carbon::parse($request->input('ReservationStartDate'))->format('Y-m-d') : null;
+                $reservationEndDate = $request->input('ReservationStartDate') ? Carbon::parse($request->input('ReservationStartDate'))->format('Y-m-d') : null;
+
+                $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
+                            ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
+                            ->join('payment', 'reservation.payment_id', '=', 'payment.id')
+                            ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
+                            ->join('users', 'reservation.created_by', '=', 'users.id')
+                            ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
+                            ->when($reservationStartDate && $reservationEndDate, function ($query) use ($reservationStartDate, $reservationEndDate) {
+                                return $query->whereBetween('reservation_detail.reservation_date', [$reservationStartDate, $reservationEndDate]);
+                            })
+                            ->orderBy('reservation_detail.status', 'asc')
+                            ->orderBy('reservation_detail.reservation_date', 'desc')
+                            ->orderBy('table_detail.table_name', 'asc')
+                            ->get();
+            } else if (!empty($request->input('ReservationStartDate')) && !empty($request->input('ReservationEndDate'))) {
+                // If both ReservationStartDate and ReservationEndDate are not empty,
+                // set reservationStartDate to the parsed ReservationStartDate
+                // and reservationEndDate to the parsed ReservationEndDate.
+                $reservationStartDate = $request->input('ReservationStartDate') ? Carbon::parse($request->input('ReservationStartDate'))->format('Y-m-d') : null;
+                $reservationEndDate = $request->input('ReservationEndDate') ? Carbon::parse($request->input('ReservationEndDate'))->format('Y-m-d') : null;
+                
+                $reservations = Reservation::select('reservation_detail.id', DB::raw("CASE WHEN reservation_detail.status= '1' THEN 'On Reserve' WHEN reservation_detail.status= '2' THEN 'Guest In' WHEN reservation_detail.status= '3' THEN 'Guest Out' WHEN reservation_detail.status= '4' THEN 'Cancel Reservation' ELSE '' END AS status"), 'reservation.total_fee', 'payment.payment_name', 'payment_type.payment_type_name', 'users.name', 'table_detail.table_name', 'reservation_detail.reservation_date', 'reservation_detail.fee', 'users.profile_picture', 'users.email', 'table_detail.id as table_id')
+                            ->join('reservation_detail', 'reservation.id', '=', 'reservation_detail.reservation_id')
+                            ->join('payment', 'reservation.payment_id', '=', 'payment.id')
+                            ->join('payment_type', 'payment.payment_type_id', '=', 'payment_type.id')
+                            ->join('users', 'reservation.created_by', '=', 'users.id')
+                            ->join('table_detail', 'reservation_detail.table_id', '=', 'table_detail.id')
+                            ->when($reservationStartDate && $reservationEndDate, function ($query) use ($reservationStartDate, $reservationEndDate) {
+                                return $query->whereDate('reservation_detail.reservation_date', '>=', $reservationStartDate)
+                                    ->whereDate('reservation_detail.reservation_date', '<=', $reservationEndDate);
+                            })
+                            ->orderBy('reservation_detail.status', 'asc')
+                            ->orderBy('reservation_detail.reservation_date', 'desc')
+                            ->orderBy('table_detail.table_name', 'asc')
+                            ->get();
+            }
 
         } else {
             $search = $request->input('SearchText');

@@ -36,7 +36,7 @@
         width: 100%;
         height: 10%;
         padding: 20px;
-        background-color: #D4B0A0;
+        background-color: #03549b;
     }
 
     .grid {
@@ -63,17 +63,18 @@
         display: flex;
         flex-direction: column;
         margin: 0;
-        font-family: 'SourceSansPro';
+        font-family: '';
         overflow-x: hidden;
         min-height: 100vh;
     }
 
     .navbar {
-        background-color: #392A23;
+        background-color: #03549b;
         display: flex;
         align-items: center;
         height: 110px;
         font-family: 'SourceSansPro';
+        font-weight: bold;
     }
 
     @media only screen and (max-width: 450px) {
@@ -118,6 +119,7 @@
             margin-left: 10px;
             margin-right: 10px;
         }
+
         .register {
             width: 40%;
         }
@@ -168,15 +170,15 @@
     }
 
     .navbar li a:hover {
-        background-color: #614d43;
+        background-color: #4e87b9;
     }
 
     .navbar li a.active {
-        background-color: #614d43;
+        background-color: #4e87b9;
     }
 
     .navbar li a.login-button.active {
-        background-color: #614d43;
+        background-color: #4e87b9;
         ;
         color: white !important;
     }
@@ -195,7 +197,7 @@
     }
 
     .login-button:hover {
-        background-color: #614d43 !important;
+        background-color: #4e87b9 !important;
         color: white !important;
     }
 
@@ -240,14 +242,30 @@
         background-position: 5px center;
         background-size: auto 50%;
         height: 35px;
-        width: 100%;
+        width: 200%;
         border: 1px solid black;
     }
 
-    .download-date-input {
-        margin: 0px 5px 0px 0px;
-
+    .input-com {
+        margin: 10px 50px 0px 80px;
     }
+
+    .input-com label,
+    .input-com input {
+        display: block;
+        font-size: 17px;
+    }
+
+    .input-com input[type="text"] {
+        background-repeat: no-repeat;
+        background-position: 5px center;
+        background-size: auto 50%;
+        height: 35px;
+        width: 200%;
+        border: 1px solid black;
+    }
+
+    .download-date-input {}
 
     .download-date-input label,
     .date-input input {
@@ -263,7 +281,6 @@
         background-size: auto 50%;
         height: 35px;
         border: 1px black solid;
-        margin: 0px 3px 45px 3px;
         width: 100%;
         /* height: 35px;
         width: 325px;
@@ -283,27 +300,6 @@
     .date-input input[type="text"] {
         padding-left: 30px;
         background-image: url('/images/calendar.png');
-        background-repeat: no-repeat;
-        background-position: 5px center;
-        background-size: auto 50%;
-        height: 35px;
-        width: 200%;
-        border: 1px solid black;
-    }
-
-    .time-input {
-        margin: 10px 50px 0px 80px;
-    }
-
-    .time-input label,
-    .time-input input {
-        display: block;
-        font-size: 17px;
-    }
-
-    .time-input input[type="text"] {
-        padding-left: 30px;
-        background-image: url('/images/clock.png');
         background-repeat: no-repeat;
         background-position: 5px center;
         background-size: auto 50%;
@@ -367,7 +363,7 @@
     }
 
     .confirm-button {
-        background-color: #392A23;
+        background-color: #d9251c;
         border: none;
         color: white;
         padding: 8px 16px;
@@ -380,7 +376,7 @@
     }
 
     .cancel-button {
-        background-color: #D4B096;
+        background-color: #ef6351;
         border: none;
         color: white;
         padding: 8px 16px;

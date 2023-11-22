@@ -4,24 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenuTable extends Migration
+class CreateKelasTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('menu', function (Blueprint $table) {
+    public function up(){
+        Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->string('menu_name');
-            $table->string('menu_image_path')->nullable();
-            $table->string('menu_description')->nullable();
-            $table->string('menu_type');
+            $table->string('nama_kelas');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
@@ -30,6 +29,6 @@ class CreateMenuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::dropIfExists('payment_type');
     }
 }

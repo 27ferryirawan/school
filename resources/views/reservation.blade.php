@@ -149,10 +149,13 @@
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        maxTime: "09:00",
-        minTime: "21:00",
-        minuteIncrement: 30
+        minTime: "09:00",
+        maxTime: "21:00",
+        minuteIncrement: 30,
+        defaultDate: '09:00'
     });
+
+    
 
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');

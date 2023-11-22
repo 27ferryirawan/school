@@ -50,11 +50,11 @@
             </div>
             <table id="managerReservationTable" class="reserv-tab"style="width: 100%;">
                 <tr>
-                    <td style="width: 21%;">Name</td>
-                    <td style="width: 14%">Table</td>
-                    <td style="width: 17%">Date</td>
-                    <td style="width: 17%">Fee</td>
-                    <td style="width: 17%">Status</td>
+                    <td style="width: 21%;" class="sortable" data-column="name">Name</td>
+                    <td style="width: 14%" class="sortable" data-column="table_name">Table</td>
+                    <td style="width: 17%" class="sortable" data-column="reservation_date">Date</td>
+                    <td style="width: 17%" class="sortable" data-column="fee">Fee</td>
+                    <td style="width: 17%" class="sortable" data-column="status">Status</td>
                     <td style="width: 14%; text-align: center">Action</td>
                 </tr>
                 @foreach ($reservations as $data)
@@ -118,8 +118,11 @@
             <div class="modal-content">
                 <h2>Download Report</h2>
                 <div class="download-date-input">
-                    <label style="font-size: 17px; margin: 15px 0px 0px 3px">Date</label>
-                    <input type="text" id="reservationDate" name="reservationDate"
+                    <label style="font-size: 17px; margin: 15px 0px 0px 3px">Start Date</label>
+                    <input type="text" id="reservationStartDate" name="reservationStartDate"
+                        style="height: 35px; border: 1px black solid; margin: 0px 3px 0px 3px;">
+                    <label style="font-size: 17px; margin: 15px 0px 0px 3px">End Date</label>
+                    <input type="text" id="reservationEndDate" name="reservationEndDate"
                         style="height: 35px; border: 1px black solid; margin: 0px 3px 45px 3px;">
                 </div>
 
@@ -138,10 +141,12 @@
 </html>
 
 <script>
-    flatpickr("#reservationDate", {
+    flatpickr("#reservationStartDate", {
         dateFormat: "d M Y",
     });
-
+    flatpickr("#reservationEndDate", {
+        dateFormat: "d M Y",
+    });
     const searchInput = document.getElementById("searchInput");
     const managerReservationTable = document.getElementById("managerReservationTable");
     const canvas = document.getElementById('mapCanvas');
@@ -490,9 +495,11 @@
     }
 
     function downloadReport() {
-        const reservationDate = document.getElementById('reservationDate').value;
+        const reservationStartDate = document.getElementById('reservationStartDate').value;
+        const reservationEndDate = document.getElementById('reservationEndDate').value;
+
         window.location.href =
-            `/manager-reservation/exportReservation?ReservationDate=${reservationDate}&SearchText=${searchInput.value}`;
+            `/manager-reservation/exportReservation?ReservationStartDate=${reservationStartDate}&ReservationEndDate=${reservationEndDate}&SearchText=${searchInput.value}`;
     }
 
     function showSuccessOrFailedModal() {
@@ -543,6 +550,31 @@
         if (event.target == downloadModal) {
             hideDownloadModal();
         }
+    }
+
+    $(".sortable").on("click", function() {
+        var column = $(this).data("column");
+        var $table = $("#managerReservationTable");
+        var $rows = $table.find("tr:gt(0)").toArray().sort(comparator($(this).index()));
+        this.asc = !this.asc;
+        if (!this.asc) {
+            $rows = $rows.reverse();
+        }
+        for (var i = 0; i < $rows.length; i++) {
+            $table.append($rows[i]);
+        }
+    });
+
+    function comparator(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index);
+            var valB = getCellValue(b, index);
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
+        };
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children("td").eq(index).text();
     }
 </script>
 
