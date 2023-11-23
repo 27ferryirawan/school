@@ -20,19 +20,28 @@ class SiswaSeeder extends Seeder
                 'user_id' => 1,
                 'NISN' => '1V',
                 'nama_siswa' => 'Vellen Jeniesca',
-                'jenis_kelamin' => 'L'
+                'jenis_kelamin' => 'L',
+                'tanggal_lahir' => '2007-11-08',
+                'agama' => 'Buddha',
+                'tempat_lahir' => 'Tanjungpinang',
             ],
             [
                 'user_id' => 1,
                 'NISN' => '1S',
                 'nama_siswa' => 'Stephanie',
-                'jenis_kelamin' => 'P'
+                'jenis_kelamin' => 'P',
+                'tanggal_lahir' => '2007-11-09',
+                'agama' => 'Kristen',
+                'tempat_lahir' => 'Pekanbaru',
             ],
             [
                 'user_id' => 1,
                 'NISN' => '1B',
                 'nama_siswa' => 'Budi',
-                'jenis_kelamin' => 'L'
+                'jenis_kelamin' => 'L',
+                'tanggal_lahir' => '2007-11-10',
+                'agama' => 'Katolik',
+                'tempat_lahir' => 'Jakarta',
             ]
         ]);
     }

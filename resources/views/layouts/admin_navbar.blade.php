@@ -1,10 +1,10 @@
-{{-- @php
-    if ((Auth::check() && Auth::user()->role == 'MANAJER') || (Auth::check() && Auth::user()->role == 'KASIR')) {
-        $reservation_url = '/manager-reservation';
+@php
+    if (Auth::check() && Auth::user()->role == 'ADMIN') {
+        $siswa_url = '/admin-siswa';
     } else {
-        $reservation_url = '/reservation';
+        $siswa_url = '/admin-siswa';
     }
-@endphp --}}
+@endphp
 
 <head>
     <link rel="icon" type="image/png" href="{{ asset('images/coffee_favicon.png') }}">
@@ -16,19 +16,21 @@
                 style="margin-left: 30px; width: 100px; height: 80px; ">
         </a>
         <ul class="navbar-nav">
-            <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">HOME </a></li>
-            <li><a class="{{ request()->is('coffee') ? 'active' : '' }}" href="/coffee">SISWA</a></li>
-            <li><a class="{{ request()->is('bakery') ? 'active' : '' }}" href="/bakery">GURU</a></li>
-            <li><a class="{{ request()->is('menu') ? 'active' : '' }}" href="/menu">NILAI</a></li>
-            {{-- <li><a class="{{ request()->is($reservation_url) ? 'active' : '' }}"
-                    href="{{ $reservation_url }}">RESERVATION</a></li> --}}
-            <li><a class="{{ request()->is('about-us') ? 'active' : '' }}" href="/about-us">ABOUT</a></li>
+            <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
+            {{-- <li><a class="{{ request()->is('admin-siswa') ? 'active' : '' }}" href="/admin-siswa">SISWA</a></li> --}}
+            <li><a class="{{ request()->is($siswa_url) ? 'active' : '' }}" href="{{ $siswa_url }}">SISWA</a>
+            </li>
+            <li><a class="{{ request()->is('admin-guru') ? 'active' : '' }}" href="/admin-guru">GURU</a></li>
+            <li><a class="{{ request()->is('admin-nilai') ? 'active' : '' }}" href="/admin-nilai">NILAI</a></li>
+            <li><a class="{{ request()->is('about-us') ? 'active' : '' }}" href="/about-us">TENTANG KITA</a></li>
             @guest
                 <li><a class="login-button {{ request()->is('login') ? 'active' : '' }}" href="/login">LOGIN</a></li>
             @endguest
 
-            {{-- @auth
-                @if ((\Auth::user()->role == 'MANAJER' || (Auth::check() && Auth::user()->role == 'KASIR')) && request()->is('reservation'))
+            @auth
+                @if (
+                    (\Auth::user()->role == 'MANAJER' || (Auth::check() && Auth::user()->role == 'KASIR')) &&
+                        request()->is('reservation'))
                     <script>
                         window.location.href = '/manager-reservation';
                     </script>
@@ -55,7 +57,7 @@
                         </form>
                     </div>
                 </li>
-            @endauth --}}
+            @endauth
         </ul>
     </nav>
 </header>

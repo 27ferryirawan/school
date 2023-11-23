@@ -17,6 +17,7 @@ class CreateGuruKelasTable extends Migration
             $table->unsignedBigInteger('guru_id');
             $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('tahun_ajaran_id');
+            $table->unsignedBigInteger('mata_pelajaran_id');
             $table->integer('wali_kelas');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
@@ -35,6 +36,11 @@ class CreateGuruKelasTable extends Migration
             $table->foreign('tahun_ajaran_id')
                 ->references('id')
                 ->on('tahun_ajaran')
+                ->onDelete('cascade');
+
+            $table->foreign('mata_pelajaran_id')
+                ->references('id')
+                ->on('mata_pelajaran')
                 ->onDelete('cascade');
         });
     }

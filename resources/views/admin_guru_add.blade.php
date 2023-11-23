@@ -11,12 +11,12 @@
         <div style="display: flex;">
             <div>
                 <div class="input-com">
-                    <label>NISN</label>
-                    <input type="text" id="nisn" name="nisn">
+                    <label>NIP</label>
+                    <input type="text" id="nip" name="nip">
                 </div>
                 <div class="input-com">
-                    <label>Nama Siswa</label>
-                    <input type="text" id="namaSiswa" name="namaSiswa">
+                    <label>Nama Guru</label>
+                    <input type="text" id="namaGuru" name="namaGuru">
                 </div>
                 <div class="input-com">
                     <label>Jenis Kelamin</label>
@@ -144,8 +144,8 @@
 
     function addData() {
         // Mengumpulkan data dari formulir
-        var nisn = $('#nisn').val();
-        var namaSiswa = $('#namaSiswa').val();
+        var nip = $('#nip').val();
+        var namaGuru = $('#namaGuru').val();
         var jenisKelamin = $('#jenisKelamin').val();
         var tempatLahir = $('#tempatLahir').val();
         var tanggalLahir = $('#tanggalLahir').val();
@@ -157,8 +157,8 @@
 
         // Menyusun data untuk dikirimkan ke server
         var requestData = {
-            nisn: nisn,
-            nama_siswa: namaSiswa,
+            nip: nip,
+            nama_guru: namaGuru,
             jenis_kelamin: jenisKelamin,
             tempat_lahir: tempatLahir,
             tanggal_lahir: tanggalLahir,
@@ -172,7 +172,7 @@
 
         // Melakukan permintaan AJAX
         $.ajax({
-            url: '{{ route('admin-siswa.addSiswa') }}',
+            url: '{{ route('admin-guru.addGuru') }}',
             method: 'POST',
             data: requestData,
             dataType: 'json',
@@ -180,14 +180,14 @@
                 $('.loading').show();
             },
             success: function(response) {
-                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Siswa Berhasil!";
+                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Guru Berhasil!";
                 // document.getElementById("successOrFailedDescriptionText").innerHTML =
                 //     "Terima kasih telah melakukan reservasi pada " + reservationDateValue + ", jam " +
                 //     reservationTimeValue +
                 //     ". Harap datang tepat waktu, apabila datang lewat dari 15 menit, maka reservasi akan dibatalkan. Terima kasih.";
             },
             error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Siswa Gagal!";
+                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Guru Gagal!";
             },
             complete: function() {
                 $('.loading').hide();
@@ -198,8 +198,8 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedText").innerHTML == "Menambahkan Siswa Berhasil!") {
-            window.location.href = '{{ route('admin-siswa') }}'
+        if (document.getElementById("successOrFailedText").innerHTML == "Menambahkan Guru Berhasil!") {
+            window.location.href = '{{ route('admin-guru') }}'
         }
     }
 

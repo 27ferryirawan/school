@@ -20,19 +20,22 @@ class GuruKelasSeeder extends Seeder
                 'guru_id' => 1,
                 'kelas_id' => 1,
                 'tahun_ajaran_id' => 1,
-                'wali_kelas' => 1
+                'wali_kelas' => 1,
+                'mata_pelajaran_id' => 1
             ],
             [
                 'guru_id' => 2,
                 'kelas_id' => 1,
                 'tahun_ajaran_id' => 1,
                 'wali_kelas' => 0,
+                'mata_pelajaran_id' => 2
             ],
             [
                 'guru_id' => 3,
                 'kelas_id' => 1,
                 'tahun_ajaran_id' => 1,
                 'wali_kelas' => 0,
+                'mata_pelajaran_id' => 3
             ]
         ]);
     }

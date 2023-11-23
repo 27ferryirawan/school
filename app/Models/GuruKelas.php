@@ -13,9 +13,10 @@ class GuruKelas extends Model
         'guru_id',
         'kelas_id',
         'tahun_ajaran_id',
+        'mata_pelajaran_id'
     ];
     
-    public function gurus(){
+    public function guru(){
         return $this->belongsTo(Guru::class);
     }
 
@@ -26,4 +27,8 @@ class GuruKelas extends Model
     public function tahunAjaran(){
         return $this->belongsTo(TahunAjaran::class);
     }
+
+    public function mataPelajaran(){
+        return $this->belongsTo(MataPelajaran::class);
+    }    
 }

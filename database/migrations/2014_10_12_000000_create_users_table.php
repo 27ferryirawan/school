@@ -20,10 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->string('profile_picture')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['SISWA', 'GURU'])->default('SISWA');
+            $table->enum('role', ['SISWA', 'GURU', 'ADMIN'])->default('SISWA');
             $table->rememberToken();
             $table->timestamps();
         });

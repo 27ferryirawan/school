@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReservationsExport;
 use Illuminate\Support\Collection;
 
+use App\Models\User;
 use App\Models\SiswaKelas;
 use App\Models\Siswa;
 use App\Models\Kelas;
@@ -26,7 +28,7 @@ class AdminSiswaController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -35,7 +37,7 @@ class AdminSiswaController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id')          
+        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id', 'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
                     ->join('siswa', 'siswa_kelas.siswa_id', '=', 'siswa.id')
                     ->join('kelas', 'siswa_kelas.kelas_id', '=', 'kelas.id')
                     ->join('tahun_ajaran', 'siswa_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
@@ -49,7 +51,7 @@ class AdminSiswaController extends Controller
     }
 
     public function addIndex(){
-        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id')          
+        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id', 'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')         
                     ->join('siswa', 'siswa_kelas.siswa_id', '=', 'siswa.id')
                     ->join('kelas', 'siswa_kelas.kelas_id', '=', 'kelas.id')
                     ->join('tahun_ajaran', 'siswa_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
@@ -68,7 +70,7 @@ class AdminSiswaController extends Controller
         $order = $request->input('order');
 
         // Logika pengurutan sesuai kolom dan urutan yang diterima
-        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran')        
+        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id', 'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
                     ->join('siswa', 'siswa_kelas.siswa_id', '=', 'siswa.id')
                     ->join('kelas', 'siswa_kelas.kelas_id', '=', 'kelas.id')
                     ->join('tahun_ajaran', 'siswa_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
@@ -164,6 +166,65 @@ class AdminSiswaController extends Controller
             DB::rollBack();
 
             // return response()->json(['message' => 'Terjadi kesalahan saat menghapus data.'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function addSiswa(Request $request)
+    {
+        // Memulai transaksi database
+        DB::beginTransaction();
+
+        try {
+            // Validasi data yang diterima dari permintaan AJAX
+            $request->validate([
+                'nisn' => 'required',
+                'nama_siswa' => 'required',
+                'jenis_kelamin' => 'required',
+                'tempat_lahir' => 'required',
+                'tanggal_lahir' => 'required',
+                'agama' => 'required',
+                'kelas_id' => 'required',
+                'tahun_ajaran_id' => 'required',
+                'username' => 'required|unique:users',
+                'password' => 'required',
+            ]);
+
+            // Simpan data user ke dalam tabel users
+            $user = new User();
+            $user->name = $request->nama_siswa;
+            $user->username = $request->username;
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // Simpan data siswa ke dalam tabel siswa
+            $siswa = new Siswa();
+            $siswa->NISN = $request->nisn;
+            $siswa->nama_siswa = $request->nama_siswa;
+            $siswa->jenis_kelamin = $request->jenis_kelamin;
+            $siswa->tempat_lahir = $request->tempat_lahir;
+            $siswa->tanggal_lahir = $request->tanggal_lahir;
+            $siswa->agama = $request->agama;
+            $siswa->user_id = $user->id;
+            $siswa->save();
+
+            // Simpan data siswa_kelas ke dalam tabel siswa_kelas
+            $siswaKelas = new SiswaKelas();
+            $siswaKelas->siswa_id = $siswa->id;
+            $siswaKelas->kelas_id = $request->kelas_id;
+            $siswaKelas->tahun_ajaran_id = $request->tahun_ajaran_id;
+            $siswaKelas->save();
+
+            // Commit transaksi database jika berhasil
+            DB::commit();
+
+            // Respon JSON untuk memberi tahu bahwa data telah ditambahkan
+            return response()->json(['message' => 'Data siswa berhasil ditambahkan.']);
+        } catch (\Exception $e) {
+            // Rollback transaksi database jika terjadi kesalahan
+            DB::rollBack();
+
+            // Respon JSON dengan pesan kesalahan
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

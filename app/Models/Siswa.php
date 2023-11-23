@@ -14,7 +14,10 @@ class Siswa extends Model
         'id',
         'NISN',
         'nama_siswa',
-        'jenis_kelamin'
+        'jenis_kelamin',
+        'tanggal_lahir',
+        'agama',
+        'tempat_lahir'
     ];
 
     public function siswaKelas()

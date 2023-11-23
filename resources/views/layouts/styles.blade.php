@@ -251,15 +251,15 @@
     }
 
     .input-com label,
-    .input-com input {
+    .input-com input,
+    .input-com select {
         display: block;
         font-size: 17px;
     }
 
-    .input-com input[type="text"] {
-        background-repeat: no-repeat;
-        background-position: 5px center;
-        background-size: auto 50%;
+    .input-com input[type="text"],
+    .input-com input[type="password"],
+    .input-com select {
         height: 35px;
         width: 200%;
         border: 1px solid black;
@@ -288,7 +288,7 @@
     }
 
     .date-input {
-        margin: 50px 50px 0px 80px;
+        margin: 10px 50px 0px 80px;
     }
 
     .date-input label,
@@ -325,8 +325,8 @@
 
     .reserve-div {
         font-size: 17px;
-        margin: 50px 20% 0px auto;
-        width: 15%;
+        margin: 0px 20% 0px auto;
+        width: 23.9%;
     }
 
     .payment-button {
@@ -363,7 +363,7 @@
     }
 
     .confirm-button {
-        background-color: #d9251c;
+        background-color: #03549b;
         border: none;
         color: white;
         padding: 8px 16px;
@@ -401,8 +401,8 @@
     }
 
     .login {
-        border: 3px solid #9B6E3F;
-        border-radius: 40px;
+        border: 3px solid #4e87b9;
+        border-radius: 10px;
         width: 60%;
     }
 
@@ -410,8 +410,9 @@
         text-align: center;
         font-weight: bold;
         font-size: 28px;
-        border-bottom: 3px solid #9B6E3F;
+        border-bottom: 3px solid #4e87b9;
         padding: 20px;
+        color: #4e87b9;
     }
 
     .login-body {
@@ -420,7 +421,7 @@
     }
 
     .register {
-        border: 3px solid #9B6E3F;
+        border: 3px solid #4e87b9;
         border-radius: 40px;
         width: 60%;
     }
@@ -429,7 +430,7 @@
         text-align: center;
         font-weight: bold;
         font-size: 28px;
-        border-bottom: 3px solid #9B6E3F;
+        border-bottom: 3px solid #4e87b9;
         padding: 15px;
     }
 
@@ -439,13 +440,13 @@
     }
 
     .button-login {
-        background-color: #9B6E3F;
+        background-color: #4e87b9;
         border-radius: 20px;
         cursor: pointer;
     }
 
     .button-login:hover {
-        background-color: #9B6E3F;
+        background-color: #4e87b9;
     }
 
     .form-group .form-control {
@@ -477,7 +478,7 @@
     .payment {
         background-color: white;
         overflow-y: auto;
-        border: 3px solid #9B6E3F;
+        border: 3px solid #4e87b9;
         border-radius: 40px;
         width: 25%;
         height: 80%;
@@ -506,7 +507,7 @@
 
     .line {
         height: 3px;
-        background-color: #9B6E3F;
+        background-color: #4e87b9;
         position: relative;
         margin: 40px 0;
     }
@@ -518,7 +519,7 @@
         transform: translate(-50%, -50%);
         background-color: #fff;
         padding: 5px;
-        border: 3px solid #9B6E3F;
+        border: 3px solid #4e87b9;
         width: 80%;
         border-radius: 15px;
     }

@@ -11,8 +11,11 @@ class Guru extends Model
 
     protected $fillable = [
         'nama_guru',
-        'mapel',
+        'NIP',
         'jenis_kelamin',
+        'tanggal_lahir',
+        'agama',
+        'tempat_lahir',
     ];
 
     public function siswaKelas()

@@ -18,21 +18,30 @@ class GuruSeeder extends Seeder
         DB::table('guru')->insert([
             [
                 'user_id' => '1',
+                'NIP' => '101',
                 'nama_guru' => 'Elsa',
-                'mapel' => 'IPA',
-                'jenis_kelamin' => 'P'
+                'jenis_kelamin' => 'P',
+                'tanggal_lahir' => '2007-12-08',
+                'agama' => 'Buddha',
+                'tempat_lahir' => 'Tanjungpinang',
             ],
             [
                 'user_id' => '1',
+                'NIP' => '102',
                 'nama_guru' => 'Dimas',
-                'mapel' => 'IPS',
-                'jenis_kelamin' => 'L'
+                'jenis_kelamin' => 'L',
+                'tanggal_lahir' => '2007-11-08',
+                'agama' => 'Buddha',
+                'tempat_lahir' => 'Tanjungpinang',
             ],
             [
                 'user_id' => '1',
+                'NIP' => '103',
                 'nama_guru' => 'Ana',
-                'mapel' => 'MTK',
-                'jenis_kelamin' => 'P'
+                'jenis_kelamin' => 'P',
+                'tanggal_lahir' => '2007-10-08',
+                'agama' => 'Buddha',
+                'tempat_lahir' => 'Tanjungpinang',
             ]
         ]);
     }

@@ -18,6 +18,9 @@ class CreateSiswaTable extends Migration
             $table->string('NISN');
             $table->string('nama_siswa');
             $table->string('jenis_kelamin');
+            $table->date('tanggal_lahir');
+            $table->string('agama');
+            $table->string('tempat_lahir');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

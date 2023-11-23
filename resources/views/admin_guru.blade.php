@@ -11,48 +11,45 @@
         <table id="siswa-table" class="siswa-tab" style="width: 100%;">
             <thead>
                 <tr>
-                    <th style="width: 21%;" class="sortable" data-column="nisn">NISN
+                    <th style="width: 20%;" class="sortable" data-column="nip">NIP
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 14%;" class="sortable" data-column="nama_siswa">Nama Siswa
+                    <th style="width: 20%;" class="sortable" data-column="nama_guru">Nama Guru
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 17%;" class="sortable" data-column="nama_kelas">Kelas
+                    <th style="width: 20%;" class="sortable" data-column="mata_pelajaran">Mata Pelajaran
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 17%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
+                    <th style="width: 20%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 17%;" class="sortable" data-column="tahun_ajaran">Tahun Ajaran
-                        <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
-                    </th>
-                    <th style="width: 14%;; text-align: center">Action
+                    <th style="width: 20%; text-align: center">Action
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($siswaKelas as $data)
+                @foreach ($guruKelas as $data)
                     <tr class="siswa-row" style="margin: 10px;" data-resid="{{ $data->id }}"
-                        data-siswakelasid="{{ $data->siswa_kelas_id }}">
+                        data-gurukelasid="{{ $data->guru_kelas_id }}">
                         <td style="position: relative; text-align: left;">
                             <div class="editable-com" style="margin-right:10px">
-                                <label contenteditable="false" name='nisn'>{{ $data->NISN }}</label>
+                                <label contenteditable="false" name='nip'>{{ $data->NIP }}</label>
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
                         </td>
                         <td style="position: relative; text-align: left;">
                             <div class="editable-com" style="margin-right:10px">
-                                <label contenteditable="false" name='nama-siswa'>{{ $data->nama_siswa }}</label>
+                                <label contenteditable="false" name='nama-guru'>{{ $data->nama_guru }}</label>
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
                         </td>
                         <td style="position: relative; text-align: left;">
                             <div class="editable-com" style="margin-right:10px">
-                                <select class="dropdown" name="kelas-dropdown">
-                                    @foreach ($kelas as $dataKelas)
-                                        <option value="{{ $dataKelas['id'] }}" disabled
-                                            @if ($data->kelas_id == $dataKelas['id']) selected @endif>
-                                            {{ $dataKelas['nama_kelas'] }}
+                                <select class="dropdown" name="matapelajaran-dropdown">
+                                    @foreach ($mataPelajaran as $dataMataPelajaran)
+                                        <option value="{{ $dataMataPelajaran['id'] }}" disabled
+                                            @if ($data->mata_pelajaran_id == $dataMataPelajaran['id']) selected @endif>
+                                            {{ $dataMataPelajaran['mata_pelajaran'] }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -68,19 +65,6 @@
                                     <option value="P" disabled @if ($data->jenis_kelamin == 'Perempuan') selected @endif>
                                         Perempuan
                                     </option>
-                                </select>
-                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
-                            </div>
-                        </td>
-                        <td style="position: relative; text-align: left;">
-                            <div class="editable-com" style="margin-right:10px">
-                                <select class="dropdown" name="tahun-ajaran-dropdown">
-                                    @foreach ($tahunAjaran as $dataTahunAjaran)
-                                        <option value="{{ $dataTahunAjaran['id'] }}" disabled
-                                            @if ($data->tahun_ajaran_id == $dataTahunAjaran['id']) selected @endif>
-                                            {{ $dataTahunAjaran['tahun_ajaran'] }}
-                                        </option>
-                                    @endforeach
                                 </select>
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
@@ -163,7 +147,7 @@
             }
 
             $.ajax({
-                url: '{{ route('admin-siswa.sort') }}',
+                url: '{{ route('admin-guru.sort') }}',
                 method: 'GET',
                 data: {
                     column: column,
@@ -211,20 +195,19 @@
             var row = $(this).closest('tr');
 
             var rowData = {
-                'NISN': row.find('label[name="nisn"]').text(),
-                'nama_siswa': row.find('label[name="nama-siswa"]').text(),
-                'kelas_id': row.find('select[name="kelas-dropdown"]').val(),
+                'NIP': row.find('label[name="nip"]').text(),
+                'nama_guru': row.find('label[name="nama-guru"]').text(),
+                'mata_pelajaran_id': row.find('select[name="matapelajaran-dropdown"]').val(),
                 'jenis_kelamin': row.find('select[name="jenis-kelamin-dropdown"]').val(),
-                'tahun_ajaran_id': row.find('select[name="tahun-ajaran-dropdown"]').val(),
                 'id': row.data('resid'),
-                'siswa_kelas_id': row.data('siswakelasid'),
+                'guru_kelas_id': row.data('gurukelasid'),
             };
 
             selectedRowsData.push(rowData);
         });
 
         $.ajax({
-            url: '{{ route('admin-siswa.bulkUpdate') }}',
+            url: '{{ route('admin-guru.bulkUpdate') }}',
             method: 'POST',
             data: {
                 rowsData: selectedRowsData,
@@ -326,15 +309,15 @@
 
             var rowData = {
                 'id': row.data('resid'),
-                'siswa_kelas_id': row.data('siswakelasid'),
+                'guru_kelas_id': row.data('gurukelasid'),
             };
 
             selectedRowsData.push(rowData);
         });
 
         selectedRowsData.forEach(function(rowData) {
-            // Temukan baris berdasarkan data-resid dan siswakelasid
-            var row = $('tr[data-resid="' + rowData.id + '"][data-siswakelasid="' + rowData.siswa_kelas_id +
+            // Temukan baris berdasarkan data-resid dan gurukelasid
+            var row = $('tr[data-resid="' + rowData.id + '"][data-gurukelasid="' + rowData.guru_kelas_id +
                 '"]');
 
             // Hapus baris dari tampilan
@@ -342,7 +325,7 @@
         });
 
         $.ajax({
-            url: '{{ route('admin-siswa.bulkDelete') }}',
+            url: '{{ route('admin-guru.bulkDelete') }}',
             method: 'POST',
             data: {
                 rowsData: selectedRowsData,
@@ -380,7 +363,7 @@
     }
 
     function addData() {
-        window.location.href = '{{ route('admin-siswa.add') }}'
+        window.location.href = '{{ route('admin-guru.add') }}'
     }
 
     window.onclick = function(event) {
