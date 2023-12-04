@@ -18,4 +18,9 @@ class MataPelajaran extends Model
     {
         return $this->hasMany(GuruKelas::class);
     }
+
+    public function mataPelajaran()
+    {
+        return $this->hasMany(Guru::class);
+    }
 }

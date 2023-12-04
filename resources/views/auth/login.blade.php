@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Login || Cafe Reservation</title>
+    <title>Login || Sekolah</title>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 </head>
 @include('layouts/admin_navbar')
@@ -22,12 +22,13 @@
                                 <div class="col-md-10 offset-md-1">
                                     <div class="form-group">
                                         <span class="fa fa-user form-control-icon"></span>
-                                        <input id="email" type="email"
-                                            class="form-control @error('email') is-invalid @enderror " name="email"
-                                            value="{{ old('email') }}" placeholder="Email" required
-                                            autocomplete="email" autofocus style="background-color: #F0F0F0;">
+                                        <input id="username" type="username"
+                                            class="form-control @error('username') is-invalid @enderror "
+                                            name="username" value="{{ old('username') }}" placeholder="Username"
+                                            required autocomplete="username" autofocus
+                                            style="background-color: #F0F0F0;">
                                     </div>
-                                    @error('email')
+                                    @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

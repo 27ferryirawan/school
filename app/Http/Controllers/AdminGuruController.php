@@ -37,34 +37,30 @@ class AdminGuruController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
-        $guruKelas = GuruKelas::select('guru.id', 'guru.NIP', 'guru.nama_guru', 'kelas.nama_kelas', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru_kelas.id AS guru_kelas_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
-                    ->join('guru', 'guru_kelas.guru_id', '=', 'guru.id')
-                    ->join('kelas', 'guru_kelas.kelas_id', '=', 'kelas.id')
-                    ->join('tahun_ajaran', 'guru_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
-                    ->join('mata_pelajaran', 'guru_kelas.mata_pelajaran_id', '=', 'mata_pelajaran.id')
+    public function index($siswaGuruNilai, $kelasId, $mataPelajaranId){
+        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
+                    ->join('tahun_ajaran', 'guru.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+                    ->join('mata_pelajaran', 'guru.mata_pelajaran_id', '=', 'mata_pelajaran.id')
+                    ->where('guru.mata_pelajaran_id', $mataPelajaranId) 
                     ->orderBy('guru.nama_guru', 'asc')
                     ->get();
 
         $mataPelajaran = MataPelajaran::all();
 
-        return view('admin_guru', compact('guruKelas','mataPelajaran'));
+        return view('admin_guru', compact('guru','mataPelajaran'));
     }
 
     public function addIndex(){
-        $guruKelas = GuruKelas::select('guru.id', 'guru.NIP', 'guru.nama_guru', 'kelas.nama_kelas', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru_kelas.id AS guru_kelas_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
-                    ->join('guru', 'guru_kelas.guru_id', '=', 'guru.id')
-                    ->join('kelas', 'guru_kelas.kelas_id', '=', 'kelas.id')
-                    ->join('tahun_ajaran', 'guru_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
-                    ->join('mata_pelajaran', 'guru_kelas.mata_pelajaran_id', '=', 'mata_pelajaran.id')
+        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
+                    ->join('tahun_ajaran', 'guru.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+                    ->join('mata_pelajaran', 'guru.mata_pelajaran_id', '=', 'mata_pelajaran.id')
                     ->orderBy('guru.nama_guru', 'asc')
                     ->get();
 
         $mataPelajaran = MataPelajaran::all();
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
-        $kelas = Kelas::select('id', 'nama_kelas')->get();
 
-        return view('admin_guru_add', compact('guruKelas','mataPelajaran', 'tahunAjaran', 'kelas'));
+        return view('admin_guru_add', compact('guru','mataPelajaran', 'tahunAjaran'));
     }
 
     public function sort(Request $request)
@@ -73,18 +69,16 @@ class AdminGuruController extends Controller
         $order = $request->input('order');
 
         // Logika pengurutan sesuai kolom dan urutan yang diterima
-        $guruKelas = GuruKelas::select('guru.id', 'guru.NIP', 'guru.nama_guru', 'kelas.nama_kelas', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru_kelas.id AS guru_kelas_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
-                    ->join('guru', 'guru_kelas.guru_id', '=', 'guru.id')
-                    ->join('kelas', 'guru_kelas.kelas_id', '=', 'kelas.id')
-                    ->join('tahun_ajaran', 'guru_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
-                    ->join('mata_pelajaran', 'guru_kelas.mata_pelajaran_id', '=', 'mata_pelajaran.id')
+        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
+                    ->join('tahun_ajaran', 'guru.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+                    ->join('mata_pelajaran', 'guru.mata_pelajaran_id', '=', 'mata_pelajaran.id')
                     ->orderBy($column, $order)
                     ->get();
 
         $mataPelajaran = MataPelajaran::all();
 
         // Mengembalikan data dalam format yang dapat di-render pada tampilan
-        return view('admin_guru', compact('guruKelas','mataPelajaran'));
+        return view('admin_guru', compact('guru','mataPelajaran'));
     }
 
     // public function insertBulkData(Request $request)
@@ -122,16 +116,9 @@ class AdminGuruController extends Controller
                     'NIP' => $rowData['NIP'],
                     'nama_guru' => $rowData['nama_guru'],
                     'jenis_kelamin' => $rowData['jenis_kelamin'],
-                ];
-                Guru::where('id', $guruId)->update($guruData);
-
-                // Update data siswa_kelas
-                $guruKelasId = $rowData['guru_kelas_id'];
-                $guruKelasData = [
                     'mata_pelajaran_id' => $rowData['mata_pelajaran_id'],
                 ];
-
-                GuruKelas::where('id', $guruKelasId)->update($guruKelasData);
+                Guru::where('id', $guruId)->update($guruData);
             }
             
             DB::commit();
@@ -155,9 +142,6 @@ class AdminGuruController extends Controller
             foreach ($data as $rowData) {
                 $guruId = $rowData['id'];
                 Guru::where('id', $guruId)->delete();
-
-                $guruKelasId = $rowData['guru_kelas_id'];
-                GuruKelas::where('id', $guruKelasId)->delete();
             }
             
             DB::commit();
@@ -185,7 +169,7 @@ class AdminGuruController extends Controller
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'agama' => 'required',
-                'kelas_id' => 'required',
+                'mata_pelajaran_id' => 'required',
                 'tahun_ajaran_id' => 'required',
                 'username' => 'required|unique:users',
                 'password' => 'required',
@@ -206,16 +190,11 @@ class AdminGuruController extends Controller
             $guru->tempat_lahir = $request->tempat_lahir;
             $guru->tanggal_lahir = $request->tanggal_lahir;
             $guru->agama = $request->agama;
+            $guru->mata_pelajaran_id = $request->mata_pelajaran_id;
             $guru->user_id = $user->id;
+            $guru->tahun_ajaran_id = $request->tahun_ajaran_id;
             $guru->save();
 
-            // Simpan data siswa_kelas ke dalam tabel siswa_kelas
-            $guruKelas = new GuruKelas();
-            $guruKelas->guru_id = $guru->id;
-            $guruKelas->kelas_id = $request->kelas_id;
-            $guruKelas->tahun_ajaran_id = $request->tahun_ajaran_id;
-            $guruKelas->tahun_ajaran_id = $request->tahun_ajaran_id;
-            $guruKelas->save();
 
             // Commit transaksi database jika berhasil
             DB::commit();

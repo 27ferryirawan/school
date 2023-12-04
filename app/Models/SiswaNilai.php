@@ -5,18 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Guru extends Model
+class SiswaNilai extends Model
 {
-    protected $table = 'guru';
+    use HasFactory;
+    protected $table = 'siswa_nilai';
 
     protected $fillable = [
-        'nama_guru',
-        'NIP',
-        'jenis_kelamin',
-        'tanggal_lahir',
-        'agama',
-        'tempat_lahir',
+        'nilai',
     ];
+
+    public function siswa()
+    {
+        return $this->hasMany(Siswa::class);
+    }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class);
+    }
 
     public function tahunAjaran()
     {

@@ -69,14 +69,13 @@
                     </select>
                 </div>
                 <div class="input-com">
-                    <label>Kelas</label>
-                    <select class="dropdown" name="kelas-dropdown" id="kelas">
+                    <label>Mata Pelajaran</label>
+                    <select class="dropdown" name="matapelajaran-dropdown" id="mataPelajaran">
                         <option value="" selected disabled hidden>
-
                         </option>
-                        @foreach ($kelas as $dataKelas)
-                            <option value="{{ $dataKelas['id'] }}">
-                                {{ $dataKelas['nama_kelas'] }}
+                        @foreach ($mataPelajaran as $dataMataPelajaran)
+                            <option value="{{ $dataMataPelajaran['id'] }}">
+                                {{ $dataMataPelajaran['mata_pelajaran'] }}
                             </option>
                         @endforeach
                     </select>
@@ -150,7 +149,7 @@
         var tempatLahir = $('#tempatLahir').val();
         var tanggalLahir = $('#tanggalLahir').val();
         var agama = $('#agama').val();
-        var kelas = $('#kelas').val();
+        var mataPelajaran = $('#mataPelajaran').val();
         var tahunAjaran = $('#tahunAjaran').val();
         var username = $('#username').val();
         var password = $('#password').val();
@@ -163,7 +162,7 @@
             tempat_lahir: tempatLahir,
             tanggal_lahir: tanggalLahir,
             agama: agama,
-            kelas_id: kelas,
+            mata_pelajaran_id: mataPelajaran,
             tahun_ajaran_id: tahunAjaran,
             username: username,
             password: password,

@@ -20,8 +20,13 @@ class Siswa extends Model
         'tempat_lahir'
     ];
 
-    public function siswaKelas()
+    public function kelas()
     {
-        return $this->hasMany(SiswaKelas::class);
+        return $this->hasMany(Kelas::class);
+    }
+
+    public function tahunAjaran()
+    {
+        return $this->hasMany(TahunAjaran::class);
     }
 }

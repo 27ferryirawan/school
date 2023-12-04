@@ -15,6 +15,8 @@ class CreateSiswaTable extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('kelas_id');
+            $table->unsignedBigInteger('tahun_ajaran_id');
             $table->string('NISN');
             $table->string('nama_siswa');
             $table->string('jenis_kelamin');
@@ -29,6 +31,16 @@ class CreateSiswaTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('kelas_id')
+                ->references('id')
+                ->on('kelas')
+                ->onDelete('cascade');
+
+            $table->foreign('tahun_ajaran_id')
+                ->references('id')
+                ->on('tahun_ajaran')
                 ->onDelete('cascade');
         });
     }

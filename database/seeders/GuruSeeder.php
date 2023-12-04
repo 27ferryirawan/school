@@ -18,6 +18,8 @@ class GuruSeeder extends Seeder
         DB::table('guru')->insert([
             [
                 'user_id' => '1',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '1',
                 'NIP' => '101',
                 'nama_guru' => 'Elsa',
                 'jenis_kelamin' => 'P',
@@ -27,6 +29,8 @@ class GuruSeeder extends Seeder
             ],
             [
                 'user_id' => '1',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '2',
                 'NIP' => '102',
                 'nama_guru' => 'Dimas',
                 'jenis_kelamin' => 'L',
@@ -36,6 +40,8 @@ class GuruSeeder extends Seeder
             ],
             [
                 'user_id' => '1',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '3',
                 'NIP' => '103',
                 'nama_guru' => 'Ana',
                 'jenis_kelamin' => 'P',

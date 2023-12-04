@@ -18,6 +18,8 @@ class SiswaSeeder extends Seeder
         DB::table('siswa')->insert([
             [
                 'user_id' => 1,
+                'kelas_id' => 1,
+                'tahun_ajaran_id' => 1,
                 'NISN' => '1V',
                 'nama_siswa' => 'Vellen Jeniesca',
                 'jenis_kelamin' => 'L',
@@ -27,6 +29,8 @@ class SiswaSeeder extends Seeder
             ],
             [
                 'user_id' => 1,
+                'kelas_id' => 2,
+                'tahun_ajaran_id' => 1,
                 'NISN' => '1S',
                 'nama_siswa' => 'Stephanie',
                 'jenis_kelamin' => 'P',
@@ -36,6 +40,8 @@ class SiswaSeeder extends Seeder
             ],
             [
                 'user_id' => 1,
+                'kelas_id' => 3,
+                'tahun_ajaran_id' => 1,
                 'NISN' => '1B',
                 'nama_siswa' => 'Budi',
                 'jenis_kelamin' => 'L',

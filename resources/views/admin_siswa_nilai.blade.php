@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Siswa</title>
+    <title>Nilai</title>
     @include('layouts/admin_navbar')
 </head>
 
@@ -11,62 +11,56 @@
         <table id="siswa-table" class="siswa-tab" style="width: 100%;">
             <thead>
                 <tr>
-                    <th style="width: 20%;" class="sortable" data-column="nip">NIP
+                    <th style="width: 21%;" class="sortable" data-column="nisn">NISN
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%;" class="sortable" data-column="nama_guru">Nama Guru
+                    <th style="width: 14%;" class="sortable" data-column="nama_siswa">Nama Siswa
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%;" class="sortable" data-column="mata_pelajaran">Mata Pelajaran
+                    <th style="width: 17%;" class="sortable" data-column="nama_kelas">Kelas
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
+                    <th style="width: 17%;" class="sortable" data-column="nilai">Nilai
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%; text-align: center">Action
+                    <th style="width: 17%;" class="sortable" data-column="tahun_ajaran">Tahun Ajaran
+                        <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                    </th>
+                    <th style="width: 14%;; text-align: center">Action
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($guru as $data)
+                @foreach ($siswaNilai as $data)
                     <tr class="siswa-row" style="margin: 10px;" data-resid="{{ $data->id }}"
-                        data-guruid="{{ $data->id }}">
+                        data-siswaid="{{ $data->siswa_id }}" data-kelasid="{{ $data->kelas_id }}"
+                        data-tahunajaranid="{{ $data->tahun_ajaran_id }}"
+                        data-matapelajaranid="{{ $data->mata_pelajaran_id }}">
                         <td style="position: relative; text-align: left;">
-                            <div class="editable-com" style="margin-right:10px">
-                                <label contenteditable="false" name='nip'>{{ $data->NIP }}</label>
-                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
+                            <div style="margin-right:10px">
+                                <label name='nisn'>{{ $data->NISN }}</label>
+                            </div>
+                        </td>
+                        <td style="position: relative; text-align: left;">
+                            <div style="margin-right:10px">
+                                <label name='nama-siswa'>{{ $data->nama_siswa }}</label>
+                            </div>
+                        </td>
+                        <td style="position: relative; text-align: left;">
+                            <div style="margin-right:10px">
+                                <label name='kelas'>{{ $data->nama_kelas }}</label>
                             </div>
                         </td>
                         <td style="position: relative; text-align: left;">
                             <div class="editable-com" style="margin-right:10px">
-                                <label contenteditable="false" name='nama-guru'>{{ $data->nama_guru }}</label>
+                                <label contenteditable="false" name='nilai'
+                                    onblur="validateLabel(this)">{{ $data->nilai }}</label>
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
                         </td>
                         <td style="position: relative; text-align: left;">
-                            <div class="editable-com" style="margin-right:10px">
-                                <select class="dropdown" name="matapelajaran-dropdown">
-                                    @foreach ($mataPelajaran as $dataMataPelajaran)
-                                        <option value="{{ $dataMataPelajaran['id'] }}" disabled
-                                            @if ($data->mata_pelajaran_id == $dataMataPelajaran['id']) selected @endif>
-                                            {{ $dataMataPelajaran['mata_pelajaran'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
-                            </div>
-                        </td>
-                        <td style="position: relative; text-align: left;">
-                            <div class="editable-com" style="margin-right:10px">
-                                <select class="dropdown" name="jenis-kelamin-dropdown">
-                                    <option value="L" disabled @if ($data->jenis_kelamin == 'Laki-Laki') selected @endif>
-                                        Laki-Laki
-                                    </option>
-                                    <option value="P" disabled @if ($data->jenis_kelamin == 'Perempuan') selected @endif>
-                                        Perempuan
-                                    </option>
-                                </select>
-                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
+                            <div style="margin-right:10px">
+                                <label name='tahun-ajaran'>{{ $data->tahun_ajaran }}</label>
                             </div>
                         </td>
                         <td>
@@ -93,16 +87,6 @@
                 style="width: 125px; height: 35px; background-color: #888888; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
                 onclick="editData(this)" data-editing="false" disabled>Ubah</button>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; margin-left: 20px;">
-            <button
-                style="width: 125px; height: 35px; background-color: #888888; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                onclick="deleteData(this)" disabled>Hapus</button>
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center; margin-left: 20px;">
-            <button
-                style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                onclick="addData()">Tambah</button>
-        </div>
     </footer>
     <div id="saveModal" class="modal">
         <div class="modal-content">
@@ -127,6 +111,25 @@
 
 
 <script>
+    function validateLabel(label) {
+        // Get the label content (assuming it contains a numeric value)
+        var labelContent = parseFloat(label.textContent);
+
+        // Check if the label content is a valid number
+        if (isNaN(labelContent) || !isFinite(labelContent)) {
+            alert("Please enter a valid number.");
+            // You may choose to revert the label content to its original value
+            // or take appropriate action based on your requirements.
+            return;
+        }
+
+        // Check if the label content is between 0 and 100
+        if (labelContent < 0 || labelContent > 100) {
+            alert("Please enter a number between 0 and 100.");
+            // You may choose to revert the label content to its original value
+            // or take appropriate action based on your requirements.
+        }
+    }
     const modal = document.getElementById("saveModal");
     const deleteModal = document.getElementById("deleteModal");
     $(document).ready(function() {
@@ -146,10 +149,14 @@
                 $(this).data('order', 'asc');
             }
 
+            const [kelasId, mataPelajaranId] = window.location.pathname.split('/').slice(-2);
+
             $.ajax({
-                url: '{{ route('admin-guru.sort') }}',
+                url: '{{ route('admin-nilai.sort') }}',
                 method: 'GET',
                 data: {
+                    kelasId: kelasId,
+                    mataPelajaranId: mataPelajaranId,
                     column: column,
                     order: order
                 },
@@ -195,19 +202,19 @@
             var row = $(this).closest('tr');
 
             var rowData = {
-                'NIP': row.find('label[name="nip"]').text(),
-                'nama_guru': row.find('label[name="nama-guru"]').text(),
-                'mata_pelajaran_id': row.find('select[name="matapelajaran-dropdown"]').val(),
-                'jenis_kelamin': row.find('select[name="jenis-kelamin-dropdown"]').val(),
+                'nilai': row.find('label[name="nilai"]').text(),
                 'id': row.data('resid'),
-                'guru_id': row.data('guruid'),
+                'siswa_id': row.data('siswaid'),
+                'kelas_id': row.data('kelasid'),
+                'tahun_ajaran_id': row.data('tahunajaranid'),
+                'mata_pelajaran_id': row.data('matapelajaranid'),
             };
 
             selectedRowsData.push(rowData);
         });
 
         $.ajax({
-            url: '{{ route('admin-guru.bulkUpdate') }}',
+            url: '{{ route('admin-nilai.bulkUpdate') }}',
             method: 'POST',
             data: {
                 rowsData: selectedRowsData,
@@ -223,7 +230,7 @@
     }
 
     function cancelEditDelete(button) {
-        $('label[contenteditable]').attr('contenteditable', false);
+        $('label[contenteditable][name="nilai"]').attr('contenteditable', false);
         $('input[type="checkbox"]').prop('checked', false);
         button.innerText = 'Batal';
         selectedIds.length = 0;
@@ -248,7 +255,7 @@
         if (!isEditMode) {
             selectedIds.forEach(function(resid) {
                 var row = $('tr[data-resid="' + resid + '"]');
-                row.find('label').attr('contenteditable', true);
+                row.find('label[contenteditable][name="nilai"]').attr('contenteditable', true);
                 row.find('.editable-com').css('border-bottom', '1px solid black');
                 row.find('option').prop('disabled', false);
                 row.find('select').css('pointer-events', 'auto');
@@ -284,7 +291,7 @@
 
     function updateData() {
         saveEditData()
-        $('label[contenteditable]').attr('contenteditable', false);
+        $('label[contenteditable][name="nilai"]').attr('contenteditable', false);
         $('input[type="checkbox"]').prop('checked', false);
         $('button[onclick="editData(this)"]').text('Ubah');
         selectedIds.length = 0;
@@ -303,67 +310,12 @@
         hideModal()
     }
 
-    function saveDeleteData() {
-        $('input[type="checkbox"]:checked').each(function() {
-            var row = $(this).closest('tr');
-
-            var rowData = {
-                'id': row.data('resid'),
-                'guru_id': row.data('guruid'),
-            };
-
-            selectedRowsData.push(rowData);
-        });
-
-        selectedRowsData.forEach(function(rowData) {
-            // Temukan baris berdasarkan data-resid dan guruid
-            var row = $('tr[data-resid="' + rowData.id + '"][data-guruid="' + rowData.guru_id +
-                '"]');
-
-            // Hapus baris dari tampilan
-            row.remove();
-        });
-
-        $.ajax({
-            url: '{{ route('admin-guru.bulkDelete') }}',
-            method: 'POST',
-            data: {
-                rowsData: selectedRowsData,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                $('input[type="checkbox"]').prop('checked', false);
-                $('button[onclick="deleteData(this)"]').text('Hapus');
-                selectedIds.length = 0;
-                $('button[onclick="editData(this)"]').prop('disabled', false);
-                $('button[onclick="editData(this)"]').css('background-color', '#d9251c')
-                $('div.editable-com').css('border-bottom', '');
-                $('input[type="checkbox"]').prop('disabled', false);
-                checkCheckBoxUpdateButton()
-                deleteModal.style.display = "none";
-                document.body.style.overflow = "auto";
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-
-    function deleteData(button) {
-        deleteModal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    }
-
     function confirmDeleteData() {
         selectedIds.forEach(function(resid) {
             var row = $('tr[data-resid="' + resid + '"]');
             row.find('.editable-com').css('border-bottom', '1px solid red');
         });
         saveDeleteData()
-    }
-
-    function addData() {
-        window.location.href = '{{ route('admin-guru.add') }}'
     }
 
     window.onclick = function(event) {

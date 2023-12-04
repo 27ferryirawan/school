@@ -10,7 +10,8 @@ class Kelas extends Model
     protected $table = 'kelas';
 
     protected $fillable = [
-        'nama_kelas'
+        'nama_kelas',
+        'tingkat_kelas'
     ];
 
     public function siswaKelas()

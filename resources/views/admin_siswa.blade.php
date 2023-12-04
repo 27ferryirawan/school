@@ -31,9 +31,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($siswaKelas as $data)
+                @foreach ($siswa as $data)
                     <tr class="siswa-row" style="margin: 10px;" data-resid="{{ $data->id }}"
-                        data-siswakelasid="{{ $data->siswa_kelas_id }}">
+                        data-siswaid="{{ $data->id }}">
                         <td style="position: relative; text-align: left;">
                             <div class="editable-com" style="margin-right:10px">
                                 <label contenteditable="false" name='nisn'>{{ $data->NISN }}</label>
@@ -217,7 +217,7 @@
                 'jenis_kelamin': row.find('select[name="jenis-kelamin-dropdown"]').val(),
                 'tahun_ajaran_id': row.find('select[name="tahun-ajaran-dropdown"]').val(),
                 'id': row.data('resid'),
-                'siswa_kelas_id': row.data('siswakelasid'),
+                'id': row.data('siswaid'),
             };
 
             selectedRowsData.push(rowData);
@@ -326,15 +326,15 @@
 
             var rowData = {
                 'id': row.data('resid'),
-                'siswa_kelas_id': row.data('siswakelasid'),
+                'id': row.data('siswaid'),
             };
 
             selectedRowsData.push(rowData);
         });
 
         selectedRowsData.forEach(function(rowData) {
-            // Temukan baris berdasarkan data-resid dan siswakelasid
-            var row = $('tr[data-resid="' + rowData.id + '"][data-siswakelasid="' + rowData.siswa_kelas_id +
+            // Temukan baris berdasarkan data-resid dan siswaid
+            var row = $('tr[data-resid="' + rowData.id + '"][data-siswaid="' + rowData.id +
                 '"]');
 
             // Hapus baris dari tampilan

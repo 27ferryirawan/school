@@ -36,32 +36,31 @@ class AdminSiswaController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
-        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id', 'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
-                    ->join('siswa', 'siswa_kelas.siswa_id', '=', 'siswa.id')
-                    ->join('kelas', 'siswa_kelas.kelas_id', '=', 'kelas.id')
-                    ->join('tahun_ajaran', 'siswa_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+    public function index($siswaGuruNilai, $kelasId){
+        $siswa = Siswa::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id',  'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
+                    ->join('kelas', 'siswa.kelas_id', '=', 'kelas.id')
+                    ->join('tahun_ajaran', 'siswa.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+                    ->where('siswa.kelas_id', $kelasId)
                     ->orderBy('siswa.nama_siswa', 'asc')
                     ->get();
 
         $kelas = Kelas::select('id', 'nama_kelas')->get();
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
 
-        return view('admin_siswa', compact('siswaKelas','kelas','tahunAjaran'));
+        return view('admin_siswa', compact('siswa','kelas','tahunAjaran'));
     }
 
     public function addIndex(){
-        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id', 'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')         
-                    ->join('siswa', 'siswa_kelas.siswa_id', '=', 'siswa.id')
-                    ->join('kelas', 'siswa_kelas.kelas_id', '=', 'kelas.id')
-                    ->join('tahun_ajaran', 'siswa_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+        $siswa = Siswa::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id',  'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
+                    ->join('kelas', 'siswa.kelas_id', '=', 'kelas.id')
+                    ->join('tahun_ajaran', 'siswa.tahun_ajaran_id', '=', 'tahun_ajaran.id')
                     ->orderBy('siswa.nama_siswa', 'asc')
                     ->get();
 
         $kelas = Kelas::select('id', 'nama_kelas')->get();
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
 
-        return view('admin_siswa_add', compact('siswaKelas','kelas','tahunAjaran'));
+        return view('admin_siswa_add', compact('siswa','kelas','tahunAjaran'));
     }
 
     public function sort(Request $request)
@@ -70,10 +69,9 @@ class AdminSiswaController extends Controller
         $order = $request->input('order');
 
         // Logika pengurutan sesuai kolom dan urutan yang diterima
-        $siswaKelas = SiswaKelas::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id', 'siswa_kelas.id AS siswa_kelas_id', 'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
-                    ->join('siswa', 'siswa_kelas.siswa_id', '=', 'siswa.id')
-                    ->join('kelas', 'siswa_kelas.kelas_id', '=', 'kelas.id')
-                    ->join('tahun_ajaran', 'siswa_kelas.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+        $siswa = Siswa::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id',  'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
+                    ->join('kelas', 'siswa.kelas_id', '=', 'kelas.id')
+                    ->join('tahun_ajaran', 'siswa.tahun_ajaran_id', '=', 'tahun_ajaran.id')
                     ->orderBy($column, $order)
                     ->get();
 
@@ -81,7 +79,7 @@ class AdminSiswaController extends Controller
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
 
         // Mengembalikan data dalam format yang dapat di-render pada tampilan
-        return view('admin_siswa', compact('siswaKelas','kelas','tahunAjaran'));
+        return view('admin_siswa', compact('siswa','kelas','tahunAjaran'));
     }
 
     // public function insertBulkData(Request $request)
@@ -119,18 +117,10 @@ class AdminSiswaController extends Controller
                     'NISN' => $rowData['NISN'],
                     'nama_siswa' => $rowData['nama_siswa'],
                     'jenis_kelamin' => $rowData['jenis_kelamin'],
-                ];
-                Siswa::where('id', $siswaId)->update($siswaData);
-
-                // Update data siswa_kelas
-                $siswaKelasId = $rowData['siswa_kelas_id'];
-                $siswaKelasData = [
-                    'siswa_id' => $rowData['id'],
                     'kelas_id' => $rowData['kelas_id'],
                     'tahun_ajaran_id' => $rowData['tahun_ajaran_id'],
                 ];
-
-                SiswaKelas::where('id', $siswaKelasId)->update($siswaKelasData);
+                Siswa::where('id', $siswaId)->update($siswaData);
             }
             
             DB::commit();
@@ -154,9 +144,6 @@ class AdminSiswaController extends Controller
             foreach ($data as $rowData) {
                 $siswaId = $rowData['id'];
                 Siswa::where('id', $siswaId)->delete();
-
-                $siswaKelasId = $rowData['siswa_kelas_id'];
-                SiswaKelas::where('id', $siswaKelasId)->delete();
             }
             
             DB::commit();
@@ -199,6 +186,8 @@ class AdminSiswaController extends Controller
 
             // Simpan data siswa ke dalam tabel siswa
             $siswa = new Siswa();
+            $siswa->kelas_id = $request->kelas_id;
+            $siswa->tahun_ajaran_id = $request->tahun_ajaran_id;
             $siswa->NISN = $request->nisn;
             $siswa->nama_siswa = $request->nama_siswa;
             $siswa->jenis_kelamin = $request->jenis_kelamin;
@@ -207,13 +196,6 @@ class AdminSiswaController extends Controller
             $siswa->agama = $request->agama;
             $siswa->user_id = $user->id;
             $siswa->save();
-
-            // Simpan data siswa_kelas ke dalam tabel siswa_kelas
-            $siswaKelas = new SiswaKelas();
-            $siswaKelas->siswa_id = $siswa->id;
-            $siswaKelas->kelas_id = $request->kelas_id;
-            $siswaKelas->tahun_ajaran_id = $request->tahun_ajaran_id;
-            $siswaKelas->save();
 
             // Commit transaksi database jika berhasil
             DB::commit();

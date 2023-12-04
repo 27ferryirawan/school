@@ -15,6 +15,8 @@ class CreateGuruTable extends Migration
         Schema::create('guru', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('tahun_ajaran_id');
+            $table->unsignedBigInteger('mata_pelajaran_id');
             $table->string('NIP');
             $table->string('nama_guru');
             $table->string('jenis_kelamin');
@@ -31,7 +33,15 @@ class CreateGuruTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
+            $table->foreign('mata_pelajaran_id')
+                ->references('id')
+                ->on('mata_pelajaran')
+                ->onDelete('cascade');
 
+            $table->foreign('tahun_ajaran_id')
+                ->references('id')
+                ->on('tahun_ajaran')
+                ->onDelete('cascade');
         });
     }
     

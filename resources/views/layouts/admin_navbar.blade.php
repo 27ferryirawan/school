@@ -1,8 +1,8 @@
 @php
     if (Auth::check() && Auth::user()->role == 'ADMIN') {
-        $siswa_url = '/admin-siswa';
+        $siswa_url = '/admin-kelas/list/1';
     } else {
-        $siswa_url = '/admin-siswa';
+        $siswa_url = '/admin-kelas/list/1';
     }
 @endphp
 
@@ -20,9 +20,12 @@
             {{-- <li><a class="{{ request()->is('admin-siswa') ? 'active' : '' }}" href="/admin-siswa">SISWA</a></li> --}}
             <li><a class="{{ request()->is($siswa_url) ? 'active' : '' }}" href="{{ $siswa_url }}">SISWA</a>
             </li>
-            <li><a class="{{ request()->is('admin-guru') ? 'active' : '' }}" href="/admin-guru">GURU</a></li>
-            <li><a class="{{ request()->is('admin-nilai') ? 'active' : '' }}" href="/admin-nilai">NILAI</a></li>
-            <li><a class="{{ request()->is('about-us') ? 'active' : '' }}" href="/about-us">TENTANG KITA</a></li>
+            <li><a class="{{ request()->is('admin-guru') ? 'active' : '' }}"
+                    href="/admin-mata-pelajaran/list/2/0">GURU</a></li>
+            <li><a class="{{ request()->is('admin-nilai') ? 'active' : '' }}" href="/admin-kelas/list/3">NILAI</a>
+            </li>
+            <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
+            </li>
             @guest
                 <li><a class="login-button {{ request()->is('login') ? 'active' : '' }}" href="/login">LOGIN</a></li>
             @endguest
