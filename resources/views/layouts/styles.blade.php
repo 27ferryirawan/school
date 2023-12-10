@@ -287,6 +287,23 @@
         border: 1px solid black; */
     }
 
+    .modal-input {}
+
+    .modal-input-input label,
+    .modal-input input {
+        display: block;
+        font-size: 17px;
+    }
+
+    .modal-input input[type="text"] {
+        background-repeat: no-repeat;
+        background-position: 5px center;
+        background-size: auto 50%;
+        height: 35px;
+        border: 1px black solid;
+        width: 100%;
+    }
+
     .date-input {
         margin: 10px 50px 0px 80px;
     }
@@ -356,11 +373,22 @@
 
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         padding: 20px;
         border: 1px solid #888;
         width: 40%;
     }
+
+    /* Add this style to center the modal on smaller screens */
+    @media screen and (max-height: 600px) {
+        .modal-content {
+            transform: translate(-50%, 0);
+        }
+    }
+
 
     .confirm-button {
         background-color: #03549b;
@@ -422,7 +450,7 @@
 
     .register {
         border: 3px solid #4e87b9;
-        border-radius: 40px;
+        border-radius: 10px;
         width: 60%;
     }
 
@@ -432,6 +460,7 @@
         font-size: 28px;
         border-bottom: 3px solid #4e87b9;
         padding: 15px;
+        color: #4e87b9;
     }
 
     .register-body {
@@ -441,7 +470,7 @@
 
     .button-login {
         background-color: #4e87b9;
-        border-radius: 20px;
+        border-radius: 10px;
         cursor: pointer;
     }
 

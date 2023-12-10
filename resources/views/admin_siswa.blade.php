@@ -380,7 +380,7 @@
     }
 
     function addData() {
-        window.location.href = '{{ route('admin-siswa.add') }}'
+        window.location.href = window.location.href + '/add'
     }
 
     window.onclick = function(event) {

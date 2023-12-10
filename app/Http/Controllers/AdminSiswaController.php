@@ -50,7 +50,7 @@ class AdminSiswaController extends Controller
         return view('admin_siswa', compact('siswa','kelas','tahunAjaran'));
     }
 
-    public function addIndex(){
+    public function addIndex($siswaGuruNilai, $kelasId){
         $siswa = Siswa::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id',  'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
                     ->join('kelas', 'siswa.kelas_id', '=', 'kelas.id')
                     ->join('tahun_ajaran', 'siswa.tahun_ajaran_id', '=', 'tahun_ajaran.id')
@@ -78,31 +78,8 @@ class AdminSiswaController extends Controller
         $kelas = Kelas::select('id', 'nama_kelas')->get();
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
 
-        // Mengembalikan data dalam format yang dapat di-render pada tampilan
         return view('admin_siswa', compact('siswa','kelas','tahunAjaran'));
     }
-
-    // public function insertBulkData(Request $request)
-    // {
-    //     $data = $request->input('data');
-    //     foreach ($data as $rowData) {
-    //         $siswa = Siswa::create([
-    //             'NISN' => $rowData['NISN'],
-    //             'nama_siswa' => $rowData['nama_siswa'],
-    //             'jenis_kelamin' => $rowData['jenis_kelamin'],
-    //         ]);
-
-    //         $siswaId = $siswa->id;
-
-    //         SiswaKelas::create([
-    //             'siswa_id' => $siswaId,
-    //             'kelas_id' => $rowData['kelas_id'],
-    //             'tahun_ajaran_id' => $rowData['tahun_ajaran_id'],
-    //         ]);
-    //     }
-        
-    //     return response()->json(['message' => 'Data Inserted'], 201);
-    // }
 
     public function bulkUpdate(Request $request)
     {
@@ -197,17 +174,13 @@ class AdminSiswaController extends Controller
             $siswa->user_id = $user->id;
             $siswa->save();
 
-            // Commit transaksi database jika berhasil
             DB::commit();
-
-            // Respon JSON untuk memberi tahu bahwa data telah ditambahkan
-            return response()->json(['message' => 'Data siswa berhasil ditambahkan.']);
+            
+            return response()->json(['message' => 'Berhasil','message_description' => 'Menambahkan Siswa Berhasil!', 'data' => $siswa]);
         } catch (\Exception $e) {
-            // Rollback transaksi database jika terjadi kesalahan
             DB::rollBack();
 
-            // Respon JSON dengan pesan kesalahan
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
         }
     }
 }

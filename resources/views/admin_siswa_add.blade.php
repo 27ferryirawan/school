@@ -170,7 +170,6 @@
             _token: '{{ csrf_token() }}'
         };
 
-        // Melakukan permintaan AJAX
         $.ajax({
             url: '{{ route('admin-siswa.addSiswa') }}',
             method: 'POST',
@@ -180,14 +179,14 @@
                 $('.loading').show();
             },
             success: function(response) {
-                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Siswa Berhasil!";
-                // document.getElementById("successOrFailedDescriptionText").innerHTML =
-                //     "Terima kasih telah melakukan reservasi pada " + reservationDateValue + ", jam " +
-                //     reservationTimeValue +
-                //     ". Harap datang tepat waktu, apabila datang lewat dari 15 menit, maka reservasi akan dibatalkan. Terima kasih.";
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
             },
             error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Siswa Gagal!";
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
             },
             complete: function() {
                 $('.loading').hide();
@@ -198,8 +197,8 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedText").innerHTML == "Menambahkan Siswa Berhasil!") {
-            window.location.href = '{{ route('admin-siswa') }}'
+        if (document.getElementById("successOrFailedText").innerHTML != "") {
+            window.location.href = window.location.href.replace('/add', '');
         }
     }
 

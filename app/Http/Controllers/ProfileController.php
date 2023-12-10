@@ -69,7 +69,7 @@ class ProfileController extends Controller
                 'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'address' => $request->address,
+                'gender' => $request->gender,
                 'phone_number' => $request->phone_number,
                 'profile_picture' => $profilePicture,
             ]);
@@ -79,7 +79,7 @@ class ProfileController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'username' => $request->username,
-                'address' => $request->address,
+                'gender' => $request->gender,
                 'phone_number' => $request->phone_number,
                 'profile_picture' => $profilePicture,
             ]);

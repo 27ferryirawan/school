@@ -179,14 +179,14 @@
                 $('.loading').show();
             },
             success: function(response) {
-                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Guru Berhasil!";
-                // document.getElementById("successOrFailedDescriptionText").innerHTML =
-                //     "Terima kasih telah melakukan reservasi pada " + reservationDateValue + ", jam " +
-                //     reservationTimeValue +
-                //     ". Harap datang tepat waktu, apabila datang lewat dari 15 menit, maka reservasi akan dibatalkan. Terima kasih.";
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
             },
             error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = "Menambahkan Guru Gagal!";
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
             },
             complete: function() {
                 $('.loading').hide();
@@ -197,8 +197,8 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedText").innerHTML == "Menambahkan Guru Berhasil!") {
-            window.location.href = '{{ route('admin-guru') }}'
+        if (document.getElementById("successOrFailedText").innerHTML != "") {
+            window.location.href = window.location.href.replace('/add', '');
         }
     }
 

@@ -2,8 +2,21 @@
 <html>
 
 <head>
+
     <title>Home</title>
-    @include('layouts/admin_navbar')
+    @auth
+        @if (Auth::user()->role == 'ADMIN')
+            @include('layouts/admin_navbar')
+        @elseif (Auth::user()->role == 'GURU')
+            @include('layouts/guru_navbar')
+        @else
+            {{-- Add the default behavior for other roles or unassigned roles --}}
+            @include('layouts/admin_navbar')
+        @endif
+    @else
+        {{-- Add the default behavior for non-authenticated users --}}
+        @include('layouts/admin_navbar')
+    @endauth
 </head>
 
 <body>

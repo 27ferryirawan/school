@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class SiswaNilaiSeeder extends Seeder
+class GuruPembelajaranSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,27 +15,24 @@ class SiswaNilaiSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('siswa_nilai')->insert([
+        DB::table('guru_pembelajaran')->insert([
             [
-                'siswa_id' => '1',
+                'guru_id' => '1',
                 'kelas_id' => '1',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '1',
-                'nilai' => 80.25,
             ],
             [
-                'siswa_id' => '1',
+                'guru_id' => '2',
                 'kelas_id' => '1',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '2',
-                'nilai' => 90.20,
             ],
             [
-                'siswa_id' => '1',
+                'guru_id' => '3',
                 'kelas_id' => '1',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '3',
-                'nilai' => 95.20,
             ]
         ]);
     }

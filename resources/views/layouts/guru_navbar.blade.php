@@ -1,10 +1,10 @@
 @php
-    if ((Auth::check() && Auth::user()->role == 'ADMIN') || !Auth::check()) {
-        $siswa_url = '/admin-kelas/list/1';
+    if ((Auth::check() && Auth::user()->role == 'GURU') || !Auth::check()) {
+        $pembelajaran = '/guru-pembelajaran';
         $guru_url = '/admin-mata-pelajaran/list/2/0';
         $nilai_url = '/admin-kelas/list/3';
-    } elseif (Auth::check() && (Auth::user()->role == 'GURU' || Auth::user()->role == 'SISWA')) {
-        $siswa_url = '/';
+    } elseif (Auth::check() && (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'SISWA')) {
+        $pembelajaran = '/';
         $guru_url = '/';
         $nilai_url = '/';
     }
@@ -22,12 +22,16 @@
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
             {{-- <li><a class="{{ request()->is('admin-siswa') ? 'active' : '' }}" href="/admin-siswa">SISWA</a></li> --}}
-            <li><a class="{{ request()->is($siswa_url) ? 'active' : '' }}" href="{{ $siswa_url }}">SISWA</a>
+            <li><a class="{{ request()->is($pembelajaran) ? 'active' : '' }}"
+                    href="{{ $pembelajaran }}">PEMBELEJARAN</a>
             </li>
-            <li><a class="{{ request()->is($guru_url) ? 'active' : '' }}" href="{{ $guru_url }}">GURU</a></li>
-            <li><a class="{{ request()->is($nilai_url) ? 'active' : '' }}" href="{{ $nilai_url }}">NILAI</a>
+            <li><a class="{{ request()->is('admin-guru') ? 'active' : '' }}"
+                    href="/admin-mata-pelajaran/list/2/0">UJIAN</a></li>
+            <li><a class="{{ request()->is('admin-nilai') ? 'active' : '' }}" href="/admin-kelas/list/3">SISWA</a>
             </li>
-            <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
+            <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">NILAI</a>
+            </li>
+            <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">PROFIL</a>
             </li>
             @guest
                 <li><a class="login-button {{ request()->is('login') ? 'active' : '' }}" href="/login">LOGIN</a></li>
@@ -35,7 +39,7 @@
 
             @auth
                 @if (
-                    (\Auth::user()->role == 'MANAJER' || (Auth::check() && Auth::user()->role == 'KASIR')) &&
+                    (Auth::user()->role == 'MANAJER' || (Auth::check() && Auth::user()->role == 'KASIR')) &&
                         request()->is('reservation'))
                     <script>
                         window.location.href = '/manager-reservation';
