@@ -1,11 +1,11 @@
 @php
     if ((Auth::check() && Auth::user()->role == 'GURU') || !Auth::check()) {
-        $pembelajaran = '/guru-pembelajaran';
-        $guru_url = '/admin-mata-pelajaran/list/2/0';
+        $pembelajaran_url = '/guru-pembelajaran';
+        $ujian_url = '/guru-ujian';
         $nilai_url = '/admin-kelas/list/3';
     } elseif (Auth::check() && (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'SISWA')) {
-        $pembelajaran = '/';
-        $guru_url = '/';
+        $pembelajaran_url = '/';
+        $ujian_url = '/';
         $nilai_url = '/';
     }
 @endphp
@@ -22,11 +22,10 @@
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
             {{-- <li><a class="{{ request()->is('admin-siswa') ? 'active' : '' }}" href="/admin-siswa">SISWA</a></li> --}}
-            <li><a class="{{ request()->is($pembelajaran) ? 'active' : '' }}"
-                    href="{{ $pembelajaran }}">PEMBELEJARAN</a>
+            <li><a class="{{ request()->is($pembelajaran_url) ? 'active' : '' }}"
+                    href="{{ $pembelajaran_url }}">PEMBELEJARAN</a>
             </li>
-            <li><a class="{{ request()->is('admin-guru') ? 'active' : '' }}"
-                    href="/admin-mata-pelajaran/list/2/0">UJIAN</a></li>
+            <li><a class="{{ request()->is($ujian_url) ? 'active' : '' }}" href="{{ $ujian_url }}">UJIAN</a></li>
             <li><a class="{{ request()->is('admin-nilai') ? 'active' : '' }}" href="/admin-kelas/list/3">SISWA</a>
             </li>
             <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">NILAI</a>

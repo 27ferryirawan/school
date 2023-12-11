@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
+            
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
@@ -64,9 +65,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'is_kasir' => \App\Http\Middleware\IsKasir::class,
-        'is_manajer' => \App\Http\Middleware\IsManajer::class,
-        'is_customer' => \App\Http\Middleware\IsCustomer::class,
+        'is_admin' => \App\Http\Middleware\IsAdmin::class,
+        'is_guru' => \App\Http\Middleware\IsGuru::class,
+        'is_siswa' => \App\Http\Middleware\IsSiswa::class,
         'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

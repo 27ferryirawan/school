@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Siswa</title>
+    <title>Pembelajaran</title>
     @include('layouts/guru_navbar')
 </head>
 
@@ -15,7 +15,7 @@
         <div class="container">
             @foreach ($guruPembelajaran as $dataGuru_pembelajaran)
                 <div class="item">
-                    <div class="item-button" onclick="openNewPage()">
+                    <div class="item-button">
                         <div class="left-side">
                             <img src="{{ asset('images/class.png') }}" style="width: 80px; height: 80px">
                         </div>

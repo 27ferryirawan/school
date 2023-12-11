@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
              GuruSeeder::class,
              SiswaNilaiSeeder::class,
              GuruPembelajaranSeeder::class,
+             JenisUjianSeeder::class,
+             JenisSoalSeeder::class,
+             UjianSeeder::class,
+             UjianDetailSeeder::class,
+            //  UjianDetailPilganSeeder::class,
         ]);
     }
 }

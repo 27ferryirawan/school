@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsManajer
+class IsSiswa
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class IsManajer
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->is_admin != 'MANAJER'){
+        if(auth()->user()->role != 'SISWA'){
             return $next($request);
         }
     
-        return redirect('home')->with('error',"You don't have Manajer access.");
+        return redirect('home')->with('error',"You don't have Siswa access.");
     }
 }

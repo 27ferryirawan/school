@@ -10,6 +10,7 @@
     }
 @endphp
 
+
 <head>
     <link rel="icon" type="image/png" href="{{ asset('images/coffee_favicon.png') }}">
 </head>
@@ -34,13 +35,6 @@
             @endguest
 
             @auth
-                @if (
-                    (\Auth::user()->role == 'MANAJER' || (Auth::check() && Auth::user()->role == 'KASIR')) &&
-                        request()->is('reservation'))
-                    <script>
-                        window.location.href = '/manager-reservation';
-                    </script>
-                @endif
                 <li class="nav-item dropdown" style="margin-right: 20px">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

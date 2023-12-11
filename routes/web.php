@@ -16,23 +16,27 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 Route::get('/', [App\Http\Controllers\AdminHomeController::class, 'index'])->name('/');
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin-siswa/{siswa_guru_nilai}/{kelas_id}', [App\Http\Controllers\AdminSiswaController::class, 'index'])->name('admin-siswa');
-Route::get('/admin-siswa/sort', [App\Http\Controllers\AdminSiswaController::class, 'sort'])->name('admin-siswa.sort');
-Route::get('/admin-siswa/{siswa_guru_nilai}/{kelas_id}/add', [App\Http\Controllers\AdminSiswaController::class, 'addIndex'])->name('admin-siswa.add');
-Route::post('/admin-siswa/bulk-update', [App\Http\Controllers\AdminSiswaController::class, 'bulkUpdate'])->name('admin-siswa.bulkUpdate');
-Route::post('/admin-siswa/bulk-delete', [App\Http\Controllers\AdminSiswaController::class, 'bulkDelete'])->name('admin-siswa.bulkDelete');
-Route::post('/admin-siswa/addSiswa', [App\Http\Controllers\AdminSiswaController::class, 'addSiswa'])->name('admin-siswa.addSiswa');
+Route::get('/home', [App\Http\Controllers\AdminHomeController::class, 'index'])->name('home');
+Route::middleware('is_siswa')->group(function () {
+    Route::get('/admin-siswa/{siswa_guru_nilai}/{kelas_id}', [App\Http\Controllers\AdminSiswaController::class, 'index'])->name('admin-siswa');
+    Route::get('/admin-siswa/sort', [App\Http\Controllers\AdminSiswaController::class, 'sort'])->name('admin-siswa.sort');
+    Route::get('/admin-siswa/{siswa_guru_nilai}/{kelas_id}/add', [App\Http\Controllers\AdminSiswaController::class, 'addIndex'])->name('admin-siswa.add');
+    Route::post('/admin-siswa/bulk-update', [App\Http\Controllers\AdminSiswaController::class, 'bulkUpdate'])->name('admin-siswa.bulkUpdate');
+    Route::post('/admin-siswa/bulk-delete', [App\Http\Controllers\AdminSiswaController::class, 'bulkDelete'])->name('admin-siswa.bulkDelete');
+    Route::post('/admin-siswa/addSiswa', [App\Http\Controllers\AdminSiswaController::class, 'addSiswa'])->name('admin-siswa.addSiswa');
+});
 
-Route::get('/admin-kelas/list/{siswa_guru_nilai}', [App\Http\Controllers\AdminKelasController::class, 'indexList'])->name('admin-kelas.list');
-Route::get('/admin-mata-pelajaran/list/{siswa_guru_nilai}/{kelas_id}', [App\Http\Controllers\AdminMataPelajaranController::class, 'indexList'])->name('admin-mata-pelajaran.list');
+Route::middleware('is_guru')->group(function () {
+    Route::get('/admin-kelas/list/{siswa_guru_nilai}', [App\Http\Controllers\AdminKelasController::class, 'indexList'])->name('admin-kelas.list');
+    Route::get('/admin-mata-pelajaran/list/{siswa_guru_nilai}/{kelas_id}', [App\Http\Controllers\AdminMataPelajaranController::class, 'indexList'])->name('admin-mata-pelajaran.list');
 
-Route::get('/admin-guru/{siswa_guru_nilai}/{kelas_id}/{mata_pelajaran_id}', [App\Http\Controllers\AdminGuruController::class, 'index'])->name('admin-guru');
-Route::get('/admin-guru/sort', [App\Http\Controllers\AdminGuruController::class, 'sort'])->name('admin-guru.sort');
-Route::get('/admin-guru/{siswa_guru_nilai}/{kelas_id}/{mata_pelajaran_id}/add', [App\Http\Controllers\AdminGuruController::class, 'addIndex'])->name('admin-guru.add');
-Route::post('/admin-guru/bulk-update', [App\Http\Controllers\AdminGuruController::class, 'bulkUpdate'])->name('admin-guru.bulkUpdate');
-Route::post('/admin-guru/bulk-delete', [App\Http\Controllers\AdminGuruController::class, 'bulkDelete'])->name('admin-guru.bulkDelete');
-Route::post('/admin-guru/addGuru', [App\Http\Controllers\AdminGuruController::class, 'addGuru'])->name('admin-guru.addGuru');
+    Route::get('/admin-guru/{siswa_guru_nilai}/{kelas_id}/{mata_pelajaran_id}', [App\Http\Controllers\AdminGuruController::class, 'index'])->name('admin-guru');
+    Route::get('/admin-guru/sort', [App\Http\Controllers\AdminGuruController::class, 'sort'])->name('admin-guru.sort');
+    Route::get('/admin-guru/{siswa_guru_nilai}/{kelas_id}/{mata_pelajaran_id}/add', [App\Http\Controllers\AdminGuruController::class, 'addIndex'])->name('admin-guru.add');
+    Route::post('/admin-guru/bulk-update', [App\Http\Controllers\AdminGuruController::class, 'bulkUpdate'])->name('admin-guru.bulkUpdate');
+    Route::post('/admin-guru/bulk-delete', [App\Http\Controllers\AdminGuruController::class, 'bulkDelete'])->name('admin-guru.bulkDelete');
+    Route::post('/admin-guru/addGuru', [App\Http\Controllers\AdminGuruController::class, 'addGuru'])->name('admin-guru.addGuru');
+});
 
 Route::get('/admin-nilai/{siswa_guru_nilai}/{kelas_id}/{mata_pelajaran_id}', [App\Http\Controllers\AdminSiswaNilaiController::class, 'index'])->name('admin-nilai');
 Route::get('/admin-nilai/sort', [App\Http\Controllers\AdminSiswaNilaiController::class, 'sort'])->name('admin-nilai.sort');
@@ -40,6 +44,9 @@ Route::post('/admin-nilai/bulk-update', [App\Http\Controllers\AdminSiswaNilaiCon
 
 Route::get('/guru-pembelajaran', [App\Http\Controllers\GuruPembelajaranContoller::class, 'index'])->name('guru-pembelajaran');
 Route::post('/guru-pembelajaran/addPembelajaran', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addGuruPembelajaran'])->name('guru-pembelajaran.add');
+
+Route::get('/guru-ujian', [App\Http\Controllers\GuruUjianController::class, 'index'])->name('guru-ujian');
+\Route::get('/guru-ujian/add', [App\Http\Controllers\GuruUjianController::class, 'addIndex'])->name('guru-ujian.add');
 
 Route::get('/tentang-kita', [App\Http\Controllers\TentangKitaController::class, 'index'])->name('tentang-kita');
 

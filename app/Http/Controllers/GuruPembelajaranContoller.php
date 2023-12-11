@@ -41,7 +41,7 @@ class GuruPembelajaranContoller extends Controller
      */
     public function index(){
         $authUserId = Auth::id();
-        $guruPembelajaran = guruPembelajaran::select(
+        $guruPembelajaran = GuruPembelajaran::select(
             'guru_pembelajaran.id',
             'mata_pelajaran.mata_pelajaran',
             'kelas.nama_kelas',
@@ -77,38 +77,38 @@ class GuruPembelajaranContoller extends Controller
     }
 
     public function addGuruPembelajaran(Request $request)
-{
-    try {
-        // Validate your request data as needed
+    {
+        try {
+            // Validate your request data as needed 
 
-        $guruId = $request->input('guru_id');
-        $kelasId = $request->input('kelas_id');
-        $tahunAjaranId = $request->input('tahun_ajaran_id');
-        $mataPelajaranId = $request->input('mata_pelajaran_id');
+            $guruId = $request->input('guru_id');
+            $kelasId = $request->input('kelas_id');
+            $tahunAjaranId = $request->input('tahun_ajaran_id');
+            $mataPelajaranId = $request->input('mata_pelajaran_id');
 
-        // Check if the record already exists
-        $existingRecord = GuruPembelajaran::where([
-            'guru_id' => $guruId,
-            'kelas_id' => $kelasId,
-            'tahun_ajaran_id' => $tahunAjaranId,
-            'mata_pelajaran_id' => $mataPelajaranId,
-        ])->first();
+            // Check if the record already exists
+            $existingRecord = GuruPembelajaran::where([
+                'guru_id' => $guruId,
+                'kelas_id' => $kelasId,
+                'tahun_ajaran_id' => $tahunAjaranId,
+                'mata_pelajaran_id' => $mataPelajaranId,
+            ])->first();
 
-        // If it exists, return the existing record
-        if ($existingRecord) {
-            return response()->json(['message' => 'Data pembelajaran sudah tersedia', 'data' => $existingRecord]);
+            // If it exists, return the existing record
+            if ($existingRecord) {
+                return response()->json(['message' => 'Data pembelajaran sudah tersedia', 'data' => $existingRecord]);
+            }
+
+            // If it doesn't exist, create a new record
+            $newRecord = GuruPembelajaran::create([
+                'guru_id' => $guruId,
+                'kelas_id' => $kelasId,
+                'tahun_ajaran_id' => $tahunAjaranId,
+                'mata_pelajaran_id' => $mataPelajaranId,
+            ]);
+            return response()->json(['message' => 'Berhasil','message_description' => 'Menambahkan Pembelajaran Berhasil!', 'data' => $newRecord]);
+        } catch (QueryException $e) {
+            return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
         }
-
-        // If it doesn't exist, create a new record
-        $newRecord = GuruPembelajaran::create([
-            'guru_id' => $guruId,
-            'kelas_id' => $kelasId,
-            'tahun_ajaran_id' => $tahunAjaranId,
-            'mata_pelajaran_id' => $mataPelajaranId,
-        ]);
-        return response()->json(['message' => 'Berhasil','message_description' => 'Menambahkan Pembelajaran Berhasil!', 'data' => $newRecord]);
-    } catch (QueryException $e) {
-        return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
     }
-}
 }
