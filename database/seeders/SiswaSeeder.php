@@ -48,6 +48,17 @@ class SiswaSeeder extends Seeder
                 'tanggal_lahir' => '2007-11-10',
                 'agama' => 'Katolik',
                 'tempat_lahir' => 'Jakarta',
+            ],
+            [
+                'user_id' => 4,
+                'kelas_id' => 3,
+                'tahun_ajaran_id' => 1,
+                'NISN' => '1D',
+                'nama_siswa' => 'Dimas',
+                'jenis_kelamin' => 'L',
+                'tanggal_lahir' => '2007-11-15',
+                'agama' => 'Hindu',
+                'tempat_lahir' => 'Jakarta',
             ]
         ]);
     }

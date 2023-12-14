@@ -12,8 +12,9 @@ class MateriKomentar extends Model
 
     protected $fillable = [
         'materi_id',
-        'siswa_id',
+        'guru_siswa_id',
         'description',
+        'role',
     ];
 
     public function materi()

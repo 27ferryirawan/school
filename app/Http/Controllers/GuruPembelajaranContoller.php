@@ -23,6 +23,7 @@ use App\Models\TahunAjaran;
 use App\Models\MataPelajaran;
 use App\Models\Guru;
 use App\Models\Materi;
+use App\Models\MateriKomentar;
 
 class GuruPembelajaranContoller extends Controller
 {
@@ -202,6 +203,46 @@ class GuruPembelajaranContoller extends Controller
         }
     }
 
+    public function addKomentar(Request $request)
+    {
+        try {
+            $authUserId = Auth::id();
+            $authUserRole = Auth::user()->role;
+            
+            $materi_id = $request->input('materi_id');
+            $guru_siswa_id = $request->input('guru_siswa_id');
+            $description = $request->input('description');
+
+            if($authUserRole == 'GURU'){
+                $guru = Guru::select(
+                    'guru.id',
+                )
+                ->where('guru.user_id', $authUserId)
+                ->first();
+                $guru_siswa_id = $guru->id;
+            } else {
+                $siswa = Guru::select(
+                    'siswa.id',
+                )
+                ->where('siswa.user_id', $authUserId)
+                ->first();
+                $guru_siswa_id = $siswa->id;
+            }
+
+            // If it doesn't exist, create a new record
+            $newRecord = MateriKomentar::create([
+                'materi_id' => $materi_id,
+                'guru_siswa_id' => $guru_siswa_id,
+                'role' => $authUserRole,
+                'description' => $description,
+            ]);
+            $newRecord->formatted_created_at = Carbon::parse($newRecord->created_at)->format('d M Y H:i');
+            return response()->json(['message' => 'Berhasil','message_description' => 'Menambahkan Komentar Berhasil!', 'data' => $newRecord]);
+        } catch (QueryException $e) {
+            return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
+        }
+    }
+
     public function deleteMateri(Request $request)
     {
         try {
@@ -291,7 +332,25 @@ class GuruPembelajaranContoller extends Controller
 
         $materi = Materi::find($materiId);
 
-        return view('guru_pembelajaran_detail_materi_detail', compact('guruPembelajaran', 'materi'));
+        $materiKomentar = MateriKomentar::select(
+            DB::raw("CASE WHEN materi_komentar.role= 'GURU' THEN guru.nama_guru WHEN materi_komentar.role= 'SISWA' THEN siswa.nama_siswa ELSE '' END AS nama"),
+            DB::raw("CASE WHEN materi_komentar.role= 'GURU' THEN 1 WHEN 0 THEN siswa.nama_siswa ELSE 2 END AS is_guru"),
+            DB::raw("CASE WHEN materi_komentar.role= 'SISWA' THEN siswa.id WHEN 0 THEN siswa.nama_siswa ELSE -1 END AS siswa_id"),
+            'materi_komentar.description',
+            'materi_komentar.created_at'
+        )
+        ->leftJoin('guru', 'materi_komentar.guru_siswa_id', '=', 'guru.id')
+        ->leftJoin('siswa', 'materi_komentar.guru_siswa_id', '=', 'siswa.id')
+        ->where('materi_komentar.materi_id', $materiId)
+        ->orderBy('materi_komentar.created_at', 'asc')
+        ->get();
+
+        foreach ($materiKomentar as $materiItem) {
+            $materiItem->formatted_created_at = Carbon::parse($materiItem->created_at)->format('d M Y H:i');
+            $materiItem->formatted_updated_at = Carbon::parse($materiItem->updated_at)->format('d M Y H:i');
+        }
+
+        return view('guru_pembelajaran_detail_materi_detail', compact('guruPembelajaran', 'materi', 'materiKomentar'));
     }
     
 }

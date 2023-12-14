@@ -28,7 +28,7 @@ class GuruSeeder extends Seeder
                 'tempat_lahir' => 'Tanjungpinang',
             ],
             [
-                'user_id' => '1',
+                'user_id' => '2',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '2',
                 'NIP' => '102',
@@ -39,7 +39,7 @@ class GuruSeeder extends Seeder
                 'tempat_lahir' => 'Tanjungpinang',
             ],
             [
-                'user_id' => '1',
+                'user_id' => '2',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '3',
                 'NIP' => '103',

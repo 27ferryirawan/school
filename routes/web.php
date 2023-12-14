@@ -49,6 +49,7 @@ Route::middleware('is_guru')->group(function () {
     Route::post('/guru-pembelajaran/detail/addMateri', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addMateri'])->name('guru-pembelajaran.addMateri');
     Route::post('/guru-pembelajaran/detail/deleteMateri', [App\Http\Controllers\GuruPembelajaranContoller::class, 'deleteMateri'])->name('guru-pembelajaran.deleteMateri');
     Route::post('/guru-pembelajaran/detail/updateMateri', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateMateri'])->name('guru-pembelajaran.updateMateri');
+    Route::post('/guru-pembelajaran/detail/addKomentar', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addKomentar'])->name('guru-pembelajaran.addKomentar');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/materi-detail/{materi_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'materiDetailIndex'])->name('guru-pembelajaran.materiDetail');
 
 

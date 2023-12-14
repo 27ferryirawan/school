@@ -15,21 +15,17 @@ class CreateMateriKomentarTable extends Migration
         Schema::create('materi_komentar', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('materi_id');
-            $table->unsignedBigInteger('siswa_id');
-            $table->string('description')->nullable();
+            $table->unsignedBigInteger('guru_siswa_id');
+            $table->string('role');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('materi_id')
-                ->references('id')
-                ->on('materi')
-                ->onDelete('cascade');
-
-            $table->foreign('siswa_id')
-                ->references('id')
-                ->on('siswa')
-                ->onDelete('cascade');
+            // $table->foreign('materi_id')
+            //     ->references('id')
+            //     ->on('materi')
+            //     ->onDelete('cascade');
         });
     }
     

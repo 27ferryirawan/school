@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
              JenisSoalSeeder::class,
              UjianSeeder::class,
              UjianDetailSeeder::class,
-            //  UjianDetailPilganSeeder::class,
+             MateriKomentarSeeder::class
+             UjianDetailPilganSeeder::class,
         ]);
     }
 }
