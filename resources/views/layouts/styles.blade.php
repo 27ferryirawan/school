@@ -77,6 +77,52 @@
         font-weight: bold;
     }
 
+    .tabbar {
+        width: 100%;
+        font-family: 'SourceSansPro';
+    }
+
+    .tabbar-nav {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+        font-weight: bold;
+        color: white;
+
+    }
+
+    .tabbar li {
+        background-color: #03549b;
+        margin: 0;
+        box-sizing: border-box;
+        /* Include padding and borders in the total width and height */
+    }
+
+    .tabbar li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 22px;
+        text-decoration: none;
+    }
+
+    .tabbar li a:hover {
+        background-color: #4e87b9;
+    }
+
+    .tabbar li a.active {
+        background-color: #4e87b9;
+    }
+
+    .tabbar li a.login-button.active {
+        background-color: #4e87b9;
+        color: white !important;
+    }
+
     @media only screen and (max-width: 450px) {
         .navbar {
             height: auto;
@@ -179,7 +225,6 @@
 
     .navbar li a.login-button.active {
         background-color: #4e87b9;
-        ;
         color: white !important;
     }
 
@@ -635,6 +680,47 @@
         min-height: 4rem;
         min-width: 4rem;
     }
+
+    .input-com-full {
+        margin: 10px 60px 0px 60px;
+    }
+
+    .input-com-full label,
+    .input-com-full input,
+    .input-com-full select {
+        display: block;
+        font-size: 17px;
+    }
+
+    .input-com-full input[type="text"],
+    .input-com-full input[type="password"],
+    .input-com-full select {
+        height: 35px;
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    .input-com-full textarea {
+        height: 200px;
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    #fileInput {
+        display: none;
+    }
+
+    #customFileButton {
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        text-align: center;
+        border: 3px solid black;
+        box-shadow: 5px 5px 5px black;
+        width: 150px;
+    }
 </style>
 
 <script>
@@ -663,6 +749,18 @@
             x.type = "text";
         } else {
             x.type = "password";
+        }
+    }
+
+    function displayFileName() {
+        var fileInput = document.getElementById('fileInput');
+        var fileNameDisplay = document.getElementById('fileNameDisplay');
+
+        if (fileInput.files.length > 0) {
+            var fileName = fileInput.files[0].name;
+            fileNameDisplay.innerHTML = fileName;
+        } else {
+            fileNameDisplay.innerHTML = '';
         }
     }
 </script>

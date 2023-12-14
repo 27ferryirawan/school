@@ -14,7 +14,7 @@
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <div class="image-container">
+                        <div class="image-container"\>
                             @if ($user->profile_picture == null)
                                 <img src="images/upload.png" alt="default upload" id="default_image" width="80px"
                                     height="70px" style=" display:block; margin: 0 auto 0 auto; padding:5px;">

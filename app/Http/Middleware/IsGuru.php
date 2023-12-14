@@ -16,10 +16,10 @@ class IsGuru
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role != 'GURU'){
+        if(auth()->user()->role == 'GURU'){
             return $next($request);
         }
     
-        return redirect('home')->with('error',"You don't have Guru access.");
+        return redirect('/')->with('error',"You don't have Guru access.");
     }
 }

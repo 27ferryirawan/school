@@ -16,10 +16,10 @@ class IsSiswa
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role != 'SISWA'){
+        if(auth()->user()->role == 'SISWA'){
             return $next($request);
         }
     
-        return redirect('home')->with('error',"You don't have Siswa access.");
+        return redirect('/')->with('error',"You don't have Siswa access.");
     }
 }

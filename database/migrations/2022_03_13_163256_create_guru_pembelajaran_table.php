@@ -17,7 +17,7 @@ class CreateGuruPembelajaranTable extends Migration
             $table->unsignedBigInteger('guru_id');
             $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('tahun_ajaran_id');
-            $table->unsignedBigInteger('mata_pelajaran_id');
+            $table->unsignedBigInteger('mata_pelajaran_id'); 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

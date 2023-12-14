@@ -15,7 +15,8 @@
         <div class="container">
             @foreach ($guruPembelajaran as $dataGuru_pembelajaran)
                 <div class="item">
-                    <div class="item-button">
+                    <a href="/guru-pembelajaran/{{ $dataGuru_pembelajaran->id }}/detail" class="item-button"
+                        style="text-decoration: none; color: black;">
                         <div class="left-side">
                             <img src="{{ asset('images/class.png') }}" style="width: 80px; height: 80px">
                         </div>
@@ -24,7 +25,7 @@
                             {{ $dataGuru_pembelajaran->mata_pelajaran }} <br>
                             {{ $dataGuru_pembelajaran->nama_kelas }}<br>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
         </div>
@@ -128,9 +129,8 @@
         document.body.style.overflow = "hidden";
     }
 
-    function hideDownloadModal() {
+    function showAddModal() {
         addModal.style.display = "none";
-        document.body.style.overflow = "auto";
     }
 
     function hideSuccessOrFailedModal() {
@@ -141,7 +141,7 @@
 
     window.onclick = function(event) {
         if (event.target == addModal) {
-            hideDownloadModal();
+            hideAddModal();
         }
         if (event.target == successOrFailedModal) {
             hideSuccessOrFailedModal();
