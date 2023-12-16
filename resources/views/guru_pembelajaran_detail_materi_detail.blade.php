@@ -44,11 +44,15 @@
                     </div>
                 </a>
             @endif
+
         </div>
-        <div style="display: flex; align-items: center; width: 100%;">
+        <div class="input-com-full">
+            <label>Komentar</label>
+        </div>
+        <div
+            style="display: flex; align-items: center; margin: 0px 60px 0px 60px; border-top: 1px solid black;border-left: 1px solid black; border-right: 1px solid black;">
             <div class="input-com-full"
-                style="position: relative; margin-bottom: 10px; width: 88.5%; margin-right: 5px;">
-                <label>Komentar</label>
+                style="position: relative; margin-bottom: 10px; width: 100%; margin: 10px 25px 0px 25px;">
                 <div id='commentsContainer'>
                     @foreach ($materiKomentar as $data)
                         @php
@@ -86,37 +90,34 @@
                         @endif
                     @endforeach
                 </div>
-                <div style="display: flex; justify-content: flex-start; align-items: center; margin-top: 30px">
-                    <textarea id="commentInput" placeholder="Type your comment..." oninput="autoExpand(this)"></textarea>
-                    <button id="clearButton" onclick="clearText()">
-                        <img src="{{ asset('images/x.png') }}" style="width: 20px; height: 20px">
-                    </button>
-                    <button id="sendButton" onclick="sendKomentar({{ $materi->id }})">
-                        <img src="{{ asset('images/send.png') }}"
-                            style="width: 30px; height: 30px; margin-bottom: 10px">
-                    </button>
-                </div>
-
             </div>
-
+        </div>
+        <div
+            style="display: flex; justify-content: flex-start; align-items: center; margin: 0px 60px 30px 60px; border: 1px solid black; padding: 10px 10px 0px 10px;">
+            <div style="position: relative; width: 100%">
+                <textarea id="commentInput" placeholder="Type your comment..." oninput="autoExpand(this)"></textarea>
+                <button id="clearButton" onclick="clearText()" style="position: absolute; top: 5px; right: 5px;">
+                    <img src="{{ asset('images/x.png') }}" style="width: 20px; height: 20px">
+                </button>
+            </div>
+            <button id="sendButton" onclick="sendKomentar({{ $materi->id }})">
+                <img src="{{ asset('images/send.png') }}" style="width: 30px; height: 30px; margin-bottom: 12px">
+            </button>
         </div>
     </main>
-    <footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
-        <div style="margin-right: 20px;">
-            <button
-                style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                onclick="deleteData({{ $materi->id }})">Hapus</button>
-        </div>
-        <div style="margin-right: 20px;">
-            <button
-                style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                id="updSaveButton" onclick="openData({{ $materi->id }})">Ubah</button>
-        </div>
-
-    </footer>
-
 </body>
-
+<footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
+    <div style="margin-right: 20px;">
+        <button
+            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+            onclick="deleteData({{ $materi->id }})">Hapus</button>
+    </div>
+    <div style="margin-right: 20px;">
+        <button
+            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+            id="updSaveButton" onclick="openData({{ $materi->id }})">Ubah</button>
+    </div>
+</footer>
 <div class="loading">
     <div class="center-body">
         <div class="loader-circle-11">
@@ -407,7 +408,8 @@
         border: none;
         padding: 5px 10px;
         font-weight: bold;
-        background-color: white;
+        /* background-color: white; */
+        background-color: transparent;
     }
 
     #commentInput:not(:placeholder-shown)+#clearButton {
@@ -451,7 +453,6 @@
         align-items: flex-end;
         background-color: #85a9a0;
         color: white;
-
     }
 
     .left-dynamic-div {
@@ -462,31 +463,31 @@
 
     /* Update the style for label elements */
     .left-dynamic-div .leftDescriptionLabel {
-        margin-left: 10px;
+        margin-left: 2.5px;
         margin-right: 0;
         white-space: pre-wrap;
         text-align: left;
     }
 
     .leftNameLabel {
-        margin-left: 10px;
+        margin-left: 2.5px;
         margin-right: 0;
     }
 
     .right-dynamic-div .rightDescriptionLabel {
-        margin-right: 10px;
+        margin-right: 2.5px;
         margin-left: 0;
         white-space: pre-wrap;
         text-align: left;
     }
 
     .left-dynamic-div .leftCreatedAtLabel {
-        margin-left: 10px;
+        margin-left: 2.5px;
         white-space: nowrap;
     }
 
     .right-dynamic-div .rightCreatedAtLabel {
-        margin-right: 10px;
+        margin-right: 2.5px;
         white-space: nowrap;
     }
 </style>

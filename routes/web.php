@@ -44,6 +44,8 @@ Route::middleware('is_guru')->group(function () {
     Route::get('/guru-pembelajaran', [App\Http\Controllers\GuruPembelajaranContoller::class, 'index'])->name('guru-pembelajaran');
     Route::post('/guru-pembelajaran/addPembelajaran', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addGuruPembelajaran'])->name('guru-pembelajaran.add');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailIndex'])->name('guru-pembelajaran.detail');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSort', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndex'])->name('guru-pembelajaran.detailSortIndex');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSortTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndexTugas'])->name('guru-pembelajaran.detailSortIndexTugas');
 
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/materi', [App\Http\Controllers\GuruPembelajaranContoller::class, 'materiAddIndex'])->name('guru-pembelajaran.materi');
     Route::post('/guru-pembelajaran/detail/addMateri', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addMateri'])->name('guru-pembelajaran.addMateri');
@@ -52,8 +54,12 @@ Route::middleware('is_guru')->group(function () {
     Route::post('/guru-pembelajaran/detail/addKomentar', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addKomentar'])->name('guru-pembelajaran.addKomentar');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/materi-detail/{materi_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'materiDetailIndex'])->name('guru-pembelajaran.materiDetail');
 
-
-    
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasAddIndex'])->name('guru-pembelajaran.tugas');
+    Route::post('/guru-pembelajaran/detail/addTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addTugas'])->name('guru-pembelajaran.addTugas');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas-detail/{tugas_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasDetailIndex'])->name('guru-pembelajaran.tugasDetail');
+    Route::post('/guru-pembelajaran/detail/updateTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateTugas'])->name('guru-pembelajaran.updateTugas');
+    Route::post('/guru-pembelajaran/detail/deleteTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'deleteTugas'])->name('guru-pembelajaran.deleteTugas');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas-detail/{tugas_id}/jawaban/{tugas_jawaban_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasDetailIndexJawaban'])->name('guru-pembelajaran.tugasJawaban');
 
 
     Route::get('/guru-ujian', [App\Http\Controllers\GuruUjianController::class, 'index'])->name('guru-ujian');

@@ -20,8 +20,8 @@
             <label style="width: 25%; display: flex; justify-content: center">{{ $guruPembelajaran->nama_kelas }}</label>
         </div>
         <div class="input-com-full">
-            <label>Materi</label>
-            <input type="text" id="materi" name="materi">
+            <label>Tugas</label>
+            <input type="text" id="tugas" name="tugas">
         </div>
         <div class="input-com-full">
             <label>Deskripsi</label>
@@ -35,13 +35,18 @@
             </div>
             <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
         </div>
+        <div class="input-com-full date-input time-input" style="margin-bottom: 30px; width: 130px">
+            <label>Hari Tenggat</label>
+            <input type="text" id="dueDate" name="dueDate">
+            <label>Jam Tenggat</label>
+            <input type="text" id="dueTime" name="dueTime">
+        </div>
     </main>
-    <footer
-        style="position: absolute; bottom: 0; right: 0; left: 0; display: flex; justify-content: flex-end; align-items: center; min-height: 50px;">
+    <footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto;">
         <div style="margin-right: 20px;">
             <button
                 style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                onclick="addData()">Tambah</button>
+                id="updSaveButton" onclick="addData()">Tambah</button>
         </div>
     </footer>
 </body>
@@ -61,12 +66,28 @@
         <button class="confirm-button" onclick="hideSuccessOrFailedModal()">Konnfirmasi</button>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </html>
 
 
 <script>
+    flatpickr("#dueDate", {
+        dateFormat: "d M Y",
+        // maxDate: "today", 
+        minDate: "today",
+    });
+
+    flatpickr("#dueTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 30,
+    });
+
     function addData() {
         var fileInput = document.getElementById('fileInput');
         var formData = new FormData();
@@ -78,18 +99,21 @@
         var parts = urlString.split('/');
         var id = parts[parts.indexOf('guru-pembelajaran') + 1];
         var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
+        var dueDate = document.getElementById('dueDate').value;
+        var dueTime = document.getElementById('dueTime').value;
         const nameWithoutExtension = fileNameDisplay.split(".")[0];
 
-        formData.append('title', document.getElementById('materi').value);
+        formData.append('title', document.getElementById('tugas').value);
         formData.append('description', document.getElementById('deskripsi').value);
         formData.append('guru_pembelajaran_id', id);
         formData.append('file_name_no_ext', nameWithoutExtension);
         formData.append('file_name', fileNameDisplay);
+        formData.append('due_date', dueDate + ' ' + dueTime);
         formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token for Laravel
 
         $.ajax({
             type: 'POST',
-            url: '/guru-pembelajaran/detail/addMateri',
+            url: '/guru-pembelajaran/detail/addTugas',
             data: formData,
             processData: false,
             contentType: false,
@@ -118,7 +142,7 @@
     function hideSuccessOrFailedModal() {
         if (document.getElementById("successOrFailedText").innerHTML != "") {
             var url = window.location.href;;
-            var substring = url.substring(0, url.lastIndexOf('/materi'));
+            var substring = url.substring(0, url.lastIndexOf('/tugas'));
             window.location.href = substring
         }
     }
