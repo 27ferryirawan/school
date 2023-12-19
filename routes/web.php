@@ -59,7 +59,11 @@ Route::middleware('is_guru')->group(function () {
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas-detail/{tugas_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasDetailIndex'])->name('guru-pembelajaran.tugasDetail');
     Route::post('/guru-pembelajaran/detail/updateTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateTugas'])->name('guru-pembelajaran.updateTugas');
     Route::post('/guru-pembelajaran/detail/deleteTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'deleteTugas'])->name('guru-pembelajaran.deleteTugas');
-    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas-detail/{tugas_id}/jawaban/{tugas_jawaban_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasDetailIndexJawaban'])->name('guru-pembelajaran.tugasJawaban');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas-detail/{tugas_id}/jawaban/{siswa_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasDetailIndexJawaban'])->name('guru-pembelajaran.tugasJawaban');
+    Route::post('/guru-pembelajaran/detail/updateTugasNilai', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateTugasNilai'])->name('guru-pembelajaran.updateTugasNilai');
+    Route::post('/guru-pembelajaran/detail/getNextPrevTugasJawaban', [App\Http\Controllers\GuruPembelajaranContoller::class, 'getNextPrevTugasJawaban'])->name('guru-pembelajaran.getNextPrevTugasJawaban');
+    Route::post('/guru-pembelajaran/detail/addDiskusi', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addDiskusi'])->name('guru-pembelajaran.addDiskusi');
+
 
 
     Route::get('/guru-ujian', [App\Http\Controllers\GuruUjianController::class, 'index'])->name('guru-ujian');

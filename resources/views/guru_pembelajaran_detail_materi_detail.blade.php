@@ -57,15 +57,9 @@
                     @foreach ($materiKomentar as $data)
                         @php
                             $siswaColors = $siswaColors ?? [];
-
-                            // Iterate through the siswa data
-                            // foreach ($siswaData as $data) {
-                            // Get the color for the current siswa ID, or use a default color if not found
                             $siswaColor = $siswaColors[$data->siswa_id] ?? '#' . str_pad(dechex(mt_rand(0, 0xffffff)), 6, '0', STR_PAD_LEFT);
 
-                            // Assign the color to the siswa ID
                             $siswaColors[$data->siswa_id] = $siswaColor;
-                            // }
                         @endphp
                         @if ($data->is_guru == 1)
                             <div style="display: flex; justify-content: flex-end; align-items: center;">
@@ -398,7 +392,7 @@
         padding: 5px 10px;
         display: none;
         font-weight: bold;
-        background-color: white;
+        background-color: transparent;
     }
 
     #sendButton {

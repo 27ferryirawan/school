@@ -60,15 +60,11 @@
             <table id="table" class="tab" style="width: 100%" data-id={{ $guruPembelajaran->id }}>
                 <thead>
                     <tr>
-                        <th style="width: 68%;" class="sortable" data-column="title">Siswa
+                        <th style="width: 80%;" class="sortable" data-column="title">Siswa
                             <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                 data-order="asc">
                         </th>
                         <th style="width: 12%;" class="sortable" data-column="created_at">Tanggal Kumpul
-                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
-                                data-order="asc">
-                        </th>
-                        <th style="width: 22%;" class="sortable" data-column="updated_at">Tanggal Update Terakhir
                             <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                 data-order="asc">
                         </th>
@@ -78,10 +74,8 @@
                 </thead>
                 <tbody>
                     @foreach ($tugasJawaban as $data)
-                        <tr class="tugas-row"
-                            style="margin: 10px; @if ($data->formatted_created_at == '') background-color: #e7e7e7; @endif"
-                            data-id="{{ $data->id }}"
-                            @if ($data->formatted_created_at != '') onclick="openJawabanDetail({{ $data->id }})" @endif>
+                        <tr class="tugas-row" style="margin: 10px;" data-id="{{ $data->id }}"
+                            onclick="openJawabanDetail({{ $data->siswa_id_siswa }})">
                             <td style="position: relative; text-align: left;">
                                 <div class="editable-com" style="margin-right:10px">
                                     <label contenteditable="false" name='materi'>{{ $data->nama_siswa }}</label>
@@ -90,21 +84,12 @@
                             <td style="position: relative; text-align: left;">
                                 <div class="editable-com" style="margin-right:10px">
                                     <label contenteditable="false"
-                                        name='formatted_created_at'>{{ $data->formatted_created_at }}</label>
-                                </div>
-                            </td>
-                            <td style="position: relative; text-align: left;">
-                                <div class="editable-com" style="margin-right:10px">
-                                    <label contenteditable="false"
-                                        name='formatted_due_date'>{{ $data->formatted_updated_at }}</label>
+                                        name='formatted_submit_date'>{{ $data->formatted_submit_date }}</label>
                                 </div>
                             </td>
                             <td style="position: relative; text-align: center;">
-                                @if ($data->formatted_created_at != '')
-                                    <img style=" width: 20px; height: 20px;"
-                                        src="{{ asset('images/double-left-arrow.png') }}" alt="Ascending"
-                                        data-order="asc">
-                                @endif
+                                <img style=" width: 20px; height: 20px;"
+                                    src="{{ asset('images/double-left-arrow.png') }}" alt="Ascending" data-order="asc">
                             </td>
                         </tr>
                     @endforeach
@@ -164,8 +149,8 @@
         minuteIncrement: 30,
     });
 
-    function openJawabanDetail(id) {
-        window.location.href = window.location.href + '/jawaban/' + id
+    function openJawabanDetail(siswaId) {
+        window.location.href = window.location.href + '/jawaban/' + siswaId
     }
 
     function openData(tugasId) {

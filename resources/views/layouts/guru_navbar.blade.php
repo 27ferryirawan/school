@@ -25,12 +25,9 @@
             <li><a class="{{ request()->is($pembelajaran_url) ? 'active' : '' }}"
                     href="{{ $pembelajaran_url }}">PEMBELEJARAN</a>
             </li>
-            <li><a class="{{ request()->is($ujian_url) ? 'active' : '' }}" href="{{ $ujian_url }}">UJIAN</a></li>
             <li><a class="{{ request()->is('admin-nilai') ? 'active' : '' }}" href="/admin-kelas/list/3">SISWA</a>
             </li>
             <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">NILAI</a>
-            </li>
-            <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">PROFIL</a>
             </li>
             @guest
                 <li><a class="login-button {{ request()->is('login') ? 'active' : '' }}" href="/login">LOGIN</a></li>

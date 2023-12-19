@@ -26,6 +26,8 @@ use App\Models\Materi;
 use App\Models\MateriKomentar;
 use App\Models\Tugas;
 use App\Models\TugasJawaban;
+use App\Models\Diskusi;
+use App\Models\Ujian;
 
 class GuruPembelajaranContoller extends Controller
 {
@@ -148,8 +150,7 @@ class GuruPembelajaranContoller extends Controller
         $tugas = Tugas::select(
             'tugas.*'
         )
-        ->join('guru_pembelajaran', 'tugas.guru_pembelajaran_id', '=', 'guru_pembelajaran.id')
-        ->where('guru_pembelajaran.id', $guruPembelajaranId)
+        ->where('tugas.guru_pembelajaran_id', $guruPembelajaranId)
         ->orderBy('tugas.created_at', 'asc')
         ->get();
 
@@ -159,7 +160,40 @@ class GuruPembelajaranContoller extends Controller
             $tugasItem->formatted_updated_at = Carbon::parse($tugasItem->updated_at)->format('d M Y H:i');
         }
 
-        return view('guru_pembelajaran_detail', compact('guruPembelajaran', 'materi', 'tugas'));
+        $diskusi = Diskusi::select(
+            DB::raw("CASE WHEN diskusi.role= 'GURU' THEN guru.nama_guru WHEN diskusi.role= 'SISWA' THEN siswa.nama_siswa ELSE '' END AS nama"),
+            DB::raw("CASE WHEN diskusi.role= 'GURU' THEN 1 WHEN 0 THEN siswa.nama_siswa ELSE 2 END AS is_guru"),
+            DB::raw("CASE WHEN diskusi.role= 'SISWA' THEN siswa.id WHEN 0 THEN siswa.nama_siswa ELSE -1 END AS siswa_id"),
+            'diskusi.description',
+            'diskusi.created_at'
+        )
+        ->leftJoin('guru', 'diskusi.guru_siswa_id', '=', 'guru.id')
+        ->leftJoin('siswa', 'diskusi.guru_siswa_id', '=', 'siswa.id')
+        ->where('diskusi.guru_pembelajaran_id', $guruPembelajaranId)
+        ->orderBy('diskusi.created_at', 'asc')
+        ->get();
+
+        foreach ($diskusi as $diskusiItem) {
+            $diskusiItem->formatted_created_at = Carbon::parse($diskusiItem->created_at)->format('d M Y H:i');
+            $diskusiItem->formatted_updated_at = Carbon::parse($diskusiItem->updated_at)->format('d M Y H:i');
+        }
+
+        $ujian = Ujian::select(
+            'ujian.*',
+            'jenis_ujian.deskripsi'
+        )
+        ->join('jenis_ujian', 'ujian.jenis_ujian_id', '=', 'jenis_ujian.id')
+        ->where('ujian.guru_pembelajaran_id', $guruPembelajaranId)
+        ->orderBy('ujian.tanggal_ujian', 'desc')
+        ->get();
+
+        foreach ($ujian as $ujianItem) {
+            $ujianItem->formatted_created_at = Carbon::parse($ujianItem->created_at)->format('d M Y H:i');
+            $ujianItem->formatted_updated_at = Carbon::parse($ujianItem->updated_at)->format('d M Y H:i');
+            $ujianItem->formatted_tanggal_ujian = Carbon::parse($ujianItem->tanggal_ujian)->format('d M Y H:i');
+        }
+
+        return view('guru_pembelajaran_detail', compact('guruPembelajaran', 'materi', 'tugas', 'diskusi', 'ujian'));
     }
 
     public function detailSortIndex($guruPembelajaranId, Request $request){
@@ -211,7 +245,25 @@ class GuruPembelajaranContoller extends Controller
             $tugasItem->formatted_updated_at = Carbon::parse($tugasItem->updated_at)->format('d M Y H:i');
         }
 
-        return view('guru_pembelajaran_detail', compact('guruPembelajaran', 'materi', 'tugas'));
+        $diskusi = Diskusi::select(
+            DB::raw("CASE WHEN diskusi.role= 'GURU' THEN guru.nama_guru WHEN diskusi.role= 'SISWA' THEN siswa.nama_siswa ELSE '' END AS nama"),
+            DB::raw("CASE WHEN diskusi.role= 'GURU' THEN 1 WHEN 0 THEN siswa.nama_siswa ELSE 2 END AS is_guru"),
+            DB::raw("CASE WHEN diskusi.role= 'SISWA' THEN siswa.id WHEN 0 THEN siswa.nama_siswa ELSE -1 END AS siswa_id"),
+            'diskusi.description',
+            'diskusi.created_at'
+        )
+        ->leftJoin('guru', 'diskusi.guru_siswa_id', '=', 'guru.id')
+        ->leftJoin('siswa', 'diskusi.guru_siswa_id', '=', 'siswa.id')
+        ->where('diskusi.guru_pembelajaran_id', $guruPembelajaranId)
+        ->orderBy('diskusi.created_at', 'asc')
+        ->get();
+
+        foreach ($diskusi as $diskusiItem) {
+            $diskusiItem->formatted_created_at = Carbon::parse($diskusiItem->created_at)->format('d M Y H:i');
+            $diskusiItem->formatted_updated_at = Carbon::parse($diskusiItem->updated_at)->format('d M Y H:i');
+        }
+
+        return view('guru_pembelajaran_detail', compact('guruPembelajaran', 'materi', 'tugas', 'diskusi'));
     }
 
     public function detailSortIndexTugas($guruPembelajaranId, Request $request){
@@ -262,8 +314,26 @@ class GuruPembelajaranContoller extends Controller
             $tugasItem->formatted_due_date = $tugasItem->due_date == "" ? '' : Carbon::parse($tugasItem->due_date)->format('d M Y H:i');
             $tugasItem->formatted_updated_at = Carbon::parse($tugasItem->updated_at)->format('d M Y H:i');
         }
+        
+        $diskusi = Diskusi::select(
+            DB::raw("CASE WHEN diskusi.role= 'GURU' THEN guru.nama_guru WHEN diskusi.role= 'SISWA' THEN siswa.nama_siswa ELSE '' END AS nama"),
+            DB::raw("CASE WHEN diskusi.role= 'GURU' THEN 1 WHEN 0 THEN siswa.nama_siswa ELSE 2 END AS is_guru"),
+            DB::raw("CASE WHEN diskusi.role= 'SISWA' THEN siswa.id WHEN 0 THEN siswa.nama_siswa ELSE -1 END AS siswa_id"),
+            'diskusi.description',
+            'diskusi.created_at'
+        )
+        ->leftJoin('guru', 'diskusi.guru_siswa_id', '=', 'guru.id')
+        ->leftJoin('siswa', 'diskusi.guru_siswa_id', '=', 'siswa.id')
+        ->where('diskusi.guru_pembelajaran_id', $guruPembelajaranId)
+        ->orderBy('diskusi.created_at', 'asc')
+        ->get();
 
-        return view('guru_pembelajaran_detail', compact('guruPembelajaran', 'tugas', 'materi'));
+        foreach ($diskusi as $diskusiItem) {
+            $diskusiItem->formatted_created_at = Carbon::parse($diskusiItem->created_at)->format('d M Y H:i');
+            $diskusiItem->formatted_updated_at = Carbon::parse($diskusiItem->updated_at)->format('d M Y H:i');
+        }
+
+        return view('guru_pembelajaran_detail', compact('guruPembelajaran', 'tugas', 'materi', 'diskusi'));
     }
 
     public function materiAddIndex($guruPembelajaranId){
@@ -611,7 +681,8 @@ class GuruPembelajaranContoller extends Controller
 
         $tugasJawaban = Siswa::select(
             'siswa.nama_siswa',
-            'tugas_jawaban.*'
+            'siswa.id AS siswa_id_siswa',
+            'tugas_jawaban.*',
         )
         ->leftJoin('tugas_jawaban', function ($join) use ($tugasId) {
             $join->on('siswa.id', '=', 'tugas_jawaban.siswa_id')
@@ -619,7 +690,9 @@ class GuruPembelajaranContoller extends Controller
         })
         ->orderBy('siswa.nama_siswa', 'asc')
         ->get();
+        
         foreach ($tugasJawaban as $tugasJawabanItem) {
+            $tugasJawabanItem->formatted_submit_date = $tugasJawabanItem->submit_date == '' ? '' :  Carbon::parse($tugasJawabanItem->submit_date)->format('d M Y H:i');
             $tugasJawabanItem->formatted_created_at = $tugasJawabanItem->created_at == '' ? '' :  Carbon::parse($tugasJawabanItem->created_at)->format('d M Y H:i');
             $tugasJawabanItem->formatted_updated_at = $tugasJawabanItem->updated_at == '' ? $tugasJawabanItem->formatted_created_at : Carbon::parse($tugasJawabanItem->updated_at)->format('d M Y H:i');
         }
@@ -627,7 +700,7 @@ class GuruPembelajaranContoller extends Controller
         return view('guru_pembelajaran_detail_tugas_detail', compact('guruPembelajaran', 'tugas', 'tugasJawaban'));
     }
     
-    public function tugasDetailIndexJawaban($guruPembelajaranId, $tugasId, $tugasJawabanId){
+    public function tugasDetailIndexJawaban($guruPembelajaranId, $tugasId, $siswaId){
         $authUserId = Auth::id();
         $guruPembelajaran = GuruPembelajaran::select(
             'guru_pembelajaran.id',
@@ -657,12 +730,163 @@ class GuruPembelajaranContoller extends Controller
             'siswa.nama_siswa',
         )
         ->join('siswa', 'tugas_jawaban.siswa_id', '=', 'siswa.id')
-        ->where('tugas_jawaban.id', $tugasJawabanId)
+        ->where('tugas_jawaban.siswa_id', $siswaId)
+        ->where('tugas_jawaban.tugas_id', $tugasId)
         ->first();
-    
-        $tugasJawaban->formatted_created_at = $tugasJawaban->created_at == '' ? '' :  Carbon::parse($tugasJawaban->created_at)->format('d M Y H:i');
-        $tugasJawaban->formatted_updated_at = $tugasJawaban->updated_at == '' ? $tugasJawaban->formatted_created_at : Carbon::parse($tugasJawabanItem->updated_at)->format('d M Y H:i');
+        $currentSiswa = Siswa::where('id', $siswaId)->first();
+
+        if (!$tugasJawaban) {
+            $tugasJawaban = new TugasJawaban;
+            $tugasJawaban->nilai = null;
+            $tugasJawaban->description = null;
+            $tugasJawaban->file_path = null;
+            $tugasJawaban->file_name = null;
+            $tugasJawaban->created_at = null;
+            $tugasJawaban->updated_at = null;
+            $tugasJawaban->siswa_id = $currentSiswa->id;
+            $tugasJawaban->nama_siswa = $currentSiswa->nama_siswa;
+        }
+        
+        $tugasJawaban->formatted_submit_date_date = $tugasJawaban->submit_date == '' ? '' :  Carbon::parse($tugasJawaban->submit_date)->format('d M Y');
+        $tugasJawaban->formatted_submit_date_time = $tugasJawaban->submit_date == '' ? '' :  Carbon::parse($tugasJawaban->submit_date)->format('H:i');
+        $tugasJawaban->formatted_created_at_date = $tugasJawaban->created_at == '' ? '' :  Carbon::parse($tugasJawaban->created_at)->format('d M Y');
+        $tugasJawaban->formatted_created_at_time = $tugasJawaban->created_at == '' ? '' :  Carbon::parse($tugasJawaban->created_at)->format('H:i');
+        $tugasJawaban->formatted_updated_at_date = $tugasJawaban->updated_at == '' ? $tugasJawaban->formatted_created_at : Carbon::parse($tugasJawaban->updated_at)->format('d M Y');
+        $tugasJawaban->formatted_updated_at_time = $tugasJawaban->updated_at == '' ? $tugasJawaban->formatted_created_at : Carbon::parse($tugasJawaban->updated_at)->format('H:i');
 
         return view('guru_pembelajaran_detail_tugas_detail_jawaban', compact('guruPembelajaran', 'tugas', 'tugasJawaban'));
+    }
+
+    public function updateTugasNilai(Request $request)
+    {
+        try {
+            $nilai = $request->input('nilai');
+            $tugasJawabanId = $request->input('id');
+            $tugasId = $request->input('tugas_id');
+            $siswaId = $request->input('siswa_id');
+
+            $existingRecord = TugasJawaban::find($tugasJawabanId);
+            
+            if ($existingRecord) {
+                $existingRecord->update([
+                    'nilai' => $nilai,
+                ]);
+                return response()->json(['message' => 'Berhasil','message_description' => 'Mengubah Nilai Tugas Berhasil!', 'data' => $existingRecord]);
+            } else {
+                $newRecord = TugasJawaban::create([
+                    'tugas_id' => $tugasId,
+                    'siswa_id' => $siswaId,
+                    'description' => null,
+                    'file_path' => null,
+                    'file_name' => null,
+                    'nilai' => $nilai
+                ]);
+                return response()->json(['message' => 'Berhasil','message_description' => 'Mengubah Nilai Tugas Berhasil!', 'data' => $newRecord]);
+            }
+        } catch (QueryException $e) {
+            return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
+        }
+    }
+
+    public function getNextPrevTugasJawaban(Request $request)
+    {
+        $direction = $request->direction;
+        $siswaId = $request->siswa_id;
+        $tugasId = $request->tugas_id;
+
+        if ($direction == 'prev') {
+            $operator = '<';
+            $orderBy = 'desc';
+        } else {
+            $operator = '>';
+            $orderBy = 'asc';
+        }
+
+        $currentSiswa = Siswa::where('id', $siswaId)->first();
+        $nextSiswa = Siswa::where('nama_siswa', $operator, $currentSiswa->nama_siswa)
+            ->orderBy('nama_siswa', $orderBy)
+            ->first();
+
+        if (!$nextSiswa && $orderBy == 'asc') {
+            $nextSiswa = Siswa::orderBy('nama_siswa', 'asc')->first();
+        } else if (!$nextSiswa && $orderBy == 'desc') {
+            $nextSiswa = Siswa::orderBy('nama_siswa', 'desc')->first();
+        }
+
+        $nextSiswaId = $nextSiswa->id ?? null;
+
+        $tugasJawaban = null;
+
+        if ($nextSiswaId) {
+            $tugasJawaban = TugasJawaban::select('tugas_jawaban.*', 'siswa.nama_siswa')
+                ->leftJoin('siswa', 'tugas_jawaban.siswa_id', '=', 'siswa.id')
+                ->where('tugas_jawaban.tugas_id', $tugasId)
+                ->where('tugas_jawaban.siswa_id', $nextSiswaId)
+                ->first();
+            
+            if (!$tugasJawaban) {
+                $tugasJawaban = new TugasJawaban;
+                $tugasJawaban->nilai = null;
+                $tugasJawaban->description = null;
+                $tugasJawaban->file_path = null;
+                $tugasJawaban->file_name = null;
+                $tugasJawaban->created_at = null;
+                $tugasJawaban->updated_at = null;
+
+            }
+            $tugasJawaban->siswa_id = $nextSiswa->id;
+            $tugasJawaban->nama_siswa = $nextSiswa->nama_siswa;
+        }
+
+        $tugasJawaban->formatted_submit_date_date = $tugasJawaban->submit_date == '' ? '' :  Carbon::parse($tugasJawaban->submit_date)->format('d M Y');
+        $tugasJawaban->formatted_submit_date_time = $tugasJawaban->submit_date == '' ? '' :  Carbon::parse($tugasJawaban->submit_date)->format('H:i');
+        $tugasJawaban->formatted_created_at_date = $tugasJawaban->created_at == '' ? '' :  Carbon::parse($tugasJawaban->created_at)->format('d M Y');
+        $tugasJawaban->formatted_created_at_time = $tugasJawaban->created_at == '' ? '' :  Carbon::parse($tugasJawaban->created_at)->format('H:i');
+        $tugasJawaban->formatted_updated_at_date = $tugasJawaban->updated_at == '' ? $tugasJawaban->formatted_created_at : Carbon::parse($tugasJawaban->updated_at)->format('d M Y');
+        $tugasJawaban->formatted_updated_at_time = $tugasJawaban->updated_at == '' ? $tugasJawaban->formatted_created_at : Carbon::parse($tugasJawaban->updated_at)->format('H:i');
+
+        return response()->json([
+            'success' => true,
+            'data' => $tugasJawaban,
+        ]);
+    }
+
+    public function addDiskusi(Request $request)
+    {
+        try {
+            $authUserId = Auth::id();
+            $authUserRole = Auth::user()->role;
+            
+            $guru_siswa_id = $request->input('guru_siswa_id');
+            $description = $request->input('description');
+            $guru_pembelajaran_id = $request->input('guru_pembelajaran_id');
+
+            if($authUserRole == 'GURU'){
+                $guru = Guru::select(
+                    'guru.id',
+                )
+                ->where('guru.user_id', $authUserId)
+                ->first();
+                $guru_siswa_id = $guru->id;
+            } else {
+                $siswa = Guru::select(
+                    'siswa.id',
+                )
+                ->where('siswa.user_id', $authUserId)
+                ->first();
+                $guru_siswa_id = $siswa->id;
+            }
+
+            $newRecord = Diskusi::create([
+                'guru_pembelajaran_id' => $guru_pembelajaran_id,
+                'guru_siswa_id' => $guru_siswa_id,
+                'role' => $authUserRole,
+                'description' => $description,
+            ]);
+            $newRecord->formatted_created_at = Carbon::parse($newRecord->created_at)->format('d M Y H:i');
+            return response()->json(['message' => 'Berhasil','message_description' => 'Menambahkan Komentar Berhasil!', 'data' => $newRecord]);
+        } catch (QueryException $e) {
+            return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
+        }
     }
 }

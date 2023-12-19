@@ -16,7 +16,8 @@ class TugasJawaban extends Model
         'description',
         'file_path',
         'file_name',
-        'nilai'
+        'nilai',
+        'submit_date'
     ];
 
     public function tugas()

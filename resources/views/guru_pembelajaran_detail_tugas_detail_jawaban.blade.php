@@ -54,63 +54,62 @@
                 style="background-color: #e7e7e7;">
         </div>
         <div class="input-com-full" style="display: flex; align-items: center; margin-bottom: 10px;">
-            <label style="margin-right: 30px;">Jawaban <b>{{ $tugasJawaban->nama_siswa }}</b></label>
+            <label style="margin-right: 30px;">Jawaban <b id="namaSiswa">{{ $tugasJawaban->nama_siswa }}</b></label>
             <div class="input-com-full" style="margin: 0px; text-align: center">
                 <label><b>Nilai</b></label>
-                <input type="number" id="nilai" name="nilai" style="width: 55px;" min="0" max="100"
-                    oninput="validateInput()">
+                <input type="number" id="nilai" name="nilai" style="width: 65px;" min="0" max="100"
+                    oninput="validateInput()" value="{{ $tugasJawaban->nilai }}">
             </div>
         </div>
-
-        <div style="margin: 0px 60px 30px 60px; border: 1px solid black; padding: 10px;">
-            <div class="input-com-full" style="margin-left: 0px; margin-right: 0px; margin-top: 0px">
-                <label>Deskripsi</label>
-                <textarea type="text" id="deskripsi" name="deskripsi" disabled style="background-color: #e7e7e7;">{{ $tugasJawaban->description }}</textarea>
-            </div>
-            <div style="display: flex; align-items: center;">
-                <div>
-                    <div class="input-com-full" style="margin: 0px;">
-                        <label>Fail</label>
-                    </div>
-                    @if ($tugas->file_path == null)
-                        <div id="fileNameDisplay">Tidak ada fail
+        <div style="display: flex; justify-content: flex-start; align-items: center;">
+            <button id="prevButton" onclick="loadData('prev')" style="width: 60px;">
+                <img src="{{ asset('images/left.png') }}" style="width: 40px; height: 40px">
+            </button>
+            <div style="margin:
+            0px 0px 30px 0px; border: 1px solid black; padding: 10px; width: 100%">
+                <div class="input-com-full" style="margin-left: 0px; margin-right: 0px; margin-top: 0px">
+                    <label>Deskripsi</label>
+                    <textarea type="text" id="deskripsiJawaban" name="deskripsiJawaban" disabled style="background-color: #e7e7e7;">{{ $tugasJawaban->description }}</textarea>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <div class="input-com-full" style="margin: 0px;">
+                            <label>Fail</label>
                         </div>
-                    @else
-                        <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank">
-                            <div id="fileNameDisplay" style="cursor: pointer;">
-                                {{ $tugas->file_name }}
-                            </div>
-                        </a>
-                    @endif
+                        @if ($tugas->file_path == null)
+                            <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank" id="fileLink"
+                                class="disabled-link" style="cursor: not-allowed">
+                                <div id="fileNameDisplayJawaban" style="cursor: pointer;">Tidak ada fail
+                                </div>
+                            </a>
+                        @else
+                            <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank" id="fileLink">
+                                <div id="fileNameDisplayJawaban" style="cursor: pointer;">
+                                    {{ $tugas->file_name }}
+                                </div>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                <div class="input-com-full date-input time-input"
+                    style="margin-left: 0px; margin-right: 0px; display: flex; width: 275px">
+                    <div style="margin-right: 15px">
+                        <label>Hari Kumpul</label>
+                        <input type="text" id="submitDate" name="submitDate"
+                            value="{{ $tugasJawaban->formatted_submit_date_date }}" disabled
+                            style="background-color: #e7e7e7;">
+                    </div>
+                    <div style="display: column;">
+                        <label>Jam Kumpul</label>
+                        <input type="text" id="submitTime" name="submitTime"
+                            value="{{ $tugasJawaban->formatted_submit_date_time }}" disabled
+                            style="background-color: #e7e7e7;">
+                    </div>
                 </div>
             </div>
-            <div class="input-com-full date-input time-input"
-                style="margin-left: 0px; margin-right: 0px; display: flex; width: 275px">
-                <div style="margin-right: 15px">
-                    <label>Hari Kumpul</label>
-                    <input type="text" id="submitDate" name="submitDate" value="{{ $tugas->formatted_due_date }}"
-                        disabled style="background-color: #e7e7e7;">
-                </div>
-                <div style="display: column;">
-                    <label>Jam Kumpul</label>
-                    <input type="text" id="submitTime" name="submitTime" value="{{ $tugas->formatted_due_time }}"
-                        disabled style="background-color: #e7e7e7;">
-                </div>
-            </div>
-            <div class="input-com-full date-input time-input"
-                style="margin-left: 0px; margin-right: 0px; display: flex; width: 275px">
-                <div style="margin-right: 15px">
-                    <label>Hari Ubah</label>
-                    <input type="text" id="submitDateUpd" name="submitDateUpd"
-                        value="{{ $tugas->formatted_due_date }}" disabled style="background-color: #e7e7e7;">
-                </div>
-                <div style="display: column;">
-                    <label>Jam Ubah</label>
-                    <input type="text" id="submitTimeUpd" name="submitTimeUpd"
-                        value="{{ $tugas->formatted_due_time }}" disabled style="background-color: #e7e7e7;">
-                </div>
-            </div>
-
+            <button id="nextButton" onclick="loadData('next')" style="width: 60px;">
+                <img src="{{ asset('images/right.png') }}" style="width: 40px; height: 40px">
+            </button>
         </div>
     </main>
 
@@ -119,7 +118,7 @@
     <div style="margin-right: 20px;">
         <button
             style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            id="updSaveButton" onclick="openData({{ $tugas->id }})">Ubah</button>
+            id="updSaveButton" data-id="{{ $tugasJawaban->id }}" onclick="saveData()">Simpan Nilai</button>
     </div>
 </footer>
 <div class="loading">
@@ -148,7 +147,6 @@
 <script>
     flatpickr("#dueDate", {
         dateFormat: "d M Y",
-        // maxDate: "today", 
         minDate: "today",
     });
 
@@ -162,7 +160,6 @@
 
     flatpickr("#submitDate", {
         dateFormat: "d M Y",
-        // maxDate: "today", 
         minDate: "today",
     });
 
@@ -176,7 +173,6 @@
 
     flatpickr("#submitDateUpd", {
         dateFormat: "d M Y",
-        // maxDate: "today", 
         minDate: "today",
     });
 
@@ -187,16 +183,81 @@
         time_24hr: true,
         minuteIncrement: 30,
     });
+    var siswa_id = {{ $tugasJawaban->siswa_id }}
+    var tugas_id = {{ $tugas->id }}
+    var tugas_jawaban_id = $('#updSaveButton').data('id')
+
+    function loadData(direction) {
+        var url = '/guru-pembelajaran/detail/getNextPrevTugasJawaban';
+        var data = {
+            tugas_id: tugas_id,
+            siswa_id: siswa_id,
+            direction: direction,
+            _token: '{{ csrf_token() }}'
+        };
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            beforeSend: function() {
+                $('.loading').show();
+            },
+            success: function(response) {
+                if (response.success) {
+                    updateUI(response.data);
+                } else {
+                    console.error('Failed to fetch data');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Ajax request failed');
+            },
+            complete: function() {
+                $('.loading').hide();
+            }
+        });
+    }
+
+    function updateUI(data) {
+        siswa_id = data.siswa_id;
+        tugas_jawaban_id = data.id;
+        // document.getElementById('updSaveButton').setAttribute('data-id', '123');
+        document.getElementById('namaSiswa').innerHTML = data.nama_siswa;
+        document.getElementById('nilai').value = data.nilai;
+        document.getElementById('deskripsiJawaban').value = data.description;
+
+        if (data.file_name == null) {
+            document.getElementById('fileNameDisplayJawaban').innerHTML = "Tidak ada fail"
+            document.getElementById('fileLink').classList.add('disabled-link');
+            document.getElementById('fileLink').removeAttribute('href'); // Removes the href attribute
+            document.getElementById('fileLink').style.cursor = 'not-allowed';
+        } else {
+            document.getElementById('fileNameDisplayJawaban').innerHTML = data.file_name;
+            document.getElementById('fileLink').classList.remove('disabled-link');
+            document.getElementById('fileLink').setAttribute('href',
+                '{{ asset('storage/' . $tugas->file_path) }}');
+            document.getElementById('fileLink').style.cursor = 'allowed';
+        }
+
+        document.getElementById('submitDate').value = data.formatted_submit_date_date;
+        document.getElementById('submitTime').value = data.formatted_submit_date_time;
+
+        document.getElementById('updSaveButton').setAttribute('onclick', 'saveData(' + null +
+            ')');
+
+    }
 
     function validateInput() {
         var inputElement = document.getElementById('nilai');
-        var value = parseInt(inputElement.value);
+        var value = parseFloat(inputElement.value);
 
-        // Ensure the value is within the range of 0 to 100
         if (isNaN(value) || value < 0) {
             inputElement.value = 0;
         } else if (value > 100) {
             inputElement.value = 100;
+        } else {
+
         }
     }
 
@@ -204,104 +265,16 @@
         window.location.href = window.location.href + '/tugas-detail/' + id
     }
 
-    function openData(tugasId) {
-        var updSaveButton = document.getElementById('updSaveButton');
-        var tugas = document.getElementById('tugas');
-        var deskripsi = document.getElementById('deskripsi');
-        var defaultColor = '#ffffff';
-        var disabledColor = '#e7e7e7';
-        var customFileButton = document.getElementById('customFileButton');
-        var fileInput = document.getElementById('fileInput');
-        var dueDate = document.getElementById('dueDate');
-        var dueTime = document.getElementById('dueTime');
-
-        // Use '==' for comparison, not '=' which is for assignment
-        if (updSaveButton.innerHTML == "Ubah") {
-            // Correct the typo: 'dupdSaveButton' to 'updSaveButton'
-            updSaveButton.innerHTML = "Simpan";
-            tugas.disabled = false;
-            deskripsi.disabled = false;
-            fileInput.disabled = false;
-            dueDate.disabled = false;
-            dueTime.disabled = false;
-            tugas.style.backgroundColor = defaultColor;
-            deskripsi.style.backgroundColor = defaultColor;
-            customFileButton.style.backgroundColor = defaultColor;
-            dueDate.style.backgroundColor = defaultColor;
-            dueTime.style.backgroundColor = defaultColor;
-        } else {
-            this.updateData(tugasId);
-            updSaveButton.innerHTML = "Ubah";
-            tugas.disabled = true;
-            deskripsi.disabled = true;
-            fileInput.disabled = true;
-            dueDate.disabled = true;
-            dueTime.disabled = true;
-            tugas.style.backgroundColor = disabledColor;
-            deskripsi.style.backgroundColor = disabledColor;
-            customFileButton.backgroundColor = disabledColor;
-            dueDate.style.backgroundColor = disabledColor;
-            dueTime.style.backgroundColor = disabledColor;
-        }
-    }
-
-    function updateData(tugasId) {
-        var fileInput = document.getElementById('fileInput');
-        var formData = new FormData();
-        if (fileInput.files.length > 0) {
-            formData.append('file_path', fileInput.files[0]);
-        }
-
-        var urlString = window.location.href;
-        var parts = urlString.split('/');
-        var id = parts[parts.indexOf('guru-pembelajaran') + 1];
-        var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
-        var dueDate = document.getElementById('dueDate').value;
-        var dueTime = document.getElementById('dueTime').value;
-        const nameWithoutExtension = fileNameDisplay.split(".")[0];
-
-        formData.append('id', tugasId);
-        formData.append('title', document.getElementById('tugas').value);
-        formData.append('description', document.getElementById('deskripsi').value);
-        formData.append('guru_pembelajaran_id', id);
-        formData.append('file_name_no_ext', nameWithoutExtension);
-        formData.append('file_name', fileNameDisplay);
-        formData.append('due_date', dueDate + ' ' + dueTime);
-        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token for Laravel
-
+    function saveData() {
+        var nilai = parseFloat(document.getElementById('nilai').value).toFixed(2);
         $.ajax({
-            type: 'POST',
-            url: '/guru-pembelajaran/detail/updateTugas',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-                $('.loading').show();
-            },
-            success: function(response) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
-            },
-            error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
-            },
-            complete: function() {
-                $('.loading').hide();
-                successOrFailedModal.style.display = "block";
-                document.body.style.overflow = "hidden";
-            }
-        });
-    }
-
-    function deleteData(id) {
-        $.ajax({
-            url: '/guru-pembelajaran/detail/deleteTugas',
+            url: '/guru-pembelajaran/detail/updateTugasNilai',
             method: 'POST',
             data: {
-                id: id,
+                id: tugas_jawaban_id,
+                nilai: nilai,
+                tugas_id: tugas_id,
+                siswa_id: siswa_id,
                 _token: '{{ csrf_token() }}'
             },
             beforeSend: function() {
@@ -326,13 +299,8 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedDescriptionText").innerHTML == "Mengubah tugas Berhasil!") {
+        if (document.getElementById("successOrFailedDescriptionText").innerHTML != "") {
             location.reload();
-        } else {
-            var currentUrl = window.location.href;
-            var position = currentUrl.lastIndexOf('/tugas-detail');
-            var newUrl = currentUrl.substring(0, position);
-            window.location.href = newUrl;
         }
     }
 
@@ -343,6 +311,14 @@
     }
 </script>
 <style>
+    #prevButton,
+    #nextButton {
+        cursor: pointer;
+        color: black;
+        border: none;
+        background-color: transparent;
+    }
+
     .tab th {
         border-bottom: 1px black solid;
     }
@@ -360,5 +336,14 @@
         width: 12px;
         height: 12px;
         margin-left: 5px;
+    }
+
+    .disabled-link {
+        color: inherit;
+        /* Set the desired text color */
+        text-decoration: none;
+        /* Remove underline */
+        cursor: not-allowed;
+        /* Change cursor to not-allowed */
     }
 </style>

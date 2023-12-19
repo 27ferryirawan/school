@@ -11,14 +11,12 @@ class Ujian extends Model
     protected $table = 'ujian';
 
     protected $fillable = [
-        'guru_id',
-        'kelas_id',
-        'tahun_ajaran_id',
-        'mata_pelajaran_id',
+        'guru_pembelajaran_id',
         'jenis_ujian_id',
         'deskripsi',
         'kode_ruangan',
         'waktu_pengerjaan',
+        'tanggal_ujian'
     ];
 
     public function guru()

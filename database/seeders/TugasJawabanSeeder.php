@@ -18,11 +18,12 @@ class TugasJawabanSeeder extends Seeder
     {
         DB::table('tugas_jawaban')->insert([
             [
-                'tugas_id' => 12,
+                'tugas_id' => 1,
                 'siswa_id' => 1,
                 'description' => 'Hari Monyet Sedunia ini kemudian dirayakan dengan misi untuk melestarikan spesies monyet dan segala satwa yang berkaitan, termasuk primata seperti kera, tarsius dan lemur. Nah, itulah daftar perayaan yang diperingati pada tanggal 14 Desember secara nasional dan global. Semoga bermanfaat ya, detikers!',
                 'file_path' => 'file/1093929252_091223-1702738123.pdf',
-                'file_name' => '1093929252_091223.pdf'
+                'file_name' => '1093929252_091223.pdf',
+                'submit_date' => '2023-12-17 20:00:00'
             ],
         ]);
     }
