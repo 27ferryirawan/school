@@ -179,15 +179,16 @@
                 <table id="table" class="tab" style="width: 100%" data-id={{ $guruPembelajaran->id }}>
                     <thead>
                         <tr>
-                            <th style="width: 78%;" class="sortable" data-column="title">Tugas
+                            <th style="width: 78%;" class="sortable" data-column="deskripsi">Ujian
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
-                            <th style="width: 12%;" class="sortable" data-column="created_at">Jenis Ujian
+                            <th style="width: 12%;" class="sortable" data-column="jenis_ujian">Jenis Ujian
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
-                            <th style="width: 12%;" class="sortable" data-column="due_date">Tanggal Ujian
+                            <th style="width: 12%;" class="sortable" data-column="tanggal_ujian">Tanggal
+                                Ujian
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
@@ -196,18 +197,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($tugas as $data)
+                        @foreach ($ujian as $data)
                             <tr class="siswa-row" style="margin: 10px;" data-id="{{ $data->id }}"
                                 onclick="openTugasDetail({{ $data->id }})">
                                 <td style="position: relative; text-align: left;">
                                     <div class="editable-com" style="margin-right:10px">
-                                        <label contenteditable="false" name='materi'>{{ $data->title }}</label>
+                                        <label contenteditable="false" name='materi'>{{ $data->deskripsi }}</label>
                                     </div>
                                 </td>
                                 <td style="position: relative; text-align: left;">
                                     <div class="editable-com" style="margin-right:10px">
                                         <label contenteditable="false"
-                                            name='formatted_created_at'>{{ $data->formatted_created_at }}</label>
+                                            name='formatted_created_at'>{{ $data->jenis_ujian }}</label>
                                     </div>
                                 </td>
                                 <td style="position: relative; text-align: left;">
@@ -390,8 +391,8 @@
                 activeUrl = '/guru-pembelajaran/' + dataId + '/detailSort';
             } else if (activeTabId == 'tugasTab') {
                 activeUrl = '/guru-pembelajaran/' + dataId + '/detailSortTugas';
-            } else if (activeTabId == 'diskusiTab') {
-                activeUrl = '/guru-pembelajaran/' + dataId + '/detailSortDiskusi';
+            } else if (activeTabId == 'ujianTab') {
+                activeUrl = '/guru-pembelajaran/' + dataId + '/detailSortUjian';
             }
 
             $.ajax({

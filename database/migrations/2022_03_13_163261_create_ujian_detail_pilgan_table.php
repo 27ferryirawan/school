@@ -14,16 +14,17 @@ class CreateUjianDetailPilganTable extends Migration
     public function up(){
         Schema::create('ujian_detail_pilgan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ujian_id');
+            $table->unsignedBigInteger('ujian_detail_id');
+            $table->integer('no_jawaban');
             $table->string('jawaban');
             $table->integer('is_jawaban');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('ujian_id')
+            $table->foreign('ujian_detail_id')
                 ->references('id')
-                ->on('ujian')
+                ->on('ujian_detail')
                 ->onDelete('cascade');
         });
     }

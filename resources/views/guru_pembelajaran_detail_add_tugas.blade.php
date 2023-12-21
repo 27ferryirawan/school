@@ -138,7 +138,6 @@
         });
     }
 
-
     function hideSuccessOrFailedModal() {
         if (document.getElementById("successOrFailedText").innerHTML != "") {
             var url = window.location.href;;

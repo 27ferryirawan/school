@@ -46,6 +46,7 @@ Route::middleware('is_guru')->group(function () {
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailIndex'])->name('guru-pembelajaran.detail');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSort', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndex'])->name('guru-pembelajaran.detailSortIndex');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSortTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndexTugas'])->name('guru-pembelajaran.detailSortIndexTugas');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSortUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndexUjian'])->name('guru-pembelajaran.detailSortIndexUjian');
 
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/materi', [App\Http\Controllers\GuruPembelajaranContoller::class, 'materiAddIndex'])->name('guru-pembelajaran.materi');
     Route::post('/guru-pembelajaran/detail/addMateri', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addMateri'])->name('guru-pembelajaran.addMateri');
@@ -62,12 +63,12 @@ Route::middleware('is_guru')->group(function () {
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/tugas-detail/{tugas_id}/jawaban/{siswa_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'tugasDetailIndexJawaban'])->name('guru-pembelajaran.tugasJawaban');
     Route::post('/guru-pembelajaran/detail/updateTugasNilai', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateTugasNilai'])->name('guru-pembelajaran.updateTugasNilai');
     Route::post('/guru-pembelajaran/detail/getNextPrevTugasJawaban', [App\Http\Controllers\GuruPembelajaranContoller::class, 'getNextPrevTugasJawaban'])->name('guru-pembelajaran.getNextPrevTugasJawaban');
+    
     Route::post('/guru-pembelajaran/detail/addDiskusi', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addDiskusi'])->name('guru-pembelajaran.addDiskusi');
 
-
-
-    Route::get('/guru-ujian', [App\Http\Controllers\GuruUjianController::class, 'index'])->name('guru-ujian');
-    Route::get('/guru-ujian/add', [App\Http\Controllers\GuruUjianController::class, 'addIndex'])->name('guru-ujian.add');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianAddIndex'])->name('guru-pembelajaran.ujian');
+    Route::post('/guru-pembelajaran/detail/addUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addUjian'])->name('guru-pembelajaran.addUjian');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian-detail/{ujian_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianDetailIndex'])->name('guru-pembelajaran.ujianDetail');
 
     Route::get('/tentang-kita', [App\Http\Controllers\TentangKitaController::class, 'index'])->name('tentang-kita');
 });
