@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Pembelajaran</title>
+    <title>Tugas</title>
     @include('layouts/guru_navbar')
 </head>
 
@@ -30,13 +30,12 @@
         </div>
         <div style="display: flex; align-items: center;">
             <div class="input-com-full" enctype="multipart/form-data" style="margin: 10px 20px 0px 60px;">
-                <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Choose
-                    file</label>
+                <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Pilih fail</label>
                 <input type="file" id="fileInput" name="fileInput" accept=".txt, .pdf, .docx, .png, .jpg"
                     onchange="displayFileName()" disabled>
             </div>
             @if ($tugas->file_path == null)
-                <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
+                <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
             @else
                 <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank">
                     <div id="fileNameDisplay" style="margin-top: 13px; cursor: pointer;">
@@ -275,7 +274,7 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedDescriptionText").innerHTML == "Mengubah tugas Berhasil!") {
+        if (document.getElementById("successOrFailedDescriptionText").innerHTML == "Mengubah Tugas Berhasil!") {
             location.reload();
         } else {
             var currentUrl = window.location.href;

@@ -21,7 +21,7 @@ class UjianJawabanDetailSeeder extends Seeder
                 'ujian_jawaban_id' => 1,
                 'jenis_soal_id' => 2,
                 'ujian_detail_id' => 1,
-                'ujian_detail_pilgan_id' => 2,
+                'ujian_detail_pilgan_id' => null,
                 'jawaban_deskripsi' => null,
             ],
             [
@@ -36,7 +36,7 @@ class UjianJawabanDetailSeeder extends Seeder
                 'jenis_soal_id' => 1,
                 'ujian_detail_id' => 3,
                 'ujian_detail_pilgan_id' => null,
-                'jawaban_deskripsi' => 'Besaran',
+                'jawaban_deskripsi' => null,
             ],
             [
                 'ujian_jawaban_id' => 1,

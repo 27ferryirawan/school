@@ -24,7 +24,7 @@
         </button>
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA</a></li>
-            <li><a class="{{ request()->is('guru-pembelajaran') ? 'active' : '' }}"
+            <li><a class="{{ Request::is('guru-pembelajaran*') ? 'active' : '' }}"
                     href="{{ $pembelajaran_url }}">PEMBELEJARAN</a></li>
             <li><a class="{{ request()->is('guru-siswa') ? 'active' : '' }}" href="/guru-siswa">SISWA</a></li>
             <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>

@@ -27,12 +27,12 @@
         </button>
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
-            <li><a class="{{ request()->is('admin-kelas/list/1') ? 'active' : '' }}"
+            <li><a class="{{ Request::is('admin-kelas/list/1') || Request::is('admin-siswa*') ? 'active' : '' }}"
                     href="{{ $siswa_url }}">SISWA</a>
             </li>
-            <li><a class="{{ request()->is('admin-mata-pelajaran/list/2/0') ? 'active' : '' }}"
+            <li><a class="{{ Request::is('admin-mata-pelajaran/list/2/0') || Request::is('admin-guru*') ? 'active' : '' }}"
                     href="{{ $guru_url }}">GURU</a></li>
-            <li><a class="{{ request()->is('admin-kelas/list/3') ? 'active' : '' }}"
+            <li><a class="{{ Request::is('admin-kelas/list/3') || Request::is('admin-mata-pelajaran/list/3/1') | Request::is('admin-nilai*') ? 'active' : '' }}"
                     href="{{ $nilai_url }}">NILAI</a>
             </li>
             <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
@@ -71,11 +71,13 @@
 
     <ul class="navbar-nav1">
         <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
-        <li><a class="{{ request()->is('admin-kelas/list/1') ? 'active' : '' }}" href="{{ $siswa_url }}">SISWA</a>
+        <li><a class="{{ Request::is('admin-kelas/list/1') || Request::is('admin-siswa*') ? 'active' : '' }}"
+                href="{{ $siswa_url }}">SISWA</a>
         </li>
-        <li><a class="{{ request()->is('admin-mata-pelajaran/list/2/0') ? 'active' : '' }}"
+        <li><a class="{{ Request::is('admin-mata-pelajaran/list/2/0') || Request::is('admin-guru*') ? 'active' : '' }}"
                 href="{{ $guru_url }}">GURU</a></li>
-        <li><a class="{{ request()->is('admin-kelas/list/3') ? 'active' : '' }}" href="{{ $nilai_url }}">NILAI</a>
+        <li><a class="{{ Request::is('admin-kelas/list/3') || Request::is('admin-mata-pelajaran/list/3/1') | Request::is('admin-nilai*') ? 'active' : '' }}"
+                href="{{ $nilai_url }}">NILAI</a>
         </li>
         <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
         </li>

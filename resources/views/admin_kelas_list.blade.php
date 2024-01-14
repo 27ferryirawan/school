@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Siswa</title>
+    <title>Kelas</title>
     @include('layouts/admin_navbar')
 </head>
 

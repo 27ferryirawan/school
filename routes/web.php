@@ -111,6 +111,18 @@ Route::middleware('is_siswa')->group(function () {
     Route::post('/siswa-pembelajaran/detail/addKomentar', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'addKomentar'])->name('siswa-pembelajaran.addKomentar');
 
     Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail/tugas-detail/{tugas_id}', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'tugasDetailIndex'])->name('siswa-pembelajaran.tugasDetail');
+    Route::post('/siswa-pembelajaran/detail/updateInsertTugasJawaban', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'updateInsertTugasJawaban'])->name('siswa-pembelajaran.updateInsertTugasJawaban');
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail/ujian-detail/{ujian_id}', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'ujianDetailIndex'])->name('siswa-pembelajaran.ujianDetail');
+
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail/ujian-detail/{ujian_id}/soal-list', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'ujianDetailIndexList'])->name('siswa-pembelajaran.ujianDetailIndexList');
+
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail/ujian-detail/{ujian_id}/soal-list/soal/{soal_id}', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'ujianDetailIndexSoal'])->name('siswa-pembelajaran.ujianDetailSoal');
+
+    Route::post('/siswa-pembelajaran/detail/updateInsertUjianJawaban', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'updateUjianJawaban'])->name('siswa-pembelajaran.updateUjianJawaban');
+
+    Route::post('/siswa-pembelajaran/detail/finishUjian', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'updateFinishUjianJawaban'])->name('siswa-pembelajaran.updateFinishUjianJawaban');
+
+    
 });
 
 Route::get('/tentang-kita', [App\Http\Controllers\TentangKitaController::class, 'index'])->name('tentang-kita');

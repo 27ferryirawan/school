@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <title>Pembelajaran</title>
-    @include('layouts/guru_navbar')
+    <title>Materi</title>
+    @include('layouts/siswa_navbar')
 </head>
 
 <body>
@@ -36,7 +36,7 @@
                     onchange="displayFileName()" disabled>
             </div>
             @if ($materi->file_path == null)
-                <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
+                <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
             @else
                 <a href="{{ asset('storage/' . $materi->file_path) }}" target="_blank">
                     <div id="fileNameDisplay" style="margin-top: 13px; cursor: pointer;">

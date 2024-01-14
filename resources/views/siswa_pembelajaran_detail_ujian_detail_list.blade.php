@@ -3,34 +3,22 @@
 
 <head>
     <title>Ujian</title>
-    @include('layouts/guru_navbar')
+    @include('layouts/siswa_navbar')
 </head>
 
 <body>
     <main>
-        <div class="input-com-full" style="display: flex; align-items: center; margin-bottom: 10px;">
-            <label style="margin-right: 30px;">Jawaban <b id="namaSiswa">{{ $siswa->nama_siswa }}</b></label>
-            <div class="input-com-full" style="margin: 0px; text-align: center">
-                <label><b>Nilai</b></label>
-                <input type="number" id="nilai" name="nilai" style="width: 65px;" min="0" max="100"
-                    oninput="validateInput()" value="{{ $ujianJawaban->nilai ?? '' }}">
-            </div>
+        <div id="timer">
         </div>
-        <div style="margin: 10px 60px 30px 60px; border: 1px solid black; padding: 10px;">
-            <table id="table" class="tab" style="width: 100%" data-id={{ $ujian->id }}>
+        <div style="margin: 0px 60px 30px 60px; border: 1px solid black; padding: 10px;">
+            <table id="table" class="tab" style="width: 100%">
                 <thead>
                     <tr>
                         <th style="width: 3%;" class="sortable" data-column="nomor">No
-                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                            <img class="sort-icon" alt="Ascending" data-order="asc">
                         </th>
-                        <th style="width: 74%;" class="sortable" data-column="soal">Soal
-                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
-                        </th>
-                        <th style="width: 10%;" class="sortable" data-column="jenis_soal">Jenis Soal
-                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
-                        </th>
-                        <th style="width: 5%;" class="sortable" data-column="benar_salah">Benar/Salah
-                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                        <th style="width: 89%;" class="sortable" data-column="soal">Soal
+                            <img class="sort-icon" alt="Ascending" data-order="asc">
                         </th>
                         <th style="width: 8%; text-align: center">Detail
                         </th>
@@ -50,27 +38,6 @@
                                 <div class="editable-com" style="margin-right:10px">
                                     <label contenteditable="false" name='materi'>{{ $data->soal }}</label>
                                 </div>
-                            </td>
-                            <td style="position: relative; text-align: left;">
-                                <div class="editable-com" style="margin-right:10px">
-                                    <label contenteditable="false"
-                                        name='materi'>{{ $data->deskripsi_jenis_soal }}</label>
-                                </div>
-                            </td>
-                            <td style="position: relative; text-align: center;">
-                                @if ($data->ujian_detail_jenis_soal_id == 2)
-                                    @if ($data->is_benar !== null)
-                                        @if ($data->is_benar)
-                                            <img src="{{ asset('images/check.png') }}"
-                                                style="width: 30px; height: 30px">
-                                        @else
-                                            <img src="{{ asset('images/cross.png') }}"
-                                                style="width: 30px; height: 30px">
-                                        @endif
-                                    @else
-                                        <img src="{{ asset('images/cross.png') }}" style="width: 30px; height: 30px">
-                                    @endif
-                                @endif
                             </td>
                             <td style="position: relative; text-align: center;">
                                 <img style=" width: 20px; height: 20px;"
@@ -102,10 +69,9 @@
 <footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
     <div style="margin-right: 20px;">
         <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            id="updSaveButton"
-            onclick="saveData('{{ $ujianJawaban->id ?? 0 }}','{{ $ujian->id ?? 0 }}','{{ $siswa->id ?? 0 }}')">Simpan
-            Nilai</button>
+            style="width: 155px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+            id="updSaveButton" onclick="saveData({{ $ujianJawaban->id }})">Selesaikan
+            Ujian</button>
     </div>
 </footer>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -116,35 +82,16 @@
 
 
 <script>
-    function openSoalDetail(soalId) {
-        window.location.href = window.location.href + '/soal/' + soalId
-    }
+    var tanggalUjian = "{{ $ujian->tanggal_ujian }}";
+    var waktuPengerjaan = {{ $ujian->waktu_pengerjaan }};
 
-    function validateInput() {
-        var inputElement = document.getElementById('nilai');
-        var value = parseFloat(inputElement.value);
+    function saveData(ujianJawabanId) {
 
-        if (isNaN(value) || value < 0) {
-            inputElement.value = 0;
-        } else if (value > 100) {
-            inputElement.value = 100;
-        } else {
-
-        }
-    }
-
-    function saveData(ujianJawabanId, ujianId, siswaId) {
-        var nilai = parseFloat(document.getElementById('nilai').value).toFixed(2);
-
-        var inputElement = document.getElementById('nilai');
         $.ajax({
-            url: '/guru-pembelajaran/detail/updateNilaiUjian',
+            url: '/siswa-pembelajaran/detail/finishUjian',
             method: 'POST',
             data: {
-                nilai: nilai,
-                ujian_id: ujianId,
-                siswa_id: siswaId,
-                id: ujianJawabanId,
+                ujian_jawaban_id: ujianJawabanId,
                 _token: '{{ csrf_token() }}'
             },
             beforeSend: function() {
@@ -156,9 +103,9 @@
                     .message_description;
             },
             error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
+                // document.getElementById("successOrFailedText").innerHTML = response.message;
+                // document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                //     .message_description;
             },
             complete: function() {
                 $('.loading').hide();
@@ -168,9 +115,53 @@
         });
     }
 
+    // Combine tanggalUjian and waktuPengerjaan to create the targetDate
+    var targetDate = new Date(tanggalUjian);
+    targetDate.setMinutes(targetDate.getMinutes() + waktuPengerjaan);
+
+    var timerInterval = setInterval(function() {
+        var currentDate = new Date().getTime();
+        var timeDifference = targetDate - currentDate;
+
+        var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        // Convert days and hours to minutes
+        var totalMinutes = days * 24 * 60 + hours * 60 + minutes;
+
+        $("#timer").html(totalMinutes + " menit dan " + seconds + " detik tersisa");
+
+        if (timeDifference <= 0) {
+            clearInterval(timerInterval);
+            $("#timer").html("Countdown expired");
+        }
+    }, 1000);
+
+    flatpickr("#date", {
+        dateFormat: "d M Y",
+        minDate: "today",
+    });
+
+    flatpickr("#time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 10,
+    });
+
+    function openSoalDetail(soalId) {
+        window.location.href = window.location.href + '/soal/' + soalId
+    }
+
     function hideSuccessOrFailedModal() {
         if (document.getElementById("successOrFailedDescriptionText").innerHTML != "") {
-            location.reload();
+            var currentUrl = window.location.href;
+            var position = currentUrl.lastIndexOf('/soal-list');
+            var newUrl = currentUrl.substring(0, position);
+            window.location.href = newUrl;
         }
     }
 
@@ -197,11 +188,23 @@
         border-bottom: 1px black solid;
     }
 
+    .tab1 th {
+        border-bottom: 1px black solid;
+    }
+
     .tab td {
         border-bottom: 1px black solid;
     }
 
+    .tab1 td {
+        border-bottom: 1px black solid;
+    }
+
     .tab tr>td {
+        padding: 10px 0px;
+    }
+
+    .tab1 tr>td {
         padding: 10px 0px;
     }
 
@@ -210,5 +213,11 @@
         width: 12px;
         height: 12px;
         margin-left: 5px;
+    }
+
+    #timer {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 10px 0px 10px 60px;
     }
 </style>

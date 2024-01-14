@@ -108,7 +108,7 @@
     <footer style="display: flex; justify-content: flex-end; align-items: center; min-height: 50px; margin-top: auto">
         <div style="display: flex; justify-content: center; align-items: center; margin-left: 20px;">
             <button
-                style="width: 125px; height: 35px; background-color: white; border: 3px solid black;  color: #03549b; box-shadow: 5px 5px 5px black; font-size: 18px;"
+                style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
                 onclick="addData()">Tambah</button>
         </div>
     </footer>

@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Home</title>
+    <title>Beranda</title>
     @auth
         @if (Auth::user()->role == 'ADMIN')
             @include('layouts/admin_navbar')
@@ -13,7 +13,7 @@
             @include('layouts/siswa_navbar')
         @endif
     @else
-        @include('layouts/guru_navbar')
+        @include('layouts/siswa_navbar')
     @endauth
 </head>
 

@@ -12,9 +12,4 @@ class TahunAjaran extends Model
     protected $fillable = [
         'tahun_ajaran'
     ];
-
-    public function siswaKelas()
-    {
-        return $this->hasMany(SiswaKelas::class);
-    }
 }

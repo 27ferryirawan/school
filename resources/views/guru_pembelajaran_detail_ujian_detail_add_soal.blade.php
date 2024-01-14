@@ -29,7 +29,7 @@
                 <input type="file" id="fileInput" name="fileInput" accept=".txt, .pdf, .docx, .png, .jpg"
                     onchange="displayFileName()">
             </div>
-            <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
+            <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
         </div>
         <div id="additionalElements" style="display: none; margin-bottom: 30px">
             @php $alphabet = range('a', 'd'); @endphp

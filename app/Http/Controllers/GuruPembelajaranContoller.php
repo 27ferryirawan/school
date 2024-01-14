@@ -1573,6 +1573,7 @@ class GuruPembelajaranContoller extends Controller
                                 'is_jawaban' => $data['option'],
                                 'jawaban' => $data['description'],
                             ]);
+                            $counter++;
                         } else {
                             UjianDetailPilgan::create([
                                 'ujian_detail_id' => $ujian_detail_id,
@@ -1752,14 +1753,13 @@ class GuruPembelajaranContoller extends Controller
             'ujian_jawaban_detail.*',
             'ujian_jawaban.id as ujian_jawaban_id'
         )
-         ->leftJoin('ujian_jawaban_detail', function ($join) use ($soalId) {
-            $join->on('ujian_detail.id', '=', 'ujian_jawaban_detail.ujian_detail_id')
+        ->leftJoin('ujian_jawaban', 'ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
+        ->leftJoin('ujian_jawaban_detail', function ($join) use ($soalId) {
+            $join->on('ujian_jawaban.id', '=', 'ujian_jawaban_detail.ujian_jawaban_id')
+                ->where('ujian_jawaban_detail.ujian_detail_id', '=', $soalId)
                 ->where('ujian_jawaban_detail.jenis_soal_id', '=', 1);
         })
-        ->leftJoin('ujian_jawaban', function ($join) use ($siswaId) {
-            $join->on('ujian_jawaban_detail.ujian_jawaban_id', '=', 'ujian_jawaban.id')
-                ->where('ujian_jawaban.siswa_id', '=', $siswaId);
-        })
+        ->where('ujian_jawaban.siswa_id', $siswaId)
         ->where('ujian_detail.id', $soalId)
         ->first();
 

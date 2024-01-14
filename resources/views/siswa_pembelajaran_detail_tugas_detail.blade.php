@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <title>Pembelajaran</title>
-    @include('layouts/guru_navbar')
+    <title>Tugas</title>
+    @include('layouts/siswa_navbar')
 </head>
 
 <body>
@@ -20,7 +20,16 @@
             <label style="width: 25%; display: flex; justify-content: center">{{ $guruPembelajaran->nama_kelas }}</label>
         </div>
         <div class="input-com-full">
-            <label>Tugas</label>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <label>Tugas</label>
+                <div class="input-com-full" style="margin: 0px; text-align: center">
+                    <label><b>Nilai</b></label>
+                    <input type="number" id="nilai" name="nilai"
+                        style="width: 65px; margin-left: 10px; border: 1px solid black; background-color: #e7e7e7;"
+                        min="0" max="100" oninput="validateInput()" value="{{ $tugasJawaban->nilai }}"
+                        disabled>
+                </div>
+            </div>
             <input type="text" id="tugas" name="tugas" value="{{ $tugas->title }}" disabled
                 style="background-color: #e7e7e7;">
         </div>
@@ -30,13 +39,12 @@
         </div>
         <div style="display: flex; align-items: center;">
             <div class="input-com-full" enctype="multipart/form-data" style="margin: 10px 20px 0px 60px;">
-                <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Choose
-                    file</label>
+                <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Pilih fail</label>
                 <input type="file" id="fileInput" name="fileInput" accept=".txt, .pdf, .docx, .png, .jpg"
                     onchange="displayFileName()" disabled>
             </div>
             @if ($tugas->file_path == null)
-                <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
+                <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
             @else
                 <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank">
                     <div id="fileNameDisplay" style="margin-top: 13px; cursor: pointer;">
@@ -54,7 +62,7 @@
                 style="background-color: #e7e7e7;">
         </div>
         <div class="input-com-full" style="margin-top: 0px">
-            <label>Tugas</label>
+            <label>Jawaban</label>
         </div>
         <div style="display: flex; justify-content: flex-start; align-items: center; margin: 0px 60px 0px 60px;">
             <div style="margin:
@@ -66,14 +74,13 @@
                 <div style="display: flex; align-items: center;">
                     <div enctype="multipart/form-data" style="margin-right: 20px;">
                         <label for="fileInputJawaban" id="customFileButtonJawaban"
-                            style="background-color: #e7e7e7;">Choose
-                            file</label>
+                            style="background-color: #e7e7e7; font-size: 17px">Pilih fail</label>
                         <input type="file" id="fileInputJawaban" name="fileInputJawavan"
-                            accept=".txt, .pdf, .docx, .png, .jpg" onchange="displayFileName()" disabled>
+                            accept=".txt, .pdf, .docx, .png, .jpg" onchange="displayFileNameJawaban()" disabled>
                     </div>
                     @if ($tugasJawaban)
                         @if ($tugasJawaban->file_path == null)
-                            <div id="fileNameDisplayJawaban" style="margin-top: 13px">No file chosen</div>
+                            <div id="fileNameDisplayJawaban" style="margin-top: 13px">Tidak ada fail</div>
                         @else
                             <a href="{{ asset('storage/' . $tugasJawaban->file_path) }}" target="_blank">
                                 <div id="fileNameDisplayJawaban" style="margin-top: 13px; cursor: pointer;">
@@ -81,6 +88,8 @@
                                 </div>
                             </a>
                         @endif
+                    @else
+                        <div id="fileNameDisplayJawaban" style="margin-top: 13px">Tidak ada fail</div>
                     @endif
                 </div>
                 <div class="input-com-full date-input time-input"
@@ -88,13 +97,13 @@
                     <div style="margin-right: 15px">
                         <label>Hari Kumpul</label>
                         <input type="text" id="submitDate" name="submitDate"
-                            value="{{ $tugasJawaban ? $tugasJawaban->formatted_submit_date_date : '' }}" disabled
+                            value="{{ $tugasJawaban ? $tugasJawaban->formatted_submit_date : '' }}" disabled
                             style="background-color: #e7e7e7;">
                     </div>
                     <div style="display: column;">
                         <label>Jam Kumpul</label>
                         <input type="text" id="submitTime" name="submitTime"
-                            value="{{ $tugasJawaban ? $tugasJawaban->formatted_submit_date_time : '' }}" disabled
+                            value="{{ $tugasJawaban ? $tugasJawaban->formatted_submit_time : '' }}" disabled
                             style="background-color: #e7e7e7;">
                     </div>
                 </div>
@@ -103,6 +112,21 @@
     </main>
 
 </body>
+<footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
+    @if (Carbon\Carbon::now()->gte(Carbon\Carbon::parse($tugas->due_date)) && $tugasJawaban->submit_date == null)
+        <div style="margin-right: 20px;">
+            <button
+                style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+                id="updSaveButton" onclick="openData({{ $tugas->id }})">Isi Jawaban</button>
+        </div>
+    @else
+        <div style="margin-right: 20px;">
+            <button
+                style="width: 125px; height: 35px; background-color: #e7e7e7; border: 3px solid black; color: black; box-shadow: 5px 5px 5px black; font-size: 18px;"
+                id="updSaveButton" disabled>Isi Jawaban</button>
+        </div>
+    @endif
+</footer>
 <div class="loading">
     <div class="center-body">
         <div class="loader-circle-11">
@@ -141,78 +165,84 @@
         minuteIncrement: 30,
     });
 
+    flatpickr("#submitDate", {
+        dateFormat: "d M Y",
+        // maxDate: "today", 
+        minDate: "today",
+    });
+
+    flatpickr("#submitTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 30,
+    });
+
+    function displayFileNameJawaban() {
+        var fileInput = document.getElementById('fileInputJawaban');
+        var fileNameDisplay = document.getElementById('fileNameDisplayJawaban');
+
+        if (fileInput.files.length > 0) {
+            var fileName = fileInput.files[0].name;
+            fileNameDisplay.innerHTML = fileName;
+        } else {
+            fileNameDisplay.innerHTML = '';
+        }
+    }
+
     function openJawabanDetail(siswaId) {
         window.location.href = window.location.href + '/jawaban/' + siswaId
     }
 
     function openData(tugasId) {
         var updSaveButton = document.getElementById('updSaveButton');
-        var tugas = document.getElementById('tugas');
-        var deskripsi = document.getElementById('deskripsi');
+        var deskripsi = document.getElementById('deskripsiJawaban');
         var defaultColor = '#ffffff';
         var disabledColor = '#e7e7e7';
-        var customFileButton = document.getElementById('customFileButton');
-        var fileInput = document.getElementById('fileInput');
-        var dueDate = document.getElementById('dueDate');
-        var dueTime = document.getElementById('dueTime');
+        var customFileButton = document.getElementById('customFileButtonJawaban');
+        var fileInput = document.getElementById('fileInputJawaban');
 
-        // Use '==' for comparison, not '=' which is for assignment
-        if (updSaveButton.innerHTML == "Ubah") {
-            // Correct the typo: 'dupdSaveButton' to 'updSaveButton'
+        if (updSaveButton.innerHTML == "Isi Jawaban") {
             updSaveButton.innerHTML = "Simpan";
-            tugas.disabled = false;
             deskripsi.disabled = false;
             fileInput.disabled = false;
             dueDate.disabled = false;
             dueTime.disabled = false;
-            tugas.style.backgroundColor = defaultColor;
             deskripsi.style.backgroundColor = defaultColor;
             customFileButton.style.backgroundColor = defaultColor;
-            dueDate.style.backgroundColor = defaultColor;
-            dueTime.style.backgroundColor = defaultColor;
         } else {
             this.updateData(tugasId);
-            updSaveButton.innerHTML = "Ubah";
-            tugas.disabled = true;
+            updSaveButton.innerHTML = "Isi Jawaban";
             deskripsi.disabled = true;
             fileInput.disabled = true;
             dueDate.disabled = true;
             dueTime.disabled = true;
-            tugas.style.backgroundColor = disabledColor;
             deskripsi.style.backgroundColor = disabledColor;
             customFileButton.backgroundColor = disabledColor;
-            dueDate.style.backgroundColor = disabledColor;
-            dueTime.style.backgroundColor = disabledColor;
         }
     }
 
     function updateData(tugasId) {
-        var fileInput = document.getElementById('fileInput');
+        var fileInput = document.getElementById('fileInputJawaban');
         var formData = new FormData();
         if (fileInput.files.length > 0) {
             formData.append('file_path', fileInput.files[0]);
         }
 
         var urlString = window.location.href;
-        var parts = urlString.split('/');
-        var id = parts[parts.indexOf('guru-pembelajaran') + 1];
-        var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
-        var dueDate = document.getElementById('dueDate').value;
-        var dueTime = document.getElementById('dueTime').value;
+        var fileNameDisplay = document.getElementById('fileNameDisplayJawaban').innerHTML;
         const nameWithoutExtension = fileNameDisplay.split(".")[0];
 
         formData.append('id', tugasId);
-        formData.append('title', document.getElementById('tugas').value);
-        formData.append('description', document.getElementById('deskripsi').value);
-        formData.append('guru_pembelajaran_id', id);
+        formData.append('description', document.getElementById('deskripsiJawaban').value);
         formData.append('file_name_no_ext', nameWithoutExtension);
         formData.append('file_name', fileNameDisplay);
-        formData.append('due_date', dueDate + ' ' + dueTime);
         formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token for Laravel
 
         $.ajax({
             type: 'POST',
-            url: '/guru-pembelajaran/detail/updateTugas',
+            url: '/siswa-pembelajaran/detail/updateInsertTugasJawaban',
             data: formData,
             processData: false,
             contentType: false,
@@ -267,13 +297,8 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedDescriptionText").innerHTML == "Mengubah tugas Berhasil!") {
+        if (document.getElementById("successOrFailedDescriptionText").innerHTML != "") {
             location.reload();
-        } else {
-            var currentUrl = window.location.href;
-            var position = currentUrl.lastIndexOf('/tugas-detail');
-            var newUrl = currentUrl.substring(0, position);
-            window.location.href = newUrl;
         }
     }
 
@@ -308,5 +333,21 @@
         text-decoration: none;
         cursor: not-allowed;
         pointer-events: none;
+    }
+
+    #fileInputJawaban {
+        display: none;
+    }
+
+    #customFileButtonJawaban {
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        text-align: center;
+        border: 3px solid black;
+        box-shadow: 5px 5px 5px black;
+        width: 150px;
     }
 </style>

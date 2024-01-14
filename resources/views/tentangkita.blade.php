@@ -12,7 +12,7 @@
             @include('layouts/siswa_navbar')
         @endif
     @else
-        @include('layouts/guru_navbar')
+        @include('layouts/siswa_navbar')
     @endauth
 </head>
 

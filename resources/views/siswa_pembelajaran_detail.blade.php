@@ -3,7 +3,7 @@
 
 <head>
     <title>Pembelajaran</title>
-    @include('layouts/guru_navbar')
+    @include('layouts/siswa_navbar')
 </head>
 
 <body>
@@ -76,7 +76,7 @@
                 <table id="table" class="tab" style="width: 100%" data-id={{ $guruPembelajaran->id }}>
                     <thead>
                         <tr>
-                            <th style="width: 78%;" class="sortable" data-column="title">Tugas
+                            <th style="width: 70%;" class="sortable" data-column="title">Tugas
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
@@ -85,6 +85,10 @@
                                     data-order="asc">
                             </th>
                             <th style="width: 12%;" class="sortable" data-column="due_date">Tanggal Tenggat
+                                <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
+                                    data-order="asc">
+                            </th>
+                            <th style="width: 8%;" class="sortable" data-column="nilai">Nilai
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
@@ -111,6 +115,12 @@
                                     <div class="editable-com" style="margin-right:10px">
                                         <label contenteditable="false"
                                             name='formatted_due_date'>{{ $data->formatted_due_date }}</label>
+                                    </div>
+                                </td>
+                                <td style="position: relative; text-align: left;">
+                                    <div class="editable-com" style="margin-right:10px">
+                                        <label contenteditable="false"
+                                            name='formatted_due_date'>{{ $data->nilai }}</label>
                                     </div>
                                 </td>
                                 <td style="position: relative; text-align: center;">
@@ -180,7 +190,7 @@
                 <table id="table" class="tab" style="width: 100%" data-id={{ $guruPembelajaran->id }}>
                     <thead>
                         <tr>
-                            <th style="width: 78%;" class="sortable" data-column="deskripsi">Ujian
+                            <th style="width: 70%;" class="sortable" data-column="deskripsi">Ujian
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
@@ -190,6 +200,10 @@
                             </th>
                             <th style="width: 12%;" class="sortable" data-column="tanggal_ujian">Tanggal
                                 Ujian
+                                <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
+                                    data-order="asc">
+                            </th>
+                            <th style="width: 8%;" class="sortable" data-column="nilai">Nilai
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
@@ -216,6 +230,12 @@
                                     <div class="editable-com" style="margin-right:10px">
                                         <label contenteditable="false"
                                             name='formatted_due_date'>{{ $data->formatted_tanggal_ujian }}</label>
+                                    </div>
+                                </td>
+                                <td style="position: relative; text-align: left;">
+                                    <div class="editable-com" style="margin-right:10px">
+                                        <label contenteditable="false"
+                                            name='formatted_due_date'>{{ $data->nilai }}</label>
                                     </div>
                                 </td>
                                 <td style="position: relative; text-align: center;">

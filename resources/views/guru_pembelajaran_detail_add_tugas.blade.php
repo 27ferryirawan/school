@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Pembelajaran</title>
+    <title>Tugas</title>
     @include('layouts/guru_navbar')
 </head>
 
@@ -33,7 +33,7 @@
                 <input type="file" id="fileInput" name="fileInput" accept=".txt, .pdf, .docx, .png, .jpg"
                     onchange="displayFileName()">
             </div>
-            <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
+            <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
         </div>
         <div class="input-com-full date-input time-input" style="margin-bottom: 30px; width: 130px">
             <label>Hari Tenggat</label>

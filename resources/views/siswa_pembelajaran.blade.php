@@ -11,14 +11,15 @@
         <div class="container">
             @foreach ($guruPembelajaran as $dataGuru_pembelajaran)
                 <div class="item">
-                    <a href="/siswa-pembelajaran/{{ $dataGuru_pembelajaran->mata_pelajaran_id    }}/detail"
+                    <a href="/siswa-pembelajaran/{{ $dataGuru_pembelajaran->mata_pelajaran_id }}/detail"
                         class="item-button" style="text-decoration: none; color: black;">
                         <div class="left-side">
                             <img src="{{ asset('images/class.png') }}" style="width: 80%; height: 80px">
                         </div>
                         <div class="right-side">
                             <label>{{ $dataGuru_pembelajaran->nama_guru }}</label> <br>
-                            <label>{{ $dataGuru_pembelajaran->mata_pelajaran }}</label> <br>
+                            <label>{{ $dataGuru_pembelajaran->mata_pelajaran }}</label>
+                            <br>
                             <label>{{ $dataGuru_pembelajaran->nama_kelas }}</label> <br>
                         </div>
                     </a>
@@ -108,6 +109,10 @@
         text-align: left;
     }
 
+    .right-side label {
+        width: 100%;
+    }
+
     .left-side {
         width: 48%;
         margin-top: 15px;
@@ -124,6 +129,11 @@
             font-size: 15px;
             margin-left: -48%;
             text-align: center;
+            word-wrap: break-word;
+        }
+
+        .right-side label {
+            width: 100%;
         }
 
     }

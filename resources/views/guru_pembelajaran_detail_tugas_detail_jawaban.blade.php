@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Pembelajaran</title>
+    <title>Tugas</title>
     @include('layouts/guru_navbar')
 </head>
 
@@ -36,7 +36,7 @@
                     onchange="displayFileName()" disabled>
             </div>
             @if ($tugas->file_path == null)
-                <div id="fileNameDisplay" style="margin-top: 13px">No file chosen</div>
+                <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
             @else
                 <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank">
                     <div id="fileNameDisplay" style="margin-top: 13px; cursor: pointer;">

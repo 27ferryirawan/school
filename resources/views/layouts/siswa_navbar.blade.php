@@ -1,12 +1,8 @@
 @php
     if ((Auth::check() && Auth::user()->role == 'SISWA') || !Auth::check()) {
-        $pembelajaran_url = 'siswa-pembelajaran';
-        $ujian_url = 'guru-ujian';
-        $nilai_url = 'admin-kelas/list/3';
+        $pembelajaran_url = '/siswa-pembelajaran';
     } elseif (Auth::check() && (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'GURU')) {
         $pembelajaran_url = '/';
-        $ujian_url = '/';
-        $nilai_url = '/';
     }
 @endphp
 
@@ -27,9 +23,8 @@
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA</a></li>
 
-            <li><a class="{{ request()->is($pembelajaran_url) ? 'active' : '' }}"
+            <li><a class="{{ Request::is('siswa-pembelajaran*') ? 'active' : '' }}"
                     href="{{ $pembelajaran_url }}">PEMBELEJARAN</a></li>
-            <li><a class="{{ request()->is('/guru-siswa') ? 'active' : '' }}" href="/guru-siswa">SISWA</a></li>
             <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
             </li>
             @guest
@@ -63,7 +58,7 @@
 
     <ul class="navbar-nav1">
         <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA</a></li>
-        <li><a class="{{ request()->is($pembelajaran_url) ? 'active' : '' }}"
+        <li><a class="{{ Request::is('siswa-pembelajaran*') ? 'active' : '' }}"
                 href="{{ $pembelajaran_url }}">PEMBELEJARAN</a></li>
         <li><a class="{{ request()->is('admin-kelas/list/3') ? 'active' : '' }}" href="/admin-kelas/list/3">SISWA</a>
         </li>

@@ -3,48 +3,21 @@
 
 <head>
     <title>Ujian</title>
-    @include('layouts/guru_navbar')
+    @include('layouts/siswa_navbar')
 </head>
 
 <body>
     <main>
-        <div class="input-com-full" style="display: flex; align-items: center; margin-bottom: 10px;">
-            <label style="margin-right: 10px;">Jawaban <b id="namaSiswa">{{ $siswa->nama_siswa }}</b></label>
-            @if ($ujianDetail->ujian_detail_jenis_soal_id == 2)
-                @if ($benarSalah !== null)
-                    @if ($benarSalah->is_benar)
-                        <img src="{{ asset('images/check.png') }}" style="width: 30px; height: 30px">
-                    @else
-                        <img src="{{ asset('images/cross.png') }}" style="width: 30px; height: 30px">
-                    @endif
-                @else
-                    <img src="{{ asset('images/cross.png') }}" style="width: 30px; height: 30px">
-                @endif
-            @endif
-
+        <div id="timer">
         </div>
         <div style="display: flex; justify-content: flex-start; align-items: center;">
             <div style="width: 100%">
-                <div class="input-com-full">
-                    <label>Tipe Soal</label>
-                    @foreach ($jenisSoal as $key => $soal)
-                        <label style="display: inline">
-                            <input type="radio" name="jenis_soal" id="jenis_soal" value="{{ $soal->id }}"
-                                @if ($ujianDetail->ujian_detail_jenis_soal_id == $soal->id) checked @endif style="display: inline"
-                                style="background-color: #e7e7e7;" disabled>
-                            {{ $soal->jenis_soal }}
-                        </label>
-                        <br>
-                    @endforeach
-                </div>
                 <div class="input-com-full">
                     <label>Deskripsi Soal</label>
                     <textarea type="text" id="deskripsi" name="deskripsi" style="background-color: #e7e7e7;" disabled>{{ $ujianDetail->soal }}</textarea>
                 </div>
                 <div style="display: flex; align-items: center;">
-                    <div class="input-com-full" enctype="multipart/form-data" style="margin: 10px 20px 0px 60px;">
-                        <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Pilih
-                            fail</label>
+                    <div class="input-com-full" enctype="multipart/form-data" style="margin: 10px 20px 0px 40px;">
                         <input type="file" id="fileInput" name="fileInput" accept=".txt, .pdf, .docx, .png, .jpg"
                             onchange="displayFileName()" disabled>
                     </div>
@@ -74,7 +47,8 @@
                                         style="margin-right: 5px;">{{ strtoupper($letter) }}.</label>
                                     <input type="radio" id="option{{ $letter }}" name="options"
                                         value="{{ strtoupper($letter) }}"
-                                        style="display: inline-block; margin-right: 5px;">
+                                        style="display: inline-block; margin-right: 5px;"
+                                        onclick="updateSelectedOption({{ $detail->id }})">
                                     <input type="text" id="option{{ $letter }}Description"
                                         name="option{{ $letter }}Description"
                                         placeholder="Description for Option {{ strtoupper($letter) }}"
@@ -93,30 +67,40 @@
                                         style="margin-right: 5px;">{{ strtoupper($letter) }}.</label>
                                     <input type="radio" id="option{{ $letter }}" name="options"
                                         value="{{ strtoupper($letter) }}"
-                                        style="display: inline-block; margin-right: 5px;background-color: #e7e7e7;"
-                                        disabled @if ($detail->is_jawaban_siswa == 1) checked @endif;>
+                                        style="display: inline-block; margin-right: 5px;"
+                                        @if ($detail->is_jawaban_siswa == 1) checked @endif;
+                                        onclick="updateSelectedOption({{ $detail->id }})">
                                     <input type="text" id="option{{ $letter }}Description"
                                         name="option{{ $letter }}Description"
                                         placeholder="Description for Option {{ strtoupper($letter) }}"
-                                        style="margin-right: 50px;background-color: #e7e7e7; @if ($detail->is_jawaban == 1) text-decoration: underline;
-                                    text-decoration-color: green; border:2px solid green; color: green; font-weight: bold; @endif"
-                                        disabled value="{{ $detail->jawaban }}">
+                                        style="margin-right: 50px; border: none; background: none" disabled
+                                        value="{{ $detail->jawaban }}">
                                 </div>
                             @endforeach
                         @endif
                     @elseif ($ujianDetail->ujian_detail_jenis_soal_id == 1)
                         <div class="input-com-full">
                             <label>Deskripsi Jawaban</label>
-                            <textarea type="text" id="deskripsiJawaban" name="deskripsiJawaban" style="background-color: #e7e7e7;" disabled>{{ $ujianDetail->jawaban_deskripsi }}</textarea>
+                            <textarea type="text" id="deskripsiJawaban" name="deskripsiJawaban">{{ $ujianDetail->jawaban_deskripsi }}</textarea>
                         </div>
                     @endif
                     <input type="hidden" id="selectedOptions" name="selectedOptions" value="">
+                    <input type="hidden" id="selectedUjianDetailPilganid" name="selectedUjianDetailPilganid"
+                        value="">
                 </div>
             </div>
         </div>
     </main>
-
 </body>
+<footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
+    <div style="margin-right: 20px;">
+        <button
+            style="width: 155px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+            id="updSaveButton"
+            onclick="saveData({{ $ujianJawaban->id }}, {{ $ujianDetail->ud_ujian_detail_id }})">Simpan
+            Jawaban</button>
+    </div>
+</footer>
 <div class="loading">
     <div class="center-body">
         <div class="loader-circle-11">
@@ -141,6 +125,91 @@
 
 
 <script>
+    var ujianJenisSoal = {{ $ujianDetail->ujian_detail_jenis_soal_id }};
+    var jawabanPilganId = {{ $ujianJawaban->ujian_detail_pilgan_id ?? 'null' }};
+
+    window.onload = function() {
+        // Replace 'ujianDetailPilganidValue' with the actual value you want to set
+        var ujianDetailPilganidValue = jawabanPilganId;
+        updateSelectedOption(ujianDetailPilganidValue);
+    };
+
+    function updateSelectedOption(ujianDetailPilganid) {
+        document.getElementById('selectedUjianDetailPilganid').value = ujianDetailPilganid;
+    }
+
+
+    function saveData(ujianJawabanId, ujianDetailId) {
+        if (ujianJenisSoal == 2) {
+            var jawabanUjianDetailPilganId = document.getElementById('selectedUjianDetailPilganid').value;
+            var deskripsiJawaban = null;
+        } else {
+            var jawabanUjianDetailPilganId = null;
+            var deskripsiJawaban = document.getElementById('deskripsiJawaban').value;
+        }
+
+        $.ajax({
+            url: '/siswa-pembelajaran/detail/updateInsertUjianJawaban',
+            method: 'POST',
+            data: {
+                ujian_jawaban_id: ujianJawabanId,
+                ujian_detail_id: ujianDetailId,
+                jawaban_ujian_detail_pilgan_id: jawabanUjianDetailPilganId,
+                jawaban_deskripsi: deskripsiJawaban,
+                jenis_soal_id: ujianJenisSoal,
+                _token: '{{ csrf_token() }}'
+            },
+            beforeSend: function() {
+                $('.loading').show();
+            },
+            success: function(response) {
+                // document.getElementById("successOrFailedText").innerHTML = response.message;
+                // document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                //     .message_description;
+                var currentUrl = window.location.href;
+                var position = currentUrl.lastIndexOf('/soal');
+                var newUrl = currentUrl.substring(0, position);
+                window.location.href = newUrl;
+            },
+            error: function(xhr, status, error) {
+                // document.getElementById("successOrFailedText").innerHTML = response.message;
+                // document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                //     .message_description;
+            },
+            complete: function() {
+                $('.loading').hide();
+                // successOrFailedModal.style.display = "block";
+                // document.body.style.overflow = "hidden";
+            }
+        });
+    }
+
+    var tanggalUjian = "{{ $ujian->tanggal_ujian }}";
+    var waktuPengerjaan = {{ $ujian->waktu_pengerjaan }};
+
+    var targetDate = new Date(tanggalUjian);
+    targetDate.setMinutes(targetDate.getMinutes() + waktuPengerjaan);
+
+    var timerInterval = setInterval(function() {
+        var currentDate = new Date().getTime();
+        var timeDifference = targetDate - currentDate;
+
+        var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        var totalMinutes = days * 24 * 60 + hours * 60 + minutes;
+
+        $("#timer").html(totalMinutes + " menit dan " + seconds + " detik tersisa");
+
+        if (timeDifference <= 0) {
+            clearInterval(timerInterval);
+            $("#timer").html("Countdown expired");
+        }
+    }, 1000);
+
+
     flatpickr("#dueDate", {
         dateFormat: "d M Y",
         minDate: "today",
@@ -202,18 +271,15 @@
 
     function toggleAdditionalElements(selectedValue) {
         var additionalElements = document.getElementById('additionalElements');
-        // if (selectedValue == 2) {
         additionalElements.style.display = 'block';
-        // } else {
-        // additionalElements.style.display = 'none';
-        // }
     }
-
-
 
     function hideSuccessOrFailedModal() {
         if (document.getElementById("successOrFailedDescriptionText").innerHTML != "") {
-            location.reload();
+            var currentUrl = window.location.href;
+            var position = currentUrl.lastIndexOf('/soal');
+            var newUrl = currentUrl.substring(0, position);
+            window.location.href = newUrl;
         }
     }
 
@@ -256,5 +322,11 @@
         text-decoration: none;
         cursor: not-allowed;
         pointer-events: none;
+    }
+
+    #timer {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 10px 0px 10px 60px;
     }
 </style>

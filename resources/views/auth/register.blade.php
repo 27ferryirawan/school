@@ -61,8 +61,8 @@
                                 <div class="row-md-3">
                                     <select id="role" class="form-control @error('role') is-invalid @enderror"
                                         name="role" value="{{ old('role') }}" required autocomplete="role"
-                                        style="border-radius:30px; background-color: #F0F0F0;" disabled>
-                                        <option value="ADMIN">
+                                        style="border-radius:30px; background-color: #F0F0F0;">
+                                        <option value="ADMIN" selected>
                                             ADMIN
                                         </option>
                                         <option value="GURU">
@@ -73,7 +73,7 @@
                                         </option>
                                     </select>
 
-                                    @error('email')
+                                    @error('role')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
