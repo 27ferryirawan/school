@@ -20,11 +20,20 @@ class MataPelajaranSeeder extends Seeder
                 'mata_pelajaran' => 'IPA',
             ],
             [
-                'mata_pelajaran' => 'MTK',
+                'mata_pelajaran' => 'MATEMATIKA',
             ],
             [
                 'mata_pelajaran' => 'IPS',
-            ]
+            ],
+            [
+                'mata_pelajaran' => 'Bahasa Indonesia',
+            ],
+            [
+                'mata_pelajaran' => 'Bahasa Inggris',
+            ],
+            [
+                'mata_pelajaran' => 'PPKN',
+            ],
         ]);
     }
 }

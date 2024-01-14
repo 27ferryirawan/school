@@ -16,6 +16,8 @@ class CreateJenisSoalTable extends Migration
             $table->id();
             $table->string('jenis_soal');
             $table->string('deskripsi')->nullable();
+            $table->string('file_path')->nullable();
+            $table->string('file_name')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

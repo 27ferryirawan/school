@@ -16,7 +16,7 @@ class CreateUjianDetailPilganTable extends Migration
             $table->id();
             $table->unsignedBigInteger('ujian_detail_id');
             $table->integer('no_jawaban');
-            $table->string('jawaban');
+            $table->text('jawaban');
             $table->integer('is_jawaban');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

@@ -30,6 +30,6 @@ class CreateKelasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_type');
+        Schema::dropIfExists('kelas');
     }
 }

@@ -28,30 +28,6 @@ class KelasSeeder extends Seeder
                 'nama_kelas' => 'VII C',
                 'tingkat_kelas' => 7
             ],
-            [
-                'nama_kelas' => 'VII D',
-                'tingkat_kelas' => 7
-            ],
-            [
-                'nama_kelas' => 'VII E',
-                'tingkat_kelas' => 7
-            ],
-            [
-                'nama_kelas' => 'VII F',
-                'tingkat_kelas' => 7
-            ],
-            [
-                'nama_kelas' => 'VII G',
-                'tingkat_kelas' => 7
-            ],
-            [
-                'nama_kelas' => 'VII H',
-                'tingkat_kelas' => 7
-            ],
-            [
-                'nama_kelas' => 'VII I',
-                'tingkat_kelas' => 7
-            ],
 
             //8
             [
@@ -65,6 +41,20 @@ class KelasSeeder extends Seeder
             [
                 'nama_kelas' => 'VIII C',
                 'tingkat_kelas' => 8
+            ],
+
+            //9
+            [
+                'nama_kelas' => 'IX A',
+                'tingkat_kelas' => 9
+            ],
+            [
+                'nama_kelas' => 'IX B',
+                'tingkat_kelas' => 9
+            ],
+            [
+                'nama_kelas' => 'IX C',
+                'tingkat_kelas' => 9
             ],
         ]);
     }

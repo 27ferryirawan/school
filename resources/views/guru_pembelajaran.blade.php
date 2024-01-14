@@ -18,12 +18,12 @@
                     <a href="/guru-pembelajaran/{{ $dataGuru_pembelajaran->id }}/detail" class="item-button"
                         style="text-decoration: none; color: black;">
                         <div class="left-side">
-                            <img src="{{ asset('images/class.png') }}" style="width: 80px; height: 80px">
+                            <img src="{{ asset('images/class.png') }}" style="width: 80%; height: 80px">
                         </div>
                         <div class="right-side">
-                            {{ $dataGuru_pembelajaran->nama_guru }} <br>
-                            {{ $dataGuru_pembelajaran->mata_pelajaran }} <br>
-                            {{ $dataGuru_pembelajaran->nama_kelas }}<br>
+                            <label>{{ $dataGuru_pembelajaran->nama_guru }}</label> <br>
+                            <label>{{ $dataGuru_pembelajaran->mata_pelajaran }}</label> <br>
+                            <label>{{ $dataGuru_pembelajaran->nama_kelas }}</label> <br>
                         </div>
                     </a>
                 </div>
@@ -129,7 +129,7 @@
         document.body.style.overflow = "hidden";
     }
 
-    function showAddModal() {
+    function hideAddModal() {
         addModal.style.display = "none";
     }
 
@@ -199,5 +199,19 @@
         width: 48%;
         margin-top: 15px;
         margin-left: 35px;
+    }
+
+    @media screen and (max-width: 1010px) {
+        .left-side {
+            width: 0%;
+        }
+
+        .right-side {
+            width: 100%;
+            font-size: 15px;
+            margin-left: -48%;
+            text-align: center;
+        }
+
     }
 </style>

@@ -15,8 +15,13 @@
         </div>
         <div class="input-com-full" style="width: 198.5px">
             <label>Tipe Ujian</label>
-            <input type="text" id="tipeUjian" name="tipeUjian" value="{{ $ujian->jenis_ujian }}" disabled
-                style="background-color: #e7e7e7;">
+            <select class="dropdown" name="jenisUjian" id="jenisUjian" disabled style="background-color: #e7e7e7;">
+                @foreach ($jenisUjian as $data)
+                    <option value="{{ $data['id'] }}" @if ($ujian->jenis_ujian_id == $data['id']) selected @endif>
+                        {{ $data['jenis_ujian'] }}
+                    </option>
+                @endforeach
+            </select>
         </div>
         <div class="input-com-full" style="width: 198.5px">
             <label>Kode Ruangan</label>
@@ -48,7 +53,7 @@
             <div style="margin-right: 20px;">
                 <button
                     style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                    id="updSaveButton" onclick="addData()">Tambah Soal</button>
+                    id="addDataButton" onclick="addData({{ $ujian->id }})">Tambah Soal</button>
             </div>
         </div>
         <div style="margin: 0px 60px 30px 60px; border: 1px solid black; padding: 10px;">
@@ -59,7 +64,8 @@
                             <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                         </th>
                         <th style="width: 89%;" class="sortable" data-column="soal">Soal
-                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
+                                data-order="asc">
                         </th>
                         <th style="width: 8%; text-align: center">Detail
                         </th>
@@ -68,21 +74,74 @@
                 <tbody>
                     @foreach ($ujianDetail as $data)
                         <tr class="tugas-row" style="margin: 10px;" data-id="{{ $data->id }}"
-                            onclick="openJawabanDetail({{ $data->id }})">
+                            onclick="openSoalDetail({{ $data->id }})">
+                            <td style="position: relative; text-align: left;">
+                                <div class="editable-com" style="margin-right:10px">
+                                    <label contenteditable="false"
+                                        name='formatted_submit_date'>{{ $data->row_num }}</label>
+                                </div>
+                            </td>
                             <td style="position: relative; text-align: left;">
                                 <div class="editable-com" style="margin-right:10px">
                                     <label contenteditable="false" name='materi'>{{ $data->soal }}</label>
                                 </div>
                             </td>
+                            <td style="position: relative; text-align: center;">
+                                <img style=" width: 20px; height: 20px;"
+                                    src="{{ asset('images/double-left-arrow.png') }}" alt="Ascending" data-order="asc">
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="input-com-full" style="display: flex; align-items: center; margin-bottom: 10px; margin-top: 20px">
+            <label style="margin-right: 30px;">Jawaban Siswa</label>
+        </div>
+        <div style="margin: 0px 60px 30px 60px; border: 1px solid black; padding: 10px;">
+            <table id="table1" class="tab1" style="width: 100%" data-id={{ $ujian->id }}>
+                <thead>
+                    <tr>
+                        <th style="width: 3%;" class="sortable" data-column="nomor">No
+                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
+                                data-order="asc">
+                        </th>
+                        <th style="width: 80%;" class="sortable" data-column="siswa">Siswa
+                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
+                                data-order="asc">
+                        </th>
+                        <th style="width: 9%;" class="sortable" data-column="nilai">Nilai
+                            <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
+                                data-order="asc">
+                        </th>
+                        <th style="width: 8%; text-align: center">Detail
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($ujianJawaban as $data)
+                        <tr class="tugas-row" style="margin: 10px;" data-id="{{ $data->id }}"
+                            onclick="openJawabanDetail({{ $data->siswa_id_siswa }})">
                             <td style="position: relative; text-align: left;">
                                 <div class="editable-com" style="margin-right:10px">
                                     <label contenteditable="false"
-                                        name='formatted_submit_date'>{{ $data->nomor }}</label>
+                                        name='formatted_submit_date'>{{ $data->row_num }}</label>
+                                </div>
+                            </td>
+                            <td style="position: relative; text-align: left;">
+                                <div class="editable-com" style="margin-right:10px">
+                                    <label contenteditable="false" name='materi'>{{ $data->nama_siswa }}</label>
+                                </div>
+                            </td>
+                            <td style="position: relative; text-align: left;">
+                                <div class="editable-com" style="margin-right:10px">
+                                    <label contenteditable="false" name='materi'>{{ $data->nilai }}</label>
                                 </div>
                             </td>
                             <td style="position: relative; text-align: center;">
                                 <img style=" width: 20px; height: 20px;"
-                                    src="{{ asset('images/double-left-arrow.png') }}" alt="Ascending" data-order="asc">
+                                    src="{{ asset('images/double-left-arrow.png') }}" alt="Ascending"
+                                    data-order="asc">
                             </td>
                         </tr>
                     @endforeach
@@ -140,10 +199,22 @@
         minuteIncrement: 10,
     });
 
+    function openSoalDetail(soalId) {
+        window.location.href = window.location.href + '/soal/' + soalId
+    }
+
+    function openJawabanDetail(siswaId) {
+        window.location.href = window.location.href + '/ujian-jawaban/' + siswaId
+    }
+
+    function addData(ujianId) {
+        window.location.href = window.location.href + '/soal/'
+    }
+
     function openData(ujianId) {
         var updSaveButton = document.getElementById('updSaveButton');
         var ujian = document.getElementById('ujian');
-        var tipeUjian = document.getElementById('tipeUjian');
+        var jenisUjian = document.getElementById('jenisUjian');
         var kodeRuangan = document.getElementById('kodeRuangan');
         var waktuPengerjaan = document.getElementById('waktuPengerjaan');
         var date = document.getElementById('date');
@@ -151,18 +222,16 @@
         var defaultColor = '#ffffff';
         var disabledColor = '#e7e7e7';
 
-        // Use '==' for comparison, not '=' which is for assignment
         if (updSaveButton.innerHTML == "Ubah") {
-            // Correct the typo: 'dupdSaveButton' to 'updSaveButton'
             updSaveButton.innerHTML = "Simpan";
             ujian.disabled = false;
-            tipeUjian.disabled = false;
+            jenisUjian.disabled = false;
             kodeRuangan.disabled = false;
             waktuPengerjaan.disabled = false;
             date.disabled = false;
             time.disabled = false;
             ujian.style.backgroundColor = defaultColor;
-            tipeUjian.style.backgroundColor = defaultColor;
+            jenisUjian.style.backgroundColor = defaultColor;
             kodeRuangan.style.backgroundColor = defaultColor;
             waktuPengerjaan.style.backgroundColor = defaultColor;
             date.style.backgroundColor = defaultColor;
@@ -171,13 +240,13 @@
             this.updateData(ujianId);
             updSaveButton.innerHTML = "Ubah";
             ujian.disabled = true;
-            tipeUjian.disabled = true;
+            jenisUjian.disabled = true;
             kodeRuangan.disabled = true;
             waktuPengerjaan.disabled = true;
             date.disabled = true;
             time.disabled = true;
             ujian.style.backgroundColor = disabledColor;
-            tipeUjian.style.backgroundColor = disabledColor;
+            jenisUjian.style.backgroundColor = disabledColor;
             kodeRuangan.style.backgroundColor = disabledColor;
             waktuPengerjaan.style.backgroundColor = disabledColor;
             date.style.backgroundColor = disabledColor;
@@ -186,35 +255,57 @@
     }
 
     function updateData(ujianId) {
-        var fileInput = document.getElementById('fileInput');
-        var formData = new FormData();
-        if (fileInput.files.length > 0) {
-            formData.append('file_path', fileInput.files[0]);
-        }
-
         var urlString = window.location.href;
         var parts = urlString.split('/');
         var id = parts[parts.indexOf('guru-pembelajaran') + 1];
-        var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
-        var dueDate = document.getElementById('dueDate').value;
-        var dueTime = document.getElementById('dueTime').value;
-        const nameWithoutExtension = fileNameDisplay.split(".")[0];
-
-        formData.append('id', tugasId);
-        formData.append('title', document.getElementById('tugas').value);
-        formData.append('description', document.getElementById('deskripsi').value);
-        formData.append('guru_pembelajaran_id', id);
-        formData.append('file_name_no_ext', nameWithoutExtension);
-        formData.append('file_name', fileNameDisplay);
-        formData.append('due_date', dueDate + ' ' + dueTime);
-        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token for Laravel
+        var ujian = document.getElementById('ujian').value;
+        var jenisUjian = document.getElementById('jenisUjian').value;
+        var kodeRuangan = document.getElementById('kodeRuangan').value;
+        var waktuPengerjaan = document.getElementById('waktuPengerjaan').value;
+        var date = document.getElementById('date').value;
+        var time = document.getElementById('time').value;
 
         $.ajax({
             type: 'POST',
-            url: '/guru-pembelajaran/detail/updateTugas',
-            data: formData,
-            processData: false,
-            contentType: false,
+            url: '/guru-pembelajaran/detail/updateUjian',
+            data: {
+                id: ujianId,
+                deskripsi: ujian,
+                jenis_ujian_id: jenisUjian,
+                kode_ruangan: kodeRuangan,
+                waktu_pengerjaan: waktuPengerjaan,
+                tanggal_ujian: date + ' ' + time,
+                _token: '{{ csrf_token() }}'
+            },
+            beforeSend: function() {
+                $('.loading').show();
+            },
+            success: function(response) {
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
+            },
+            error: function(xhr, status, error) {
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
+            },
+            complete: function() {
+                $('.loading').hide();
+                successOrFailedModal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            }
+        });
+    }
+
+    function deleteData(ujianId) {
+        $.ajax({
+            type: 'POST',
+            url: '/guru-pembelajaran/detail/deleteUjian',
+            data: {
+                id: ujianId,
+                _token: '{{ csrf_token() }}'
+            },
             beforeSend: function() {
                 $('.loading').show();
             },
@@ -237,8 +328,13 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedDescriptionText").innerHTML != "") {
+        if (document.getElementById("successOrFailedDescriptionText").innerHTML == "Mengubah Ujian Berhasil!") {
             location.reload();
+        } else {
+            var currentUrl = window.location.href;
+            var position = currentUrl.lastIndexOf('/ujian-detail');
+            var newUrl = currentUrl.substring(0, position);
+            window.location.href = newUrl;
         }
     }
 
@@ -265,11 +361,23 @@
         border-bottom: 1px black solid;
     }
 
+    .tab1 th {
+        border-bottom: 1px black solid;
+    }
+
     .tab td {
         border-bottom: 1px black solid;
     }
 
+    .tab1 td {
+        border-bottom: 1px black solid;
+    }
+
     .tab tr>td {
+        padding: 10px 0px;
+    }
+
+    .tab1 tr>td {
         padding: 10px 0px;
     }
 

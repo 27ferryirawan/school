@@ -238,23 +238,21 @@
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
-                            <th style="width: 14%;" class="sortable" data-column="nama_siswa">Nama Siswa
+                            <th style="width: 18%;" class="sortable" data-column="nama_siswa">Nama Siswa
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
-                            <th style="width: 17%;" class="sortable" data-column="nama_kelas">Kelas
+                            <th style="width: 21%;" class="sortable" data-column="nama_kelas">Kelas
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
-                            <th style="width: 17%;" class="sortable" data-column="nilai">Nilai
+                            <th style="width: 20%;" class="sortable" data-column="nilai">Nilai
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
                             </th>
-                            <th style="width: 17%;" class="sortable" data-column="tahun_ajaran">Tahun Ajaran
+                            <th style="width: 20%;" class="sortable" data-column="tahun_ajaran">Tahun Ajaran
                                 <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending"
                                     data-order="asc">
-                            </th>
-                            <th style="width: 14%;; text-align: center">Action
                             </th>
                         </tr>
                     </thead>
@@ -291,14 +289,6 @@
                                         <label name='tahun-ajaran'>{{ $data->tahun_ajaran }}</label>
                                     </div>
                                 </td>
-                                <td>
-                                    <div style="display: flex; justify-content: center; align-items: center;">
-                                        <input type="checkbox"
-                                            style="width: 20px; height: 20px; border-radius: 5px; background-color: #392A23; border: none; color: white"
-                                            data-resid="{{ $data->id }}" data-tabid="{{ $data->table_id }}"
-                                            onclick="checkBox(this)">
-                                    </div>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -323,39 +313,6 @@
         <button class="cancel-button" onclick="hideDeleteModal()">Batal</button>
     </div>
 </div>
-<footer class="footer-content active" id="materiFooter">
-    <div style="margin-right: 20px;">
-        <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            onclick="addData()">Tambah</button>
-    </div>
-</footer>
-<footer class="footer-content" id="tugasFooter">
-    <div style="margin-right: 20px;">
-        <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            onclick="addTugasData()">Tambah</button>
-    </div>
-</footer>
-<footer class="footer-content" id="ujianFooter">
-    <div style="margin-right: 20px;">
-        <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            onclick="addUjianData()">Tambah</button>
-    </div>
-</footer>
-<footer class="footer-content" id="nilaiFooter">
-    <div style="display: flex; justify-content: center; align-items: center; margin-right: auto;">
-        <button
-            style="width: 125px; height: 35px; background-color: #888888; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            onclick="cancelEditDelete(this)" disabled>Batal</button>
-    </div>
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <button
-            style="width: 125px; height: 35px; background-color: #888888; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            onclick="editData(this)" data-editing="false" disabled>Ubah</button>
-    </div>
-</footer>
 <div class="loading">
     <div class="center-body">
         <div class="loader-circle-11">
@@ -438,7 +395,7 @@
 
     //         var dataId = table.getAttribute('data-id');
     //         $.ajax({
-    //             url: '/guru-pembelajaran/' + dataId + '/detailSortNilai',
+    //             url: '/siswa-pembelajaran/' + dataId + '/detailSortNilai',
     //             method: 'GET',
     //             data: {
     //                 kelasId: kelasId,
@@ -500,7 +457,7 @@
         });
 
         $.ajax({
-            url: '/guru-pembelajaran/nilai-bulk-update',
+            url: '/siswa-pembelajaran/nilai-bulk-update',
             method: 'POST',
             data: {
                 rowsData: selectedRowsData,
@@ -570,7 +527,7 @@
         var guruPembelajaran = {{ $guruPembelajaran->id }}
         $.ajax({
             type: 'POST',
-            url: '/guru-pembelajaran/detail/addDiskusi',
+            url: '/siswa-pembelajaran/detail/addDiskusi',
             data: {
                 '_token': '{{ csrf_token() }}',
                 'description': komentar,
@@ -687,13 +644,13 @@
             var activeTabId = document.querySelector('.tab-content.active').id;
             var activeUrl = '';
             if (activeTabId == 'materiTab') {
-                activeUrl = '/guru-pembelajaran/' + dataId + '/detailSort';
+                activeUrl = '/siswa-pembelajaran/' + dataId + '/detailSort';
             } else if (activeTabId == 'tugasTab') {
-                activeUrl = '/guru-pembelajaran/' + dataId + '/detailSortTugas';
+                activeUrl = '/siswa-pembelajaran/' + dataId + '/detailSortTugas';
             } else if (activeTabId == 'ujianTab') {
-                activeUrl = '/guru-pembelajaran/' + dataId + '/detailSortUjian';
-            } else if (activeTabId == 'nilaiTab') {
-                activeUrl = '/guru-pembelajaran/' + dataId + '/detailSortNilai';
+                activeUrl = '/siswa-pembelajaran/' + dataId + '/detailSortUjian';
+            } else if (activeTabId == 'ujianTab') {
+                activeUrl = '/siswa-pembelajaran/' + dataId + '/detailSortNilai';
             }
 
             $.ajax({
@@ -717,7 +674,6 @@
 
     function showTab(tabName) {
         var tabs = document.getElementsByClassName('tab-content');
-        var footers = document.getElementsByClassName('footer-content');
         var tabbar = document.getElementsByClassName('tabbar-isAct');
         for (var i = 0; i < tabs.length; i++) {
             tabs[i].classList.remove('active');
@@ -725,16 +681,10 @@
         for (var i = 0; i < tabbar.length; i++) {
             tabbar[i].classList.remove('active');
         }
-        for (var i = 0; i < footers.length; i++) {
-            footers[i].classList.remove('active');
-        }
 
         document.getElementById(tabName + 'Tab').classList.add('active');
         document.getElementById(tabName + 'TabMaster').classList.add('active');
 
-        if (tabName != 'diskusi') {
-            document.getElementById(tabName + 'Footer').classList.add('active');
-        }
     }
 
     function addData() {

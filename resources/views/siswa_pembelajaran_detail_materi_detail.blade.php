@@ -100,18 +100,6 @@
         </div>
     </main>
 </body>
-<footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
-    <div style="margin-right: 20px;">
-        <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            onclick="deleteData({{ $materi->id }})">Hapus</button>
-    </div>
-    <div style="margin-right: 20px;">
-        <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            id="updSaveButton" onclick="openData({{ $materi->id }})">Ubah</button>
-    </div>
-</footer>
 <div class="loading">
     <div class="center-body">
         <div class="loader-circle-11">
@@ -152,20 +140,15 @@
     }
     var commentInput = document.getElementById('commentInput');
 
-    // Add an event listener for the 'keydown' event
     commentInput.addEventListener('keydown', function(event) {
-        // Check if the pressed key is Enter (keyCode 13) and Shift key is not pressed
         if (event.keyCode === 13 && !event.shiftKey) {
-            // Prevent the default behavior of the Enter key
             event.preventDefault();
 
-            // Trigger the click event for the Send button
             document.getElementById('sendButton').click();
         }
     });
 
     function addCommentToDOM(comment) {
-        // Create HTML elements for the new comment
         var commentContainer = document.createElement('div');
         commentContainer.style.display = 'flex';
         commentContainer.style.justifyContent = 'flex-end';
@@ -214,119 +197,13 @@
         commentInput.style.height = "45px"; // Reset to initial height
     }
 
-    function openData(materiId) {
-        var updSaveButton = document.getElementById('updSaveButton');
-        var materi = document.getElementById('materi');
-        var deskripsi = document.getElementById('deskripsi');
-        var defaultColor = '#ffffff';
-        var disabledColor = '#e7e7e7';
-        var customFileButton = document.getElementById('customFileButton');
-        var fileInput = document.getElementById('fileInput');
 
-        // Use '==' for comparison, not '=' which is for assignment
-        if (updSaveButton.innerHTML == "Ubah") {
-            // Correct the typo: 'dupdSaveButton' to 'updSaveButton'
-            updSaveButton.innerHTML = "Simpan";
-            materi.disabled = false;
-            deskripsi.disabled = false;
-            fileInput.disabled = false;
-            materi.style.backgroundColor = defaultColor;
-            deskripsi.style.backgroundColor = defaultColor;
-            customFileButton.style.backgroundColor = defaultColor;
-        } else {
-            this.updateData(materiId);
-            updSaveButton.innerHTML = "Ubah";
-            materi.disabled = true;
-            deskripsi.disabled = true;
-            fileInput.disabled = true;
-            materi.style.backgroundColor = disabledColor;
-            deskripsi.style.backgroundColor = disabledColor;
-            customFileButton.backgroundColor = disabledColor;
-        }
-    }
-
-    function updateData(materiId) {
-        var fileInput = document.getElementById('fileInput');
-        var formData = new FormData();
-        if (fileInput.files.length > 0) {
-            formData.append('file_path', fileInput.files[0]);
-        }
-
-        var urlString = window.location.href;
-        var parts = urlString.split('/');
-        var id = parts[parts.indexOf('guru-pembelajaran') + 1];
-        var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
-        const nameWithoutExtension = fileNameDisplay.split(".")[0];
-
-        formData.append('id', materiId);
-        formData.append('title', document.getElementById('materi').value);
-        formData.append('description', document.getElementById('deskripsi').value);
-        formData.append('guru_pembelajaran_id', id);
-        formData.append('file_name_no_ext', nameWithoutExtension);
-        formData.append('file_name', fileNameDisplay);
-        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token for Laravel
-
-        $.ajax({
-            type: 'POST',
-            url: '/guru-pembelajaran/detail/updateMateri',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-                $('.loading').show();
-            },
-            success: function(response) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
-            },
-            error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
-            },
-            complete: function() {
-                $('.loading').hide();
-                successOrFailedModal.style.display = "block";
-                document.body.style.overflow = "hidden";
-            }
-        });
-    }
-
-    function deleteData(id) {
-        $.ajax({
-            url: '/guru-pembelajaran/detail/deleteMateri',
-            method: 'POST',
-            data: {
-                id: id,
-                _token: '{{ csrf_token() }}'
-            },
-            beforeSend: function() {
-                $('.loading').show();
-            },
-            success: function(response) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
-            },
-            error: function(xhr, status, error) {
-                document.getElementById("successOrFailedText").innerHTML = response.message;
-                document.getElementById("successOrFailedDescriptionText").innerHTML = response
-                    .message_description;
-            },
-            complete: function() {
-                $('.loading').hide();
-                successOrFailedModal.style.display = "block";
-                document.body.style.overflow = "hidden";
-            }
-        });
-    }
 
     function sendKomentar(id) {
         var komentar = document.getElementById('commentInput').value;
         $.ajax({
             type: 'POST',
-            url: '/guru-pembelajaran/detail/addKomentar', // Replace with the actual route of your controller function
+            url: '/siswa-pembelajaran/detail/addKomentar', // Replace with the actual route of your controller function
             data: {
                 '_token': '{{ csrf_token() }}', // Include CSRF token for Laravel
                 'materi_id': id,

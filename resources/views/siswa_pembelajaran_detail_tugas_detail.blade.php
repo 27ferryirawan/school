@@ -30,8 +30,8 @@
         </div>
         <div style="display: flex; align-items: center;">
             <div class="input-com-full" enctype="multipart/form-data" style="margin: 10px 20px 0px 60px;">
-                <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Pilih
-                    fail</label>
+                <label for="fileInput" id="customFileButton" style="background-color: #e7e7e7;">Choose
+                    file</label>
                 <input type="file" id="fileInput" name="fileInput" accept=".txt, .pdf, .docx, .png, .jpg"
                     onchange="displayFileName()" disabled>
             </div>
@@ -53,75 +53,56 @@
             <input type="text" id="dueTime" name="dueTime" value="{{ $tugas->formatted_due_time }}" disabled
                 style="background-color: #e7e7e7;">
         </div>
-        <div class="input-com-full" style="display: flex; align-items: center; margin-bottom: 10px;">
-            <label style="margin-right: 30px;">Jawaban <b id="namaSiswa">{{ $tugasJawaban->nama_siswa }}</b></label>
-            <div class="input-com-full" style="margin: 0px; text-align: center">
-                <label><b>Nilai</b></label>
-                <input type="number" id="nilai" name="nilai" style="width: 65px;" min="0" max="100"
-                    oninput="validateInput()" value="{{ $tugasJawaban->nilai }}">
-            </div>
+        <div class="input-com-full" style="margin-top: 0px">
+            <label>Tugas</label>
         </div>
-        <div style="display: flex; justify-content: flex-start; align-items: center;">
-            <button id="prevButton" onclick="loadData('prev', {{ $guruPembelajaran->kelas_id }})" style="width: 60px;">
-                <img src="{{ asset('images/left.png') }}" style="width: 40px; height: 40px">
-            </button>
+        <div style="display: flex; justify-content: flex-start; align-items: center; margin: 0px 60px 0px 60px;">
             <div style="margin:
             0px 0px 30px 0px; border: 1px solid black; padding: 10px; width: 100%">
                 <div class="input-com-full" style="margin-left: 0px; margin-right: 0px; margin-top: 0px">
                     <label>Deskripsi</label>
-                    <textarea type="text" id="deskripsiJawaban" name="deskripsiJawaban" disabled style="background-color: #e7e7e7;">{{ $tugasJawaban->description }}</textarea>
+                    <textarea type="text" id="deskripsiJawaban" name="deskripsiJawaban" disabled style="background-color: #e7e7e7;">{{ $tugasJawaban ? $tugasJawaban->description : '' }}</textarea>
                 </div>
                 <div style="display: flex; align-items: center;">
-                    <div>
-                        <div class="input-com-full" style="margin: 0px;">
-                            <label>Fail</label>
-                        </div>
-                        @if ($tugas->file_path == null)
-                            <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank" id="fileLink"
-                                class="disabled-link" style="cursor: not-allowed">
-                                <div id="fileNameDisplayJawaban" style="cursor: pointer;">Tidak ada fail
-                                </div>
-                            </a>
+                    <div enctype="multipart/form-data" style="margin-right: 20px;">
+                        <label for="fileInputJawaban" id="customFileButtonJawaban"
+                            style="background-color: #e7e7e7;">Choose
+                            file</label>
+                        <input type="file" id="fileInputJawaban" name="fileInputJawavan"
+                            accept=".txt, .pdf, .docx, .png, .jpg" onchange="displayFileName()" disabled>
+                    </div>
+                    @if ($tugasJawaban)
+                        @if ($tugasJawaban->file_path == null)
+                            <div id="fileNameDisplayJawaban" style="margin-top: 13px">No file chosen</div>
                         @else
-                            <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank" id="fileLink">
-                                <div id="fileNameDisplayJawaban" style="cursor: pointer;">
-                                    {{ $tugas->file_name }}
+                            <a href="{{ asset('storage/' . $tugasJawaban->file_path) }}" target="_blank">
+                                <div id="fileNameDisplayJawaban" style="margin-top: 13px; cursor: pointer;">
+                                    {{ $tugasJawaban->file_name }}
                                 </div>
                             </a>
                         @endif
-                    </div>
+                    @endif
                 </div>
                 <div class="input-com-full date-input time-input"
                     style="margin-left: 0px; margin-right: 0px; display: flex; width: 275px">
                     <div style="margin-right: 15px">
                         <label>Hari Kumpul</label>
                         <input type="text" id="submitDate" name="submitDate"
-                            value="{{ $tugasJawaban->formatted_submit_date_date }}" disabled
+                            value="{{ $tugasJawaban ? $tugasJawaban->formatted_submit_date_date : '' }}" disabled
                             style="background-color: #e7e7e7;">
                     </div>
                     <div style="display: column;">
                         <label>Jam Kumpul</label>
                         <input type="text" id="submitTime" name="submitTime"
-                            value="{{ $tugasJawaban->formatted_submit_date_time }}" disabled
+                            value="{{ $tugasJawaban ? $tugasJawaban->formatted_submit_date_time : '' }}" disabled
                             style="background-color: #e7e7e7;">
                     </div>
                 </div>
             </div>
-            <button id="nextButton" onclick="loadData('next', {{ $guruPembelajaran->kelas_id }})"
-                style="width: 60px;">
-                <img src="{{ asset('images/right.png') }}" style="width: 40px; height: 40px">
-            </button>
         </div>
     </main>
 
 </body>
-<footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
-    <div style="margin-right: 20px;">
-        <button
-            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-            id="updSaveButton" data-id="{{ $tugasJawaban->id }}" onclick="saveData()">Simpan Nilai</button>
-    </div>
-</footer>
 <div class="loading">
     <div class="center-body">
         <div class="loader-circle-11">
@@ -148,6 +129,7 @@
 <script>
     flatpickr("#dueDate", {
         dateFormat: "d M Y",
+        // maxDate: "today", 
         minDate: "today",
     });
 
@@ -159,124 +141,108 @@
         minuteIncrement: 30,
     });
 
-    flatpickr("#submitDate", {
-        dateFormat: "d M Y",
-        minDate: "today",
-    });
+    function openJawabanDetail(siswaId) {
+        window.location.href = window.location.href + '/jawaban/' + siswaId
+    }
 
-    flatpickr("#submitTime", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 30,
-    });
+    function openData(tugasId) {
+        var updSaveButton = document.getElementById('updSaveButton');
+        var tugas = document.getElementById('tugas');
+        var deskripsi = document.getElementById('deskripsi');
+        var defaultColor = '#ffffff';
+        var disabledColor = '#e7e7e7';
+        var customFileButton = document.getElementById('customFileButton');
+        var fileInput = document.getElementById('fileInput');
+        var dueDate = document.getElementById('dueDate');
+        var dueTime = document.getElementById('dueTime');
 
-    flatpickr("#submitDateUpd", {
-        dateFormat: "d M Y",
-        minDate: "today",
-    });
+        // Use '==' for comparison, not '=' which is for assignment
+        if (updSaveButton.innerHTML == "Ubah") {
+            // Correct the typo: 'dupdSaveButton' to 'updSaveButton'
+            updSaveButton.innerHTML = "Simpan";
+            tugas.disabled = false;
+            deskripsi.disabled = false;
+            fileInput.disabled = false;
+            dueDate.disabled = false;
+            dueTime.disabled = false;
+            tugas.style.backgroundColor = defaultColor;
+            deskripsi.style.backgroundColor = defaultColor;
+            customFileButton.style.backgroundColor = defaultColor;
+            dueDate.style.backgroundColor = defaultColor;
+            dueTime.style.backgroundColor = defaultColor;
+        } else {
+            this.updateData(tugasId);
+            updSaveButton.innerHTML = "Ubah";
+            tugas.disabled = true;
+            deskripsi.disabled = true;
+            fileInput.disabled = true;
+            dueDate.disabled = true;
+            dueTime.disabled = true;
+            tugas.style.backgroundColor = disabledColor;
+            deskripsi.style.backgroundColor = disabledColor;
+            customFileButton.backgroundColor = disabledColor;
+            dueDate.style.backgroundColor = disabledColor;
+            dueTime.style.backgroundColor = disabledColor;
+        }
+    }
 
-    flatpickr("#submitTimeUpd", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 30,
-    });
-    var siswa_id = {{ $tugasJawaban->siswa_id }}
-    var tugas_id = {{ $tugas->id }}
-    var tugas_jawaban_id = $('#updSaveButton').data('id')
+    function updateData(tugasId) {
+        var fileInput = document.getElementById('fileInput');
+        var formData = new FormData();
+        if (fileInput.files.length > 0) {
+            formData.append('file_path', fileInput.files[0]);
+        }
 
-    function loadData(direction, kelasId) {
-        var url = '/guru-pembelajaran/detail/getNextPrevTugasJawaban';
-        var data = {
-            tugas_id: tugas_id,
-            siswa_id: siswa_id,
-            kelas_id: kelasId,
-            direction: direction,
-            _token: '{{ csrf_token() }}'
-        };
+        var urlString = window.location.href;
+        var parts = urlString.split('/');
+        var id = parts[parts.indexOf('guru-pembelajaran') + 1];
+        var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
+        var dueDate = document.getElementById('dueDate').value;
+        var dueTime = document.getElementById('dueTime').value;
+        const nameWithoutExtension = fileNameDisplay.split(".")[0];
+
+        formData.append('id', tugasId);
+        formData.append('title', document.getElementById('tugas').value);
+        formData.append('description', document.getElementById('deskripsi').value);
+        formData.append('guru_pembelajaran_id', id);
+        formData.append('file_name_no_ext', nameWithoutExtension);
+        formData.append('file_name', fileNameDisplay);
+        formData.append('due_date', dueDate + ' ' + dueTime);
+        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token for Laravel
 
         $.ajax({
-            url: url,
-            method: 'POST',
-            data: data,
+            type: 'POST',
+            url: '/guru-pembelajaran/detail/updateTugas',
+            data: formData,
+            processData: false,
+            contentType: false,
             beforeSend: function() {
                 $('.loading').show();
             },
             success: function(response) {
-                if (response.success) {
-                    updateUI(response.data);
-                } else {
-                    console.error('Failed to fetch data');
-                }
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
             },
             error: function(xhr, status, error) {
-                console.error('Ajax request failed');
+                document.getElementById("successOrFailedText").innerHTML = response.message;
+                document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                    .message_description;
             },
             complete: function() {
                 $('.loading').hide();
+                successOrFailedModal.style.display = "block";
+                document.body.style.overflow = "hidden";
             }
         });
     }
 
-    function updateUI(data) {
-        siswa_id = data.siswa_id;
-        tugas_jawaban_id = data.id;
-        // document.getElementById('updSaveButton').setAttribute('data-id', '123');
-        document.getElementById('namaSiswa').innerHTML = data.nama_siswa;
-        document.getElementById('nilai').value = data.nilai;
-        document.getElementById('deskripsiJawaban').value = data.description;
-
-        if (data.file_name == null) {
-            document.getElementById('fileNameDisplayJawaban').innerHTML = "Tidak ada fail"
-            document.getElementById('fileLink').classList.add('disabled-link');
-            document.getElementById('fileLink').removeAttribute('href'); // Removes the href attribute
-            document.getElementById('fileLink').style.cursor = 'not-allowed';
-        } else {
-            document.getElementById('fileNameDisplayJawaban').innerHTML = data.file_name;
-            document.getElementById('fileLink').classList.remove('disabled-link');
-            document.getElementById('fileLink').setAttribute('href',
-                '{{ asset('storage/' . $tugas->file_path) }}');
-            document.getElementById('fileLink').style.cursor = 'allowed';
-        }
-
-        document.getElementById('submitDate').value = data.formatted_submit_date_date;
-        document.getElementById('submitTime').value = data.formatted_submit_date_time;
-
-        document.getElementById('updSaveButton').setAttribute('onclick', 'saveData(' + null +
-            ')');
-
-    }
-
-    function validateInput() {
-        var inputElement = document.getElementById('nilai');
-        var value = parseFloat(inputElement.value);
-
-        if (isNaN(value) || value < 0) {
-            inputElement.value = 0;
-        } else if (value > 100) {
-            inputElement.value = 100;
-        } else {
-
-        }
-    }
-
-    function openJawabanDetail(id) {
-        window.location.href = window.location.href + '/tugas-detail/' + id
-    }
-
-    function saveData() {
-        var nilai = parseFloat(document.getElementById('nilai').value).toFixed(2);
+    function deleteData(id) {
         $.ajax({
-            url: '/guru-pembelajaran/detail/updateTugasNilai',
+            url: '/guru-pembelajaran/detail/deleteTugas',
             method: 'POST',
             data: {
-                id: tugas_jawaban_id,
-                nilai: nilai,
-                tugas_id: tugas_id,
-                siswa_id: siswa_id,
+                id: id,
                 _token: '{{ csrf_token() }}'
             },
             beforeSend: function() {
@@ -301,8 +267,13 @@
     }
 
     function hideSuccessOrFailedModal() {
-        if (document.getElementById("successOrFailedDescriptionText").innerHTML != "") {
+        if (document.getElementById("successOrFailedDescriptionText").innerHTML == "Mengubah tugas Berhasil!") {
             location.reload();
+        } else {
+            var currentUrl = window.location.href;
+            var position = currentUrl.lastIndexOf('/tugas-detail');
+            var newUrl = currentUrl.substring(0, position);
+            window.location.href = newUrl;
         }
     }
 
@@ -313,14 +284,6 @@
     }
 </script>
 <style>
-    #prevButton,
-    #nextButton {
-        cursor: pointer;
-        color: black;
-        border: none;
-        background-color: transparent;
-    }
-
     .tab th {
         border-bottom: 1px black solid;
     }

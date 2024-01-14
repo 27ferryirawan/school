@@ -9,13 +9,11 @@
             @include('layouts/admin_navbar')
         @elseif (Auth::user()->role == 'GURU')
             @include('layouts/guru_navbar')
-        @else
-            {{-- Add the default behavior for other roles or unassigned roles --}}
-            @include('layouts/admin_navbar')
+        @elseif (Auth::user()->role == 'SISWA')
+            @include('layouts/siswa_navbar')
         @endif
     @else
-        {{-- Add the default behavior for non-authenticated users --}}
-        @include('layouts/admin_navbar')
+        @include('layouts/guru_navbar')
     @endauth
 </head>
 

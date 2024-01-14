@@ -11,19 +11,22 @@
         <table id="siswa-table" class="siswa-tab" style="width: 100%;">
             <thead>
                 <tr>
-                    <th style="width: 20%;" class="sortable" data-column="nip">NIP
+                    <th style="width: 16.6%;" class="sortable" data-column="nip">NIP
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%;" class="sortable" data-column="nama_guru">Nama Guru
+                    <th style="width: 16.6%;" class="sortable" data-column="nama_guru">Nama Guru
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%;" class="sortable" data-column="mata_pelajaran">Mata Pelajaran
+                    <th style="width: 16.6%;" class="sortable" data-column="mata_pelajaran">Mata Pelajaran
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
+                    <th style="width: 16.6%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 20%; text-align: center">Action
+                    <th style="width: 16.6%;" class="sortable" data-column="kelas">Wali Kelas
+                        <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                    </th>
+                    <th style="width: 16.6%; text-align: center">Action
                     </th>
                 </tr>
             </thead>
@@ -65,6 +68,19 @@
                                     <option value="P" disabled @if ($data->jenis_kelamin == 'Perempuan') selected @endif>
                                         Perempuan
                                     </option>
+                                </select>
+                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
+                            </div>
+                        </td>
+                        <td style="position: relative; text-align: left;">
+                            <div class="editable-com" style="margin-right:10px">
+                                <select class="dropdown" name="kelas-dropdown">
+                                    @foreach ($kelas as $dataKelas)
+                                        <option value="{{ $dataKelas['id'] }}" disabled
+                                            @if ($data->kelas_id == $dataKelas['id']) selected @endif>
+                                            {{ $dataKelas['nama_kelas'] }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
@@ -199,6 +215,7 @@
                 'nama_guru': row.find('label[name="nama-guru"]').text(),
                 'mata_pelajaran_id': row.find('select[name="matapelajaran-dropdown"]').val(),
                 'jenis_kelamin': row.find('select[name="jenis-kelamin-dropdown"]').val(),
+                'kelas_id': row.find('select[name="kelas-dropdown"]').val(),
                 'id': row.data('resid'),
                 'guru_id': row.data('guruid'),
             };

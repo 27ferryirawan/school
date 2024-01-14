@@ -16,9 +16,22 @@ class GuruPembelajaranSeeder extends Seeder
     public function run()
     {
         DB::table('guru_pembelajaran')->insert([
+            
             [
                 'guru_id' => '1',
                 'kelas_id' => '1',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '1',
+            ],
+            [
+                'guru_id' => '1',
+                'kelas_id' => '2',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '1',
+            ],
+            [
+                'guru_id' => '1',
+                'kelas_id' => '3',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '1',
             ],
@@ -29,8 +42,33 @@ class GuruPembelajaranSeeder extends Seeder
                 'mata_pelajaran_id' => '2',
             ],
             [
+                'guru_id' => '2',
+                'kelas_id' => '2',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '2',
+            ],
+            [
+                'guru_id' => '2',
+                'kelas_id' => '3',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '2',
+            ],
+
+            [
                 'guru_id' => '3',
                 'kelas_id' => '1',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '3',
+            ],
+            [
+                'guru_id' => '3',
+                'kelas_id' => '2',
+                'tahun_ajaran_id' => '1',
+                'mata_pelajaran_id' => '3',
+            ],
+            [
+                'guru_id' => '3',
+                'kelas_id' => '3',
                 'tahun_ajaran_id' => '1',
                 'mata_pelajaran_id' => '3',
             ]

@@ -13,6 +13,8 @@ class JenisSoal extends Model
     protected $fillable = [
         'jenis_soal',
         'deskripsi',
+        'file_path',
+        'file_name',
     ];
 
     public function ujian()

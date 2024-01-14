@@ -17,6 +17,7 @@ class CreateGuruTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('tahun_ajaran_id');
             $table->unsignedBigInteger('mata_pelajaran_id');
+            $table->unsignedBigInteger('kelas_id')->nullable();
             $table->string('NIP');
             $table->string('nama_guru');
             $table->string('jenis_kelamin');

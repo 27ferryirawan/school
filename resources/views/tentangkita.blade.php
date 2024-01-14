@@ -3,7 +3,17 @@
 
 <head>
     <title>About Us</title>
-    @include('layouts/admin_navbar')
+    @auth
+        @if (Auth::user()->role == 'ADMIN')
+            @include('layouts/admin_navbar')
+        @elseif (Auth::user()->role == 'GURU')
+            @include('layouts/guru_navbar')
+        @elseif (Auth::user()->role == 'SISWA')
+            @include('layouts/siswa_navbar')
+        @endif
+    @else
+        @include('layouts/guru_navbar')
+    @endauth
 </head>
 
 <body>

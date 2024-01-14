@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 Route::get('/', [App\Http\Controllers\AdminHomeController::class, 'index'])->name('/');
+Route::get('/home', [App\Http\Controllers\AdminHomeController::class, 'index'])->name('home');
 // Route::get('/home', [App\Http\Controllers\AdminHomeController::class, 'index'])->name('home');
 Route::middleware('is_admin')->group(function () {
     Route::get('/admin-siswa/{siswa_guru_nilai}/{kelas_id}', [App\Http\Controllers\AdminSiswaController::class, 'index'])->name('admin-siswa');
@@ -47,6 +48,7 @@ Route::middleware('is_guru')->group(function () {
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSort', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndex'])->name('guru-pembelajaran.detailSortIndex');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSortTugas', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndexTugas'])->name('guru-pembelajaran.detailSortIndexTugas');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSortUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndexUjian'])->name('guru-pembelajaran.detailSortIndexUjian');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detailSortNilai', [App\Http\Controllers\GuruPembelajaranContoller::class, 'detailSortIndexNilai'])->name('guru-pembelajaran.detailSortIndexNilai');
 
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/materi', [App\Http\Controllers\GuruPembelajaranContoller::class, 'materiAddIndex'])->name('guru-pembelajaran.materi');
     Route::post('/guru-pembelajaran/detail/addMateri', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addMateri'])->name('guru-pembelajaran.addMateri');
@@ -69,24 +71,50 @@ Route::middleware('is_guru')->group(function () {
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianAddIndex'])->name('guru-pembelajaran.ujian');
     Route::post('/guru-pembelajaran/detail/addUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addUjian'])->name('guru-pembelajaran.addUjian');
     Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian-detail/{ujian_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianDetailIndex'])->name('guru-pembelajaran.ujianDetail');
+    Route::post('/guru-pembelajaran/detail/updateUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateUjian'])->name('guru-pembelajaran.updateUjian');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian-detail/{ujian_id}/soal/', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianAddIndexSoal'])->name('guru-pembelajaran.soalUjian');
+    Route::post('/guru-pembelajaran/detail/addUjianSoal', [App\Http\Controllers\GuruPembelajaranContoller::class, 'addUjianSoal'])->name('guru-pembelajaran.addUjianSoal');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian-detail/{ujian_id}/soal/{soal_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianDetailIndexSoal'])->name('guru-pembelajaran.ujianDetailSoal');
+    Route::post('/guru-pembelajaran/detail/updateUjianSoal', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateUjianSoal'])->name('guru-pembelajaran.updateUjianSoal');
+    Route::post('/guru-pembelajaran/detail/deleteUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'deleteUjian'])->name('guru-pembelajaran.deleteUjian');
+    Route::post('/guru-pembelajaran/detail/deleteUjianSoal', [App\Http\Controllers\GuruPembelajaranContoller::class, 'deleteUjianSoal'])->name('guru-pembelajaran.deleteUjianSoal');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian-detail/{ujian_id}/ujian-jawaban/{siswa_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianDetailIndexJawaban'])->name('guru-pembelajaran.ujianJawaban');
 
-    Route::get('/tentang-kita', [App\Http\Controllers\TentangKitaController::class, 'index'])->name('tentang-kita');
+    Route::get('/guru-pembelajaran/{guru_pembelajaran_id}/detail/ujian-detail/{ujian_id}/ujian-jawaban/{siswa_id}/soal/{soal_id}', [App\Http\Controllers\GuruPembelajaranContoller::class, 'ujianDetailIndexJawabanSiswa'])->name('guru-pembelajaran.ujianJawabanSiswa');
+    Route::post('/guru-pembelajaran/detail/updateNilaiUjian', [App\Http\Controllers\GuruPembelajaranContoller::class, 'updateUjianNilai'])->name('guru-pembelajaran.updateUjianNilai');
+
+    Route::get('/guru-siswa', [App\Http\Controllers\GuruSiswaController::class, 'index'])->name('guru-siswa');
+    Route::get('/guru-siswa/sort', [App\Http\Controllers\GuruSiswaController::class, 'sort'])->name('guru-siswa.sort');
+    Route::get('/guru-siswa/add', [App\Http\Controllers\GuruSiswaController::class, 'addIndex'])->name('guru-siswa.add');
+    Route::post('/guru-siswa/bulk-update', [App\Http\Controllers\GuruSiswaController::class, 'bulkUpdate'])->name('guru-siswa.bulkUpdate');
+    Route::post('/guru-siswa/bulk-delete', [App\Http\Controllers\GuruSiswaController::class, 'bulkDelete'])->name('guru-siswa.bulkDelete');
+    Route::post('/guru-siswa/addSiswa', [App\Http\Controllers\GuruSiswaController::class, 'addSiswa'])->name('guru-siswa.addSiswa');
+
+    Route::get('/guru-nilai', [App\Http\Controllers\GuruSiswaNilaiController::class, 'index'])->name('guru-nilai');
+    Route::get('/guru-nilai/sort', [App\Http\Controllers\GuruSiswaNilaiController::class, 'sort'])->name('guru-nilai.sort');
+    Route::post('/guru-pembelajaran/nilai-bulk-update', [App\Http\Controllers\GuruPembelajaranContoller::class, 'nilaiBulkUpdate'])->name('guru-pembelajaran.nilaiBulkUpdate');
+    
+    
 });
 
+Route::middleware('is_siswa')->group(function () {
+    Route::get('/siswa-pembelajaran', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'index'])->name('siswa-pembelajaran');    
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'detailIndex'])->name('siswa-pembelajaran.detail');
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detailSort', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'detailSortIndex'])->name('siswa-pembelajaran.detailSortIndex');
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detailSortTugas', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'detailSortIndexTugas'])->name('siswa-pembelajaran.detailSortIndexTugas');
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detailSortUjian', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'detailSortIndexUjian'])->name('siswa-pembelajaran.detailSortIndexUjian');
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detailSortNilai', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'detailSortIndexNilai'])->name('siswa-pembelajaran.detailSortIndexNilai');
 
-//OLD
-Route::get('/reservation', [App\Http\Controllers\ReservationController::class, 'index'])->name('reservation');
-Route::get('/manager-reservation', [App\Http\Controllers\ManagerReservationController::class, 'index'])->name('manager-reservation');
-Route::post('/manager-reservation/updateReservationStatus', [App\Http\Controllers\ManagerReservationController::class, 'updateReservationStatus'])->name('update-reservation-status');
-Route::get('/manager-reservation/exportReservation', [App\Http\Controllers\ManagerReservationController::class, 'exportReservation'])->name('export-reservation');
-Route::post('/manager-reservation/searchReservation', [App\Http\Controllers\ManagerReservationController::class, 'searchReservation'])->name('search-reservation');
+    Route::post('/siswa-pembelajaran/detail/addDiskusi', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'addDiskusi'])->name('siswa-pembelajaran.addDiskusi');
+    
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail/materi-detail/{materi_id}', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'materiDetailIndex'])->name('siswa-pembelajaran.materiDetail');
+    Route::post('/siswa-pembelajaran/detail/addKomentar', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'addKomentar'])->name('siswa-pembelajaran.addKomentar');
 
-Route::post('/reservation/insertPayment', [App\Http\Controllers\ReservationController::class, 'insertPayment'])->name('insert-payment');
-Route::post('/reservation/updateTable', [App\Http\Controllers\ReservationController::class, 'updateTable'])->name('update-table');
-Route::get('/reservation/getTableDetailData', [App\Http\Controllers\ReservationController::class, 'getTableDetailData'])->name('get-table-detail-data');
-Route::get('/about-us', [App\Http\Controllers\AboutUsController::class, 'index'])->name('about-us');
-Route::get('/coffee', [App\Http\Controllers\CoffeeController::class, 'index'])->name('coffee');
-Route::get('/bakery', [App\Http\Controllers\BakeryController::class, 'index'])->name('bakery');
-Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
-Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
-Route::post('/edit-profile', [App\Http\Controllers\ProfileController::class, 'editProfile'])->name('edit-profile');
+    Route::get('/siswa-pembelajaran/{mata_pelajaran_id}/detail/tugas-detail/{tugas_id}', [App\Http\Controllers\SiswaPembelajaranContoller::class, 'tugasDetailIndex'])->name('siswa-pembelajaran.tugasDetail');
+});
+
+Route::get('/tentang-kita', [App\Http\Controllers\TentangKitaController::class, 'index'])->name('tentang-kita');
+
+Route::get('/guru_profile', [App\Http\Controllers\GuruProfileController::class, 'index'])->name('guru-profile');
+Route::get('/admin_profile', [App\Http\Controllers\AdminProfileController::class, 'index'])->name('admin-profile');
+Route::post('/edit-profile', [App\Http\Controllers\AdminProfileController::class, 'editProfile'])->name('edit-profile');

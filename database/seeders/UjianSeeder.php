@@ -17,24 +17,20 @@ class UjianSeeder extends Seeder
     {
         DB::table('ujian')->insert([
             [
-                'guru_id' => 1,
-                'kelas_id' => 1,
-                'tahun_ajaran_id' => 1,
-                'mata_pelajaran_id' => 1,
+                'guru_pembelajaran_id' => 1,
                 'jenis_ujian_id' => 1,
                 'deskripsi' => 'Ujian Harian 1',
                 'kode_ruangan' => 'VII A',
                 'waktu_pengerjaan' => 30,
+                'tanggal_ujian' => '2024-01-21 07:00:00',
             ],
             [
-                'guru_id' => 1,
-                'kelas_id' => 1,
-                'tahun_ajaran_id' => 1,
-                'mata_pelajaran_id' => 2,
-                'jenis_ujian_id' => 1,
-                'deskripsi' => 'Ujian Harian 2',
+                'guru_pembelajaran_id' => 5,
+                'jenis_ujian_id' => 2,
+                'deskripsi' => 'Ujian Tengah Semester 1',
                 'kode_ruangan' => 'VII B',
-                'waktu_pengerjaan' => 30,
+                'waktu_pengerjaan' => 50,
+                'tanggal_ujian' => '2024-01-22 07:00:00',
             ],
         ]);
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUjianTable extends Migration
+class CreateUjianJawabanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,26 +12,24 @@ class CreateUjianTable extends Migration
      * @return void
      */
     public function up(){
-        Schema::create('ujian', function (Blueprint $table) {
+        Schema::create('ujian_jawaban', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('guru_pembelajaran_id');
-            $table->unsignedBigInteger('jenis_ujian_id');
-            $table->text('deskripsi');
-            $table->string('kode_ruangan')->nullable();
-            $table->integer('waktu_pengerjaan')->nullable();
-            $table->dateTime('tanggal_ujian')->nullable();
+            $table->unsignedBigInteger('ujian_id');
+            $table->unsignedBigInteger('siswa_id');
+            $table->dateTime('finish_date')->nullable();
+            $table->double('nilai')->nullable(); 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-            
-            $table->foreign('guru_pembelajaran_id')
+
+            $table->foreign('siswa_id')
                 ->references('id')
-                ->on('guru_pembelajaran')
+                ->on('siswa')
                 ->onDelete('cascade');
 
-            $table->foreign('jenis_ujian_id')
+            $table->foreign('ujian_id')
                 ->references('id')
-                ->on('jenis_ujian')
+                ->on('ujian')
                 ->onDelete('cascade');
         });
     }
@@ -44,6 +42,6 @@ class CreateUjianTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ujian');
+        Schema::dropIfExists('ujian_jawaban');
     }
 }

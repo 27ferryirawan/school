@@ -20,13 +20,20 @@
             <img src="{{ asset('images/navbar-logo.png') }}" alt="Logo"
                 style="margin-left: 30px; width: 100px; height: 80px; ">
         </a>
+        <button class="hamburger-btn" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
         <ul class="navbar-nav">
             <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
-            {{-- <li><a class="{{ request()->is('admin-siswa') ? 'active' : '' }}" href="/admin-siswa">SISWA</a></li> --}}
-            <li><a class="{{ request()->is($siswa_url) ? 'active' : '' }}" href="{{ $siswa_url }}">SISWA</a>
+            <li><a class="{{ request()->is('admin-kelas/list/1') ? 'active' : '' }}"
+                    href="{{ $siswa_url }}">SISWA</a>
             </li>
-            <li><a class="{{ request()->is($guru_url) ? 'active' : '' }}" href="{{ $guru_url }}">GURU</a></li>
-            <li><a class="{{ request()->is($nilai_url) ? 'active' : '' }}" href="{{ $nilai_url }}">NILAI</a>
+            <li><a class="{{ request()->is('admin-mata-pelajaran/list/2/0') ? 'active' : '' }}"
+                    href="{{ $guru_url }}">GURU</a></li>
+            <li><a class="{{ request()->is('admin-kelas/list/3') ? 'active' : '' }}"
+                    href="{{ $nilai_url }}">NILAI</a>
             </li>
             <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
             </li>
@@ -42,7 +49,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/profile" style="color: black; font-weight:bold; font-size: 17px">
+                        <a class="dropdown-item" href="/admin_profile"
+                            style="color: black; font-weight:bold; font-size: 17px">
                             {{ __('PROFIL') }}
                         </a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
@@ -60,6 +68,46 @@
             @endauth
         </ul>
     </nav>
+
+    <ul class="navbar-nav1">
+        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">BERANDA </a></li>
+        <li><a class="{{ request()->is('admin-kelas/list/1') ? 'active' : '' }}" href="{{ $siswa_url }}">SISWA</a>
+        </li>
+        <li><a class="{{ request()->is('admin-mata-pelajaran/list/2/0') ? 'active' : '' }}"
+                href="{{ $guru_url }}">GURU</a></li>
+        <li><a class="{{ request()->is('admin-kelas/list/3') ? 'active' : '' }}" href="{{ $nilai_url }}">NILAI</a>
+        </li>
+        <li><a class="{{ request()->is('tentang-kita') ? 'active' : '' }}" href="/tentang-kita">TENTANG KITA</a>
+        </li>
+        @guest
+            <li><a class="login-button {{ request()->is('login') ? 'active' : '' }}" href="/login">LOGIN</a></li>
+        @endguest
+
+        @auth
+            <li class="nav-item dropdown" style="margin-right: 20px">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-user form-control-icon" style="color: white"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/admin_profile" style="color: black; font-weight:bold; font-size: 17px">
+                        {{ __('PROFIL') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();"
+                        style="color: black; font-weight:bold;  font-size: 17px">
+                        {{ __('KELUAR') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            </li>
+        @endauth
+    </ul>
 </header>
 @include('layouts/styles')
 
@@ -67,14 +115,122 @@
     var title = document.title;
     var link = document.querySelector("link[rel~='icon']");
 
-    // window.addEventListener("blur", () => {
-    //     document.title = "SAMANKO KUY";
-    //     link.href = "{{ asset('images/angry_favicon.png') }}";
-    //     // document.head.appendChild(link);
-    // });
-
     window.addEventListener("focus", () => {
         document.title = title;
         link.href = "{{ asset('images/coffee_favicon.png') }}";
     });
+
+    function toggleMenu() {
+        var navbarNav = document.querySelector('.navbar-nav1');
+        navbarNav.classList.toggle('show');
+    }
 </script>
+
+<style>
+    .hamburger-btn {
+        display: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 10px;
+    }
+
+    .navbar-nav1 {
+        display: none;
+        font-family: 'SourceSansPro';
+        font-weight: bold;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+        font-size: 17px;
+    }
+
+    .navbar-nav1 li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 22px;
+        text-decoration: none;
+    }
+
+    .navbar-nav1 li a:hover {
+        background-color: #4e87b9;
+    }
+
+    .navbar-nav1 li a.active {
+        background-color: #4e87b9;
+    }
+
+    .navbar-nav1 li a.login-button.active {
+        background-color: #4e87b9;
+        color: white !important;
+    }
+
+    @media screen and (min-width: 781px) {
+        .navbar-nav1 {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 780px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .navbar-nav {
+            display: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .navbar-nav1 {
+            display: none;
+            flex-direction: column;
+            background-color: #03549b;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-nav1.show {
+            display: flex;
+            flex-direction: column;
+            background-color: #03549b;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-nav1 li {
+            width: 100%;
+            float: none;
+        }
+
+        .navbar-nav1 li a {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .hamburger-btn {
+            margin-left: auto;
+            display: block;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+        }
+    }
+</style>

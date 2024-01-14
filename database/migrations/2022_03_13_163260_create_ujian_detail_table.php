@@ -16,8 +16,9 @@ class CreateUjianDetailTable extends Migration
             $table->id();
             $table->unsignedBigInteger('ujian_id');
             $table->unsignedBigInteger('jenis_soal_id');
-            $table->integer('nomor');
-            $table->string('soal');
+            $table->text('soal');
+            $table->string('file_path')->nullable();
+            $table->string('file_name')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

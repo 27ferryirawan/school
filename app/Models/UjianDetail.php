@@ -13,8 +13,9 @@ class UjianDetail extends Model
     protected $fillable = [
         'ujian_id',
         'jenis_soal_id',
-        'nomor',
         'soal',
+        'file_path',
+        'file_name',
     ];
 
     public function ujian()

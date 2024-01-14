@@ -17,10 +17,13 @@ class TahunAjaranSeeder extends Seeder
     {
         DB::table('tahun_ajaran')->insert([
             [
-                'tahun_ajaran' => '2022/2023',
+                'tahun_ajaran' => '2023/2024',
             ],
             [
-                'tahun_ajaran' => '2023/2024',
+                'tahun_ajaran' => '2024/2025',
+            ],
+            [
+                'tahun_ajaran' => '2025/2026',
             ],
         ]);
     }

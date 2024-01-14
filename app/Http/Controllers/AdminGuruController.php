@@ -38,16 +38,16 @@ class AdminGuruController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index($siswaGuruNilai, $kelasId, $mataPelajaranId){
-        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
+        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id', 'guru.kelas_id')          
                     ->join('tahun_ajaran', 'guru.tahun_ajaran_id', '=', 'tahun_ajaran.id')
                     ->join('mata_pelajaran', 'guru.mata_pelajaran_id', '=', 'mata_pelajaran.id')
                     ->where('guru.mata_pelajaran_id', $mataPelajaranId) 
                     ->orderBy('guru.nama_guru', 'asc')
                     ->get();
+        $kelas = Kelas::all();
+        $mataPelajaran = MataPelajaran::all();
 
-    $mataPelajaran = MataPelajaran::all();
-
-        return view('admin_guru', compact('guru','mataPelajaran'));
+        return view('admin_guru', compact('guru','mataPelajaran', 'kelas'));
     }
 
     public function addIndex(){
@@ -58,9 +58,10 @@ class AdminGuruController extends Controller
                     ->get();
 
         $mataPelajaran = MataPelajaran::all();
+        $kelas = Kelas::all();
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
 
-        return view('admin_guru_add', compact('guru','mataPelajaran', 'tahunAjaran'));
+        return view('admin_guru_add', compact('guru','mataPelajaran', 'tahunAjaran', 'kelas'));
     }
 
     public function sort(Request $request)
@@ -95,6 +96,7 @@ class AdminGuruController extends Controller
                     'nama_guru' => $rowData['nama_guru'],
                     'jenis_kelamin' => $rowData['jenis_kelamin'],
                     'mata_pelajaran_id' => $rowData['mata_pelajaran_id'],
+                    'kelas_id' => $rowData['kelas_id'],
                 ];
                 Guru::where('id', $guruId)->update($guruData);
             }
@@ -155,6 +157,7 @@ class AdminGuruController extends Controller
             $user->name = $request->nama_guru;
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
+            $user->role = 'GURU';
             $user->save();
 
             $guru = new Guru();
@@ -164,6 +167,7 @@ class AdminGuruController extends Controller
             $guru->tempat_lahir = $request->tempat_lahir;
             $guru->tanggal_lahir = $request->tanggal_lahir;
             $guru->agama = $request->agama;
+            $guru->kelas_id = $request->kelas_id;
             $guru->mata_pelajaran_id = $request->mata_pelajaran_id;
             $guru->user_id = $user->id;
             $guru->tahun_ajaran_id = $request->tahun_ajaran_id;

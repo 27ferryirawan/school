@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <title>Home</title>
-    @include('layouts/admin_navbar')
+    <title>Siswa</title>
+    @include('layouts/guru_navbar')
 </head>
 
 <body>
@@ -11,12 +11,12 @@
         <div style="display: flex;">
             <div>
                 <div class="input-com">
-                    <label>NIP</label>
-                    <input type="text" id="nip" name="nip">
+                    <label>NISN</label>
+                    <input type="text" id="nisn" name="nisn">
                 </div>
                 <div class="input-com">
-                    <label>Nama Guru</label>
-                    <input type="text" id="namaGuru" name="namaGuru">
+                    <label>Nama Siswa</label>
+                    <input type="text" id="namaSiswa" name="namaSiswa">
                 </div>
                 <div class="input-com">
                     <label>Jenis Kelamin</label>
@@ -39,18 +39,6 @@
                 <div class="date-input">
                     <label>Tanggal Lahir</label>
                     <input type="text" id="tanggalLahir" name="tanggalLahir">
-                </div>
-                <div class="input-com">
-                    <label>Wali Kelas</label>
-                    <select class="dropdown" name="kelas-dropdown" id="kelas">
-                        <option value="" selected disabled hidden>
-                        </option>
-                        @foreach ($kelas as $data)
-                            <option value="{{ $data['id'] }}">
-                                {{ $data['nama_kelas'] }}
-                            </option>
-                        @endforeach
-                    </select>
                 </div>
             </div>
             <div class="reserve-div">
@@ -81,13 +69,14 @@
                     </select>
                 </div>
                 <div class="input-com">
-                    <label>Mata Pelajaran</label>
-                    <select class="dropdown" name="matapelajaran-dropdown" id="mataPelajaran">
+                    <label>Kelas</label>
+                    <select class="dropdown" name="kelas-dropdown" id="kelas">
                         <option value="" selected disabled hidden>
+
                         </option>
-                        @foreach ($mataPelajaran as $dataMataPelajaran)
-                            <option value="{{ $dataMataPelajaran['id'] }}">
-                                {{ $dataMataPelajaran['mata_pelajaran'] }}
+                        @foreach ($kelas as $dataKelas)
+                            <option value="{{ $dataKelas['id'] }}">
+                                {{ $dataKelas['nama_kelas'] }}
                             </option>
                         @endforeach
                     </select>
@@ -155,13 +144,12 @@
 
     function addData() {
         // Mengumpulkan data dari formulir
-        var nip = $('#nip').val();
-        var namaGuru = $('#namaGuru').val();
+        var nisn = $('#nisn').val();
+        var namaSiswa = $('#namaSiswa').val();
         var jenisKelamin = $('#jenisKelamin').val();
         var tempatLahir = $('#tempatLahir').val();
         var tanggalLahir = $('#tanggalLahir').val();
         var agama = $('#agama').val();
-        var mataPelajaran = $('#mataPelajaran').val();
         var kelas = $('#kelas').val();
         var tahunAjaran = $('#tahunAjaran').val();
         var username = $('#username').val();
@@ -169,23 +157,21 @@
 
         // Menyusun data untuk dikirimkan ke server
         var requestData = {
-            nip: nip,
-            nama_guru: namaGuru,
+            nisn: nisn,
+            nama_siswa: namaSiswa,
             jenis_kelamin: jenisKelamin,
             tempat_lahir: tempatLahir,
             tanggal_lahir: tanggalLahir,
             agama: agama,
-            mata_pelajaran_id: mataPelajaran,
-            tahun_ajaran_id: tahunAjaran,
             kelas_id: kelas,
+            tahun_ajaran_id: tahunAjaran,
             username: username,
             password: password,
             _token: '{{ csrf_token() }}'
         };
 
-        // Melakukan permintaan AJAX
         $.ajax({
-            url: '{{ route('admin-guru.addGuru') }}',
+            url: '{{ route('guru-siswa.addSiswa') }}',
             method: 'POST',
             data: requestData,
             dataType: 'json',
@@ -212,7 +198,7 @@
 
     function hideSuccessOrFailedModal() {
         if (document.getElementById("successOrFailedText").innerHTML != "") {
-            window.location.href = window.location.href.replace('/add', '');
+            window.location.href = '/guru-siswa';
         }
     }
 
