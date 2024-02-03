@@ -26,7 +26,7 @@
                     <label><b>Nilai</b></label>
                     <input type="number" id="nilai" name="nilai"
                         style="width: 65px; margin-left: 10px; border: 1px solid black; background-color: #e7e7e7;"
-                        min="0" max="100" oninput="validateInput()" value="{{ $tugasJawaban->nilai }}"
+                        min="0" max="100" oninput="validateInput()" value="{{ $tugasJawaban->nilai ?? 0 }}"
                         disabled>
                 </div>
             </div>
@@ -113,7 +113,7 @@
 
 </body>
 <footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
-    @if (Carbon\Carbon::now()->gte(Carbon\Carbon::parse($tugas->due_date)) && $tugasJawaban->submit_date == null)
+    @if (Carbon\Carbon::now() <= Carbon\Carbon::parse($tugas->due_date) && ($tugasJawaban->submit_date ?? null) == null)
         <div style="margin-right: 20px;">
             <button
                 style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"

@@ -1046,6 +1046,7 @@ class SiswaPembelajaranContoller extends Controller
             return response()->json(['message' => 'Gagal','message_description' =>  $e->getMessage()], 500);
         }
     }
+    
 
     public function updateUjian(Request $request)
     {
@@ -1797,15 +1798,20 @@ class SiswaPembelajaranContoller extends Controller
             'ujian_detail.jenis_soal_id as ujian_detail_jenis_soal_id',
             DB::raw("CASE WHEN ujian_jawaban_detail.ujian_detail_pilgan_id = ujian_detail_pilgan.id THEN 1 ELSE 0 END AS is_benar"),
             'jenis_soal.jenis_soal as deskripsi_jenis_soal',
+            'ujian_jawaban_detail.ujian_detail_pilgan_id as a'
         )
-        ->leftJoin('ujian_detail_pilgan', function ($join) use ($siswaId) {
-            $join->on('ujian_detail.id', '=', 'ujian_detail_pilgan.ujian_detail_id')
-            ->where('ujian_detail_pilgan.is_jawaban', '=', 1);;
+        // ->leftJoin('ujian_jawaban', 'ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
+        ->leftJoin('ujian_jawaban', function ($join) use ($siswaId){
+            $join->on('ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
+            ->where('ujian_jawaban.siswa_id', '=', $siswaId);
         })
-        ->leftJoin('ujian_jawaban_detail', 'ujian_jawaban_detail.ujian_detail_id', '=', 'ujian_detail_pilgan.ujian_detail_id')
-        ->leftJoin('ujian_jawaban', function ($join) use ($siswaId) {
+        ->leftJoin('ujian_jawaban_detail', function ($join) {
             $join->on('ujian_jawaban.id', '=', 'ujian_jawaban_detail.ujian_jawaban_id')
-            ->where('ujian_jawaban.siswa_id', '=', $siswaId);;
+            ->on('ujian_jawaban_detail.ujian_detail_id', '=', 'ujian_detail.id');
+        })
+        ->leftJoin('ujian_detail_pilgan', function ($join) {
+            $join->on('ujian_detail_pilgan.ujian_detail_id', '=', 'ujian_detail.id')
+            ->where('ujian_detail_pilgan.is_jawaban', '=', 1);;
         })
         ->join('jenis_soal', 'jenis_soal.id', '=', 'ujian_detail.jenis_soal_id')
         ->where('ujian_detail.ujian_id', $ujianId)
@@ -2019,17 +2025,65 @@ class SiswaPembelajaranContoller extends Controller
         
         try {
             $authUserId = Auth::id();
+            $ujian_jawaban_id = $request->input('ujian_jawaban_id');
+            $finish_date = now();
+
             $siswa = Siswa::select(
                 'siswa.*',
             )
             ->where('siswa.user_id', $authUserId)
             ->first();
 
-            $ujian_jawaban_id = $request->input('ujian_jawaban_id');
-            $finish_date = now();
+            $ujianJawaban = UjianJawaban::select(
+                'ujian_jawaban.*',
+            )
+            ->where('ujian_jawaban.id', $ujian_jawaban_id)
+            ->first();
+            
+
+            $siswaId = $siswa->id;
+            $ujianId = $ujianJawaban->ujian_id;
+
+            $ujianDetail = UjianDetail::select(
+                DB::raw('ROW_NUMBER() OVER (ORDER BY ujian_detail.jenis_soal_id DESC, ujian_detail.created_at ASC) as row_num'),
+                'ujian_detail.*',
+                'ujian_detail.jenis_soal_id as ujian_detail_jenis_soal_id',
+                DB::raw("CASE WHEN ujian_jawaban_detail.ujian_detail_pilgan_id = ujian_detail_pilgan.id THEN 1 ELSE 0 END AS is_benar"),
+                'jenis_soal.jenis_soal as deskripsi_jenis_soal',
+                'ujian_jawaban_detail.ujian_detail_pilgan_id as a'
+            )
+            // ->leftJoin('ujian_jawaban', 'ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
+            ->leftJoin('ujian_jawaban', function ($join) use ($siswaId){
+                $join->on('ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
+                ->where('ujian_jawaban.siswa_id', '=', $siswaId);
+            })
+            ->leftJoin('ujian_jawaban_detail', function ($join) {
+                $join->on('ujian_jawaban.id', '=', 'ujian_jawaban_detail.ujian_jawaban_id')
+                ->on('ujian_jawaban_detail.ujian_detail_id', '=', 'ujian_detail.id');
+            })
+            ->leftJoin('ujian_detail_pilgan', function ($join) {
+                $join->on('ujian_detail_pilgan.ujian_detail_id', '=', 'ujian_detail.id')
+                ->where('ujian_detail_pilgan.is_jawaban', '=', 1);;
+            })
+            ->join('jenis_soal', 'jenis_soal.id', '=', 'ujian_detail.jenis_soal_id')
+            ->where('ujian_detail.ujian_id', $ujianId)
+            ->orderBy('ujian_detail.jenis_soal_id', 'desc')
+            ->orderBy('ujian_detail.created_at', 'asc')
+            ->get();
+
+            $totalRows = $ujianDetail->count();
+            $isBenarRows = $ujianDetail->where('is_benar', 1)->count();
+
+            if ($totalRows > 0) {
+                $nilai = ($isBenarRows / $totalRows) * 100;
+                $formattedNilai = number_format($nilai, 2);
+            } else {
+                $formattedNilai = 0.00; // Handle the case where totalRows is 0 to avoid division by zero
+            }
 
             $data = [
                 'finish_date' => $finish_date,
+                'nilai' => $formattedNilai,
             ];
             
             UjianJawaban::updateOrInsert(

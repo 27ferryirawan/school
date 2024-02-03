@@ -20,7 +20,7 @@
     <div class="container-profile">
         <h2><b>Ubah Profil</b></h2>
         <div class="register-body">
-            <form method="POST" action="{{ route('admin-edit-profile') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('siswa-edit-profile') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-3">

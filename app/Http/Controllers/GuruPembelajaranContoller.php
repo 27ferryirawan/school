@@ -950,16 +950,21 @@ class GuruPembelajaranContoller extends Controller
             $file_name_no_ext = $request->input('file_name_no_ext');
             $materiId = $request->input('id');
             $existingRecord = Materi::find($materiId);
+            // dd($request->file('file_path')->getClientOriginalExtension());
             if ($request->hasFile('file_path')) {
                 $file_path = $request->file('file_path')->storeAs(
                     'file',
                     $file_name_no_ext . '-' . Carbon::now()->timestamp . '.' . $request->file('file_path')->getClientOriginalExtension(),
                     'public'
                 );
+                
             } else {
                 $file_path = $existingRecord->file_path ?? null;
             }
             
+            // dd($file_path);
+
+
             if ($existingRecord) {
                 $existingRecord->update([
                     'guru_pembelajaran_id' => $guru_pembelajaran_id,
@@ -1696,8 +1701,17 @@ class GuruPembelajaranContoller extends Controller
         ->where('ujian_jawaban.siswa_id', $siswaId)
         ->where('ujian_jawaban.ujian_id', $ujianId)
         ->first();
+
+        $totalRows = $ujianDetail->count();
+        $isBenarRows = $ujianDetail->where('is_benar', 1)->count();
+
+        if ($totalRows > 0) {
+            $nilai = ($isBenarRows / $totalRows) * 100;
+        } else {
+            $nilai = 0; // Handle the case where totalRows is 0 to avoid division by zero
+        }
         
-        return view('guru_pembelajaran_detail_ujian_detail_jawaban', compact('guruPembelajaran', 'siswa', 'ujian', 'ujianDetail', 'ujianJawaban'));
+        return view('guru_pembelajaran_detail_ujian_detail_jawaban', compact('guruPembelajaran', 'siswa', 'ujian', 'ujianDetail', 'ujianJawaban', 'nilai'));
     }
 
     public function ujianDetailIndexJawabanSiswa($guruPembelajaranId, $ujianId, $siswaId, $soalId){
@@ -1753,13 +1767,11 @@ class GuruPembelajaranContoller extends Controller
             'ujian_jawaban_detail.*',
             'ujian_jawaban.id as ujian_jawaban_id'
         )
-        ->leftJoin('ujian_jawaban', 'ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
-        ->leftJoin('ujian_jawaban_detail', function ($join) use ($soalId) {
-            $join->on('ujian_jawaban.id', '=', 'ujian_jawaban_detail.ujian_jawaban_id')
-                ->where('ujian_jawaban_detail.ujian_detail_id', '=', $soalId)
-                ->where('ujian_jawaban_detail.jenis_soal_id', '=', 1);
+        ->leftJoin('ujian_jawaban', function ($join) use ($siswaId) {
+            $join->on('ujian_jawaban.ujian_id', '=', 'ujian_detail.ujian_id')
+                ->where('ujian_jawaban.siswa_id', '=', $siswaId);
         })
-        ->where('ujian_jawaban.siswa_id', $siswaId)
+        ->leftJoin('ujian_jawaban_detail', 'ujian_jawaban_detail.ujian_detail_id', '=', 'ujian_detail.id')
         ->where('ujian_detail.id', $soalId)
         ->first();
 

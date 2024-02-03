@@ -37,7 +37,7 @@
                         <span class="fa fa-user form-control-icon" style="color: white"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/guru_profile"
+                        <a class="dropdown-item" href="/siswa_profile"
                             style="color: black; font-weight:bold; font-size: 17px">
                             {{ __('PROFIL') }}
                         </a>
@@ -74,7 +74,7 @@
                     <span class="fa fa-user form-control-icon" style="color: white"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/guru_profile" style="color: black; font-weight:bold; font-size: 17px">
+                    <a class="dropdown-item" href="/siswa_profile" style="color: black; font-weight:bold; font-size: 17px">
                         {{ __('PROFIL') }}
                     </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"

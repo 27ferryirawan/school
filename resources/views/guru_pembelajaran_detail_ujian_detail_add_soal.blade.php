@@ -13,7 +13,8 @@
             @foreach ($jenisSoal as $key => $soal)
                 <label style="display: inline">
                     <input type="radio" name="jenis_soal" id="jenis_soal" value="{{ $soal->id }}"
-                        @if ($key === 0) checked @endif style="display: inline">
+                        @if ($key === 0) disabled @endif
+                        @if ($key === 1) checked @endif style="display: inline">
                     {{ $soal->jenis_soal }}
                 </label>
                 <br>
@@ -31,7 +32,7 @@
             </div>
             <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
         </div>
-        <div id="additionalElements" style="display: none; margin-bottom: 30px">
+        <div id="additionalElements" style="display: block; margin-bottom: 30px">
             @php $alphabet = range('a', 'd'); @endphp
             @foreach ($alphabet as $letter)
                 <div class="input-com-full" style="display: flex; align-items: center; margin-right: 10px;">
@@ -160,7 +161,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         var jenisSoalId = document.getElementById("jenis_soal").value
 
-        toggleAdditionalElements(jenisSoalId);
+        // toggleAdditionalElements(jenisSoalId);
+        toggleAdditionalElements(2);
 
         document.querySelectorAll('input[name="jenis_soal"]').forEach(function(input) {
             input.addEventListener('change', function() {

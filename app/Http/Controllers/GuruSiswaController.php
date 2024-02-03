@@ -144,8 +144,12 @@ class GuruSiswaController extends Controller
 
         try {
             foreach ($data as $rowData) {
+                $siswaUserId = Siswa::select('siswa.user_id')          
+                    ->where('siswa.id', $rowData['id'])
+                    ->first();
                 $siswaId = $rowData['id'];
                 Siswa::where('id', $siswaId)->delete();
+                User::where('id', $siswaUserId->user_id)->delete();
             }
             
             DB::commit();

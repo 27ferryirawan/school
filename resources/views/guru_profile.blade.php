@@ -4,13 +4,23 @@
 <head>
     <title>Profil || Sekolah</title>
 </head>
-@include('layouts/guru_navbar')
+@auth
+    @if (Auth::user()->role == 'ADMIN')
+        @include('layouts/admin_navbar')
+    @elseif (Auth::user()->role == 'GURU')
+        @include('layouts/guru_navbar')
+    @elseif (Auth::user()->role == 'SISWA')
+        @include('layouts/siswa_navbar')
+    @endif
+@else
+    @include('layouts/siswa_navbar')
+@endauth
 
 <body>
     <div class="container-profile">
         <h2><b>Ubah Profil</b></h2>
         <div class="register-body">
-            <form method="POST" action="{{ route('edit-profile') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('guru-edit-profile') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-3">

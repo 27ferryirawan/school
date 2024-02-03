@@ -77,15 +77,15 @@
 </body>
 <footer style="display:flex; justify-content: flex-end; align-items:center; min-height:50px; margin-top: auto">
     <div style="margin-right: 20px;">
-        @if (Carbon\Carbon::now()->gte(Carbon\Carbon::parse($ujian->tanggal_ujian)) && $ujianJawaban->finish_date == null)
-            <button
-                style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
-                id="updSaveButton" onclick="openData({{ $ujian->id }})">Mulai Ujian</button>
-        @else
+        {{-- @if (Carbon\Carbon::now() >= Carbon\Carbon::parse($ujian->tanggal_ujian) && Carbon\Carbon::now() <= Carbon\Carbon::parse($ujian->tanggal_ujian)->addMinutes($ujian->waktu_pengerjaan) && ($ujianJawaban->finish_date ?? null) == null) --}}
+        <button
+            style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black; color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+            id="updSaveButton" onclick="openData({{ $ujian->id }})">Mulai Ujian</button>
+        {{-- @else
             <button
                 style="width: 125px; height: 35px; background-color: #e7e7e7; border: 3px solid black; color: black; box-shadow: 5px 5px 5px black; font-size: 18px;"
                 id="updSaveButton" disabled>Mulai Ujian</button>
-        @endif
+        @endif --}}
     </div>
 </footer>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">

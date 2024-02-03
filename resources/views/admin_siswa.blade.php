@@ -162,12 +162,19 @@
                 $(this).data('order', 'asc');
             }
 
+            var currentUrl = window.location.href;
+            var urlSegments = currentUrl.split("/");
+            var kelasId = urlSegments[urlSegments.length - 1];
+
+            console.log(kelasId);
+
             $.ajax({
                 url: '{{ route('admin-siswa.sort') }}',
                 method: 'GET',
                 data: {
                     column: column,
-                    order: order
+                    order: order,
+                    kelasId: kelasId
                 },
                 success: function(data) {
                     $('#siswa-table tbody').replaceWith($(data).find('tbody'));

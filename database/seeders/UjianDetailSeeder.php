@@ -27,16 +27,16 @@ class UjianDetailSeeder extends Seeder
                 'jenis_soal_id' => 2,
                 'soal' => 'Panjang meja 1 meter. Satuan besaran yang digunakan pada pernyataan tersebut adalah…',
             ],
-            [
-                'ujian_id' => 1,
-                'jenis_soal_id' => 1,
-                'soal' => 'Sesuatu yang dapat diukur dan dapat dinyatakan dengan angka disebut …',
-            ],
-            [
-                'ujian_id' => 1,
-                'jenis_soal_id' => 1,
-                'soal' => 'Pembanding dalam suatu pengukuran disebut …',
-            ],
+            // [
+            //     'ujian_id' => 1,
+            //     'jenis_soal_id' => 1,
+            //     'soal' => 'Sesuatu yang dapat diukur dan dapat dinyatakan dengan angka disebut …',
+            // ],
+            // [
+            //     'ujian_id' => 1,
+            //     'jenis_soal_id' => 1,
+            //     'soal' => 'Pembanding dalam suatu pengukuran disebut …',
+            // ],
             //2
             [
                 'ujian_id' => 2,
@@ -48,16 +48,16 @@ class UjianDetailSeeder extends Seeder
                 'jenis_soal_id' => 2,
                 'soal' => 'Besaran yang satuannya telah didefinisikan terlebih dahulu disebut …',
             ],
-            [
-                'ujian_id' => 2,
-                'jenis_soal_id' => 1,
-                'soal' => 'Besaran yang dapat diukur dan memiliki satuan disebut …',
-            ],
-            [
-                'ujian_id' => 2,
-                'jenis_soal_id' => 1,
-                'soal' => 'Besaran turunan adalah …',
-            ],
+            // [
+            //     'ujian_id' => 2,
+            //     'jenis_soal_id' => 1,
+            //     'soal' => 'Besaran yang dapat diukur dan memiliki satuan disebut …',
+            // ],
+            // [
+            //     'ujian_id' => 2,
+            //     'jenis_soal_id' => 1,
+            //     'soal' => 'Besaran turunan adalah …',
+            // ],
         ]);
     }
 }

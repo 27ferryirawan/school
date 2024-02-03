@@ -66,13 +66,6 @@
                             </div>
 
                             <div class="row mb-0">
-                                <div class="col-md-8 offset-md-2 pb-3 text-center">
-                                    <span style = "color: #4e87b9">Anda tidak memiliki akun?</span>
-                                    <a href="/register"
-                                        style="color: #4e87b9; text-decoration:underline; cursor: pointer;">Sign Up</a>
-                                </div>
-                            </div>
-                            <div class="row mb-0">
                                 <div class="col-md-8 offset-md-2 text-center">
                                     <button type="submit" class="btn button-login">
                                         <b

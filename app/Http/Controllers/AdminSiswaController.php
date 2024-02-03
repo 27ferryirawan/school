@@ -67,11 +67,13 @@ class AdminSiswaController extends Controller
     {
         $column = $request->input('column');
         $order = $request->input('order');
+        $kelasId = $request->input('kelasId');
 
         // Logika pengurutan sesuai kolom dan urutan yang diterima
         $siswa = Siswa::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id',  'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
                     ->join('kelas', 'siswa.kelas_id', '=', 'kelas.id')
                     ->join('tahun_ajaran', 'siswa.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+                    ->where('siswa.kelas_id', $kelasId)
                     ->orderBy($column, $order)
                     ->get();
 
@@ -119,8 +121,12 @@ class AdminSiswaController extends Controller
 
         try {
             foreach ($data as $rowData) {
+                $siswaUserId = Siswa::select('siswa.user_id')          
+                    ->where('siswa.id', $rowData['id'])
+                    ->first();
                 $siswaId = $rowData['id'];
                 Siswa::where('id', $siswaId)->delete();
+                User::where('id', $siswaUserId->user_id)->delete();
             }
             
             DB::commit();

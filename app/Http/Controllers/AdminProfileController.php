@@ -86,6 +86,6 @@ class AdminProfileController extends Controller
 
         // $user = User::find(Auth::user()->id);
         // return view('profile', compact('user'));
-        return redirect('profile');
+        return redirect('admin_profile');
     }
 }

@@ -16,9 +16,9 @@ class JenisUjianSeeder extends Seeder
     public function run()
     {
         DB::table('jenis_ujian')->insert([
-            [
-                'jenis_ujian' => 'Ujian Harian'
-            ],
+            // [
+            //     'jenis_ujian' => 'Ujian Harian'
+            // ],
             [
                 'jenis_ujian' => 'Ujian Tengah Semester'
             ],

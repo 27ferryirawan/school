@@ -68,18 +68,21 @@ class AdminGuruController extends Controller
     {
         $column = $request->input('column');
         $order = $request->input('order');
+        $mataPelajaranId = $request->input('mataPelajaranId');
 
         // Logika pengurutan sesuai kolom dan urutan yang diterima
-        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id')          
+        $guru = Guru::select('guru.id', 'guru.NIP', 'guru.nama_guru', DB::raw("CASE WHEN guru.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN guru.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'tahun_ajaran.id AS tahun_ajaran_id', 'guru.tanggal_lahir', 'guru.agama', 'guru.tempat_lahir', 'mata_pelajaran.mata_pelajaran', 'mata_pelajaran.id AS mata_pelajaran_id', 'guru.kelas_id')          
                     ->join('tahun_ajaran', 'guru.tahun_ajaran_id', '=', 'tahun_ajaran.id')
                     ->join('mata_pelajaran', 'guru.mata_pelajaran_id', '=', 'mata_pelajaran.id')
+                    ->where('guru.mata_pelajaran_id', $mataPelajaranId) 
                     ->orderBy($column, $order)
                     ->get();
+        $kelas = Kelas::all();
 
         $mataPelajaran = MataPelajaran::all();
 
         // Mengembalikan data dalam format yang dapat di-render pada tampilan
-        return view('admin_guru', compact('guru','mataPelajaran'));
+        return view('admin_guru', compact('guru','mataPelajaran', 'kelas'));
     }
 
     public function bulkUpdate(Request $request)
@@ -120,8 +123,12 @@ class AdminGuruController extends Controller
 
         try {
             foreach ($data as $rowData) {
+                $guruUserId = Guru::select('guru.user_id')          
+                    ->where('guru.id', $rowData['id'])
+                    ->first();
                 $guruId = $rowData['id'];
                 Guru::where('id', $guruId)->delete();
+                User::where('id', $guruUserId->user_id)->delete();
             }
             
             DB::commit();

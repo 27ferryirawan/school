@@ -162,12 +162,17 @@
                 $(this).data('order', 'asc');
             }
 
+            var currentUrl = window.location.href;
+            var urlSegments = currentUrl.split("/");
+            var mataPelajaranId = urlSegments[urlSegments.length - 1];
+
             $.ajax({
                 url: '{{ route('admin-guru.sort') }}',
                 method: 'GET',
                 data: {
                     column: column,
-                    order: order
+                    order: order,
+                    mataPelajaranId: mataPelajaranId
                 },
                 success: function(data) {
                     $('#siswa-table tbody').replaceWith($(data).find('tbody'));

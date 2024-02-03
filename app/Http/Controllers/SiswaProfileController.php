@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class GuruProfileController extends Controller
+class SiswaProfileController extends Controller
 {
     /**
      * Where to redirect users after registration.
@@ -46,7 +46,7 @@ class GuruProfileController extends Controller
 
     public function index(){
         $user = User::find(Auth::user()->id);
-        return view('guru_profile', compact('user'));
+        return view('siswa_profile', compact('user'));
     }
 
     public function editProfile(Request $request){
@@ -86,6 +86,6 @@ class GuruProfileController extends Controller
 
         // $user = User::find(Auth::user()->id);
         // return view('profile', compact('user'));
-        return redirect('guru_profile');
+        return redirect('siswa_profile');
     }
 }

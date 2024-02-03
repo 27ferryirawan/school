@@ -50,7 +50,7 @@
                     </div>
                     @if ($ujianDetail->file_path == null)
                         <a href="{{ asset('storage/' . $ujianDetail->file_path) }}" target="_blank" id="fileLink"
-                            class="disabled-link" style="cursor: not-allowed">
+                            class="disabled-link" style="cursor: 1t-allowed">
                             <div id="fileNameDisplay" style="margin-top: 13px">Tidak ada fail</div>
                         </a>
                     @else

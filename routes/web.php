@@ -128,5 +128,8 @@ Route::middleware('is_siswa')->group(function () {
 Route::get('/tentang-kita', [App\Http\Controllers\TentangKitaController::class, 'index'])->name('tentang-kita');
 
 Route::get('/guru_profile', [App\Http\Controllers\GuruProfileController::class, 'index'])->name('guru-profile');
+Route::get('/siswa_profile', [App\Http\Controllers\SiswaProfileController::class, 'index'])->name('siswa-profile');
 Route::get('/admin_profile', [App\Http\Controllers\AdminProfileController::class, 'index'])->name('admin-profile');
-Route::post('/edit-profile', [App\Http\Controllers\AdminProfileController::class, 'editProfile'])->name('edit-profile');
+Route::post('/admin-edit-profile', [App\Http\Controllers\AdminProfileController::class, 'editProfile'])->name('admin-edit-profile');
+Route::post('/siswa-edit-profile', [App\Http\Controllers\SiswaProfileController::class, 'editProfile'])->name('siswa-edit-profile');
+Route::post('/guru-edit-profile', [App\Http\Controllers\GuruProfileController::class, 'editProfile'])->name('guru-edit-profile');

@@ -68,53 +68,53 @@ class UjianDetailPilganSeeder extends Seeder
                 'is_jawaban' => 0,
             ],
 
-            //5
+            //3
             [
-                'ujian_detail_id' => 5,
+                'ujian_detail_id' => 3,
                 'no_jawaban' => 1,
                 'jawaban' => 'Satuan Baku',
                 'is_jawaban' => 0,
             ],
             [
-                'ujian_detail_id' => 5,
+                'ujian_detail_id' => 3,
                 'no_jawaban' => 2,
                 'jawaban' => 'Satuan International',
                 'is_jawaban' => 0,
             ],
             [
-                'ujian_detail_id' => 5,
+                'ujian_detail_id' => 3,
                 'no_jawaban' => 3,
                 'jawaban' => 'Satuan Tidak Baku',
                 'is_jawaban' => 1,
             ],
             [
-                'ujian_detail_id' => 5,
+                'ujian_detail_id' => 3,
                 'no_jawaban' => 4,
                 'jawaban' => 'Besaran Pokok',
                 'is_jawaban' => 0,
             ],
 
-            //6
+            //4
             [
-                'ujian_detail_id' => 6,
+                'ujian_detail_id' => 4,
                 'no_jawaban' => 1,
                 'jawaban' => 'Besaran turunan',
                 'is_jawaban' => 0,
             ],
             [
-                'ujian_detail_id' => 6,
+                'ujian_detail_id' => 4,
                 'no_jawaban' => 2,
                 'jawaban' => 'Besaran skalar',
                 'is_jawaban' => 0,
             ],
             [
-                'ujian_detail_id' => 6,
+                'ujian_detail_id' => 4,
                 'no_jawaban' => 3,
                 'jawaban' => 'Besaran vektor',
                 'is_jawaban' => 0,
             ],
             [
-                'ujian_detail_id' => 6,
+                'ujian_detail_id' => 4,
                 'no_jawaban' => 4,
                 'jawaban' => 'Besaran Pokok',
                 'is_jawaban' => 1,

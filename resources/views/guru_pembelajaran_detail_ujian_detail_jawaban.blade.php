@@ -13,7 +13,7 @@
             <div class="input-com-full" style="margin: 0px; text-align: center">
                 <label><b>Nilai</b></label>
                 <input type="number" id="nilai" name="nilai" style="width: 65px;" min="0" max="100"
-                    oninput="validateInput()" value="{{ $ujianJawaban->nilai ?? '' }}">
+                    oninput="validateInput()" value="{{ $ujianJawaban->nilai ?? '' }}" disabled>
             </div>
         </div>
         <div style="margin: 10px 60px 30px 60px; border: 1px solid black; padding: 10px;">
