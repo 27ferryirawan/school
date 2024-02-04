@@ -15,7 +15,7 @@ class CreateMateriTable extends Migration
         Schema::create('materi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('guru_pembelajaran_id');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_name')->nullable();

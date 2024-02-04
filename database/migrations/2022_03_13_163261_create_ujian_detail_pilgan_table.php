@@ -15,9 +15,9 @@ class CreateUjianDetailPilganTable extends Migration
         Schema::create('ujian_detail_pilgan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ujian_detail_id');
-            $table->integer('no_jawaban');
-            $table->text('jawaban');
-            $table->integer('is_jawaban');
+            $table->integer('no_jawaban')->nullable();
+            $table->text('jawaban')->nullable();
+            $table->integer('is_jawaban')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

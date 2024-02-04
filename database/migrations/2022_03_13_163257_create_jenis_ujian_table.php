@@ -14,7 +14,7 @@ class CreateJenisUjianTable extends Migration
     public function up(){
         Schema::create('jenis_ujian', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_ujian');
+            $table->string('jenis_ujian')->nullable();
             $table->string('deskripsi')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

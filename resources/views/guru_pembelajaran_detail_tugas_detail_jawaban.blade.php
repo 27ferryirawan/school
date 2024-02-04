@@ -76,16 +76,17 @@
                         <div class="input-com-full" style="margin: 0px;">
                             <label>Fail</label>
                         </div>
-                        @if ($tugas->file_path == null)
-                            <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank" id="fileLink"
+                        @if ($tugasJawaban->file_path == null)
+                            <a href="{{ asset('storage/' . $tugasJawaban->file_path) }}" target="_blank" id="fileLink"
                                 class="disabled-link" style="cursor: not-allowed">
                                 <div id="fileNameDisplayJawaban" style="cursor: pointer;">Tidak ada fail
                                 </div>
                             </a>
                         @else
-                            <a href="{{ asset('storage/' . $tugas->file_path) }}" target="_blank" id="fileLink">
+                            <a href="{{ asset('storage/' . $tugasJawaban->file_path) }}" target="_blank"
+                                id="fileLink">
                                 <div id="fileNameDisplayJawaban" style="cursor: pointer;">
-                                    {{ $tugas->file_name }}
+                                    {{ $tugasJawaban->file_name }}
                                 </div>
                             </a>
                         @endif

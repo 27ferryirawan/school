@@ -17,12 +17,12 @@ class CreateSiswaTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('tahun_ajaran_id');
-            $table->string('NISN');
-            $table->string('nama_siswa');
-            $table->string('jenis_kelamin');
-            $table->date('tanggal_lahir');
-            $table->string('agama');
-            $table->string('tempat_lahir');
+            $table->string('NISN')->nullable();
+            $table->string('nama_siswa')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('agama')->nullable();
+            $table->string('tempat_lahir')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

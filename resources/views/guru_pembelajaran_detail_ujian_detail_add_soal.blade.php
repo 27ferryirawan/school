@@ -120,7 +120,7 @@
 
         var fileNameDisplay = document.getElementById('fileNameDisplay').innerHTML;
         const nameWithoutExtension = fileNameDisplay.split(".")[0];
-
+        
         formData.append('ujian_id', ujianId);
         formData.append('jenis_soal_id', getSelectedRadioButtonValue());
         formData.append('deskripsi', document.getElementById('deskripsi').value);

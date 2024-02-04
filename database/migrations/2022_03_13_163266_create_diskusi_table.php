@@ -16,7 +16,7 @@ class CreateDiskusiTable extends Migration
             $table->id();
             $table->unsignedBigInteger('guru_siswa_id');
             $table->unsignedBigInteger('guru_pembelajaran_id');
-            $table->string('role');
+            $table->string('role')->nullable();
             $table->text('description')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

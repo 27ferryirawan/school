@@ -15,7 +15,7 @@ class CreateTugasTable extends Migration
         Schema::create('tugas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('guru_pembelajaran_id');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_name')->nullable();

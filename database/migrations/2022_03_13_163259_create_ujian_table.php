@@ -16,7 +16,7 @@ class CreateUjianTable extends Migration
             $table->id();
             $table->unsignedBigInteger('guru_pembelajaran_id');
             $table->unsignedBigInteger('jenis_ujian_id');
-            $table->text('deskripsi');
+            $table->text('deskripsi')->nullable();
             $table->string('kode_ruangan')->nullable();
             $table->integer('waktu_pengerjaan')->nullable();
             $table->dateTime('tanggal_ujian')->nullable();

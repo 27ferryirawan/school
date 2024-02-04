@@ -14,7 +14,7 @@ class CreateJenisSoalTable extends Migration
     public function up(){
         Schema::create('jenis_soal', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_soal');
+            $table->string('jenis_soal')->nullable();
             $table->string('deskripsi')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_name')->nullable();

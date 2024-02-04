@@ -18,12 +18,12 @@ class CreateGuruTable extends Migration
             $table->unsignedBigInteger('tahun_ajaran_id');
             $table->unsignedBigInteger('mata_pelajaran_id');
             $table->unsignedBigInteger('kelas_id')->nullable();
-            $table->string('NIP');
-            $table->string('nama_guru');
-            $table->string('jenis_kelamin');
-            $table->date('tanggal_lahir');
-            $table->string('agama');
-            $table->string('tempat_lahir');
+            $table->string('NIP')->nullable();
+            $table->string('nama_guru')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('agama')->nullable();
+            $table->string('tempat_lahir')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
