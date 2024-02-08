@@ -34,7 +34,7 @@ use App\Models\JenisUjian;
 use App\Models\JenisSoal;
 use App\Models\UjianJawaban;
 use App\Models\UjianJawabanDetail;
-use App\Models\SiswaNilaipr;
+use App\Models\SiswaNilai;
 
 class GuruPembelajaranContoller extends Controller
 {
