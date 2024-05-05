@@ -21,9 +21,10 @@
                             <img src="{{ asset('images/class.png') }}" style="width: 80%; height: 80px">
                         </div>
                         <div class="right-side">
-                            <label>{{ $dataGuru_pembelajaran->nama_guru }}</label> <br>
-                            <label>{{ $dataGuru_pembelajaran->mata_pelajaran }}</label> <br>
-                            <label>{{ $dataGuru_pembelajaran->nama_kelas }}</label> <br>
+                            <label>{{ substr(explode(' ', $dataGuru_pembelajaran->nama_guru)[0], 0, 10) }}</label> <br>
+                            <label>{{ substr(explode(' ', $dataGuru_pembelajaran->mata_pelajaran)[0], 0, 10) }}</label>
+                            <br>
+                            <label>{{ substr($dataGuru_pembelajaran->nama_kelas, 0, 10) }}</label> <br>
                         </div>
                     </a>
                 </div>

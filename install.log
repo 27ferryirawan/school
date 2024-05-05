@@ -1,0 +1,8 @@
+[13:53:04 2024-05-03] FETCHING Version 2.36.10
+[13:53:04 2024-05-03] DOWNLOADING https://github.com/spicetify/spicetify-cli/releases/download/v2.36.10/spicetify-2.36.10-darwin-amd64.tar.gz
+[13:53:07 2024-05-03] EXTRACTING /Users/ferryirawan/.spicetify/spicetify.tar.gz
+[13:53:07 2024-05-03] SETTING EXECUTABLE PERMISSIONS TO /Users/ferryirawan/.spicetify/spicetify
+[13:53:07 2024-05-03] REMOVING /Users/ferryirawan/.spicetify/spicetify.tar.gz
+[13:53:07 2024-05-03] spicetify path already set in /Users/ferryirawan/.bash_profile, continuing...
+[13:53:07 2024-05-03] spicetify v2.36.10 was installed successfully to /Users/ferryirawan/.spicetify
+[13:53:07 2024-05-03] Run 'spicetify --help' to get started

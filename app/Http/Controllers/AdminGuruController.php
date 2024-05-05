@@ -102,6 +102,18 @@ class AdminGuruController extends Controller
                     'kelas_id' => $rowData['kelas_id'],
                 ];
                 Guru::where('id', $guruId)->update($guruData);
+
+                $user_id = Guru::where('id', $guruId)->value('user_id');
+
+                if ($user_id) {
+                    // Update the password in the User table
+                    $user = User::where('id', $user_id)->first();
+
+                    if ($user) {
+                        $user->password = bcrypt($rowData['password']);
+                        $user->save();
+                    }
+                }
             }
             
             DB::commit();

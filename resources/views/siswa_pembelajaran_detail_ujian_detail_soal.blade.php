@@ -184,6 +184,7 @@
         });
     }
 
+
     var tanggalUjian = "{{ $ujian->tanggal_ujian }}";
     var waktuPengerjaan = {{ $ujian->waktu_pengerjaan }};
 
@@ -205,7 +206,9 @@
 
         if (timeDifference <= 0) {
             clearInterval(timerInterval);
-            $("#timer").html("Countdown expired");
+            $("#timer").html("Waktu Habis");
+
+            saveData({{ $ujianJawaban->id }});
         }
     }, 1000);
 

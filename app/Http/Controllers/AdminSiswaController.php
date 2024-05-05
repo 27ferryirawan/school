@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ReservationsExport;
+use App\Exports\SiswaExport;
 use Illuminate\Support\Collection;
 
 use App\Models\User;
@@ -43,11 +43,42 @@ class AdminSiswaController extends Controller
                     ->where('siswa.kelas_id', $kelasId)
                     ->orderBy('siswa.nama_siswa', 'asc')
                     ->get();
-
         $kelas = Kelas::select('id', 'nama_kelas')->get();
         $tahunAjaran = TahunAjaran::select('id', 'tahun_ajaran')->get();
 
         return view('admin_siswa', compact('siswa','kelas','tahunAjaran'));
+    }
+
+    public function downloadSiswa(Request $request){
+        $kelas = Kelas::select('kelas.tingkat_kelas')          
+                    ->where('kelas.id', $request->input('KelasId'))
+                    ->first();
+
+        
+        $siswa = Siswa::select('siswa.id', 'siswa.NISN', 'siswa.nama_siswa', 'kelas.nama_kelas', DB::raw("CASE WHEN siswa.jenis_kelamin= 'L' THEN 'Laki-Laki' WHEN siswa.jenis_kelamin= 'P' THEN 'Perempuan' ELSE '' END AS jenis_kelamin"), 'tahun_ajaran.tahun_ajaran', 'kelas.id AS kelas_id', 'tahun_ajaran.id AS tahun_ajaran_id',  'siswa.tanggal_lahir', 'siswa.agama', 'siswa.tempat_lahir')          
+                    ->join('kelas', 'siswa.kelas_id', '=', 'kelas.id')
+                    ->join('tahun_ajaran', 'siswa.tahun_ajaran_id', '=', 'tahun_ajaran.id')
+                    ->where('kelas.tingkat_kelas', $kelas->tingkat_kelas)
+                    ->orderBy('siswa.nama_siswa', 'asc')
+                    ->get();
+            
+        $data = [];
+
+        
+
+        foreach ($siswa as $item) {
+            $data[] = [
+                $item->NISN,
+                $item->nama_siswa,
+                $item->jenis_kelamin,
+                $item->tanggal_lahir,
+                $item->agama,
+                $item->nama_kelas,
+                $item->tahun_ajaran,
+            ];
+        }
+
+        return Excel::download(new SiswaExport($data), 'data_siswa.xlsx');
     }
 
     public function addIndex($siswaGuruNilai, $kelasId){
@@ -100,6 +131,18 @@ class AdminSiswaController extends Controller
                     'tahun_ajaran_id' => $rowData['tahun_ajaran_id'],
                 ];
                 Siswa::where('id', $siswaId)->update($siswaData);
+                
+                $user_id = Siswa::where('id', $siswaId)->value('user_id');
+
+                if ($user_id) {
+                    // Update the password in the User table
+                    $user = User::where('id', $user_id)->first();
+
+                    if ($user) {
+                        $user->password = bcrypt($rowData['password']);
+                        $user->save();
+                    }
+                }
             }
             
             DB::commit();

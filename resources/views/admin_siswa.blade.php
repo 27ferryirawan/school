@@ -11,19 +11,22 @@
         <table id="siswa-table" class="siswa-tab" style="width: 100%;">
             <thead>
                 <tr>
-                    <th style="width: 21%;" class="sortable" data-column="nisn">NISN
+                    <th style="width: 11%;" class="sortable" data-column="nisn">NISN
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 14%;" class="sortable" data-column="nama_siswa">Nama Siswa
+                    <th style="width: 19%;" class="sortable" data-column="nama_siswa">Nama Siswa
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 17%;" class="sortable" data-column="nama_kelas">Kelas
+                    <th style="width: 16%;" class="sortable" data-column="nama_kelas">Kelas
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 17%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
+                    <th style="width: 16%;" class="sortable" data-column="jenis_kelamin">Jenis Kelamin
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
-                    <th style="width: 17%;" class="sortable" data-column="tahun_ajaran">Tahun Ajaran
+                    <th style="width: 15%;" class="sortable" data-column="tahun_ajaran">Tahun Ajaran
+                        <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                    </th>
+                    <th style="width: 10%;" class="sortable" data-column="sandi">Sandi
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
                     <th style="width: 14%;; text-align: center">Action
@@ -36,7 +39,7 @@
                         data-siswaid="{{ $data->id }}">
                         <td style="position: relative; text-align: left;">
                             <div class="editable-com" style="margin-right:10px">
-                                <label contenteditable="false" name='nisn'>{{ $data->NISN }}</label>
+                                <label contenteditable="faltse" name='nisn'>{{ $data->NISN }}</label>
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
                         </td>
@@ -85,6 +88,12 @@
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
                         </td>
+                        <td style="position: relative; text-align: left;">
+                            <div class="editable-com" style="margin-right:10px">
+                                <input disabled type="password" name='sandi' style=" border: none;">
+                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
+                            </div>
+                        </td>
                         <td>
                             <div style="display: flex; justify-content: center; align-items: center;">
                                 <input type="checkbox"
@@ -118,6 +127,11 @@
             <button
                 style="width: 125px; height: 35px; background-color: #d9251c; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
                 onclick="addData()">Tambah</button>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; margin-left: 20px;">
+            <button
+                style="width: 225px; height: 35px; background-color: #d9251c; border: 3px solid black;  color: white; box-shadow: 5px 5px 5px black; font-size: 18px;"
+                onclick="downloadData()">Unduh Data Siswa Tingkat</button>
         </div>
     </footer>
     <div id="saveModal" class="modal">
@@ -187,6 +201,15 @@
 
     });
 
+    function downloadData() {
+        var currentUrl = window.location.href;
+        var urlSegments = currentUrl.split("/");
+        var kelasId = urlSegments[urlSegments.length - 1];
+
+        window.location.href =
+            `/admin-siswa/downloadSiswa?KelasId=${kelasId}`;
+    }
+
     var selectedIds = [];
 
     function checkCheckBoxUpdateButton() {
@@ -223,6 +246,7 @@
                 'kelas_id': row.find('select[name="kelas-dropdown"]').val(),
                 'jenis_kelamin': row.find('select[name="jenis-kelamin-dropdown"]').val(),
                 'tahun_ajaran_id': row.find('select[name="tahun-ajaran-dropdown"]').val(),
+                'password': row.find('input[name="sandi"]').val(),
                 'id': row.data('resid'),
                 'id': row.data('siswaid'),
             };
@@ -255,6 +279,7 @@
         $('button[onclick="deleteData(this)"]').css('background-color', '#d9251c')
         $('div.editable-com').css('border-bottom', '');
         $('option').prop('disabled', true);
+        $('input').prop('disabled', true);
         $('select').css('pointer-events', 'none');
         $('button[onclick="editData(this)"]').text('Ubah');
 
@@ -275,6 +300,7 @@
                 row.find('label').attr('contenteditable', true);
                 row.find('.editable-com').css('border-bottom', '1px solid black');
                 row.find('option').prop('disabled', false);
+                row.find('input').prop('disabled', false);
                 row.find('select').css('pointer-events', 'auto');
 
                 $('tr[data-resid="' + resid + '"] img.editable-icon').css('display', 'inline-block');
@@ -316,6 +342,7 @@
         $('button[onclick="deleteData(this)"]').css('background-color', '#d9251c')
         $('div.editable-com').css('border-bottom', '');
         $('option').prop('disabled', true);
+        $('input').prop('disabled', true);
         $('select').css('pointer-events', 'none');
 
         $('button[onclick="cancelEditDelete(this)"]').prop('disabled', true);

@@ -26,6 +26,8 @@ Route::middleware('is_admin')->group(function () {
     Route::post('/admin-siswa/bulk-delete', [App\Http\Controllers\AdminSiswaController::class, 'bulkDelete'])->name('admin-siswa.bulkDelete');
     Route::post('/admin-siswa/addSiswa', [App\Http\Controllers\AdminSiswaController::class, 'addSiswa'])->name('admin-siswa.addSiswa');
 
+    Route::get('/admin-siswa/downloadSiswa', [App\Http\Controllers\AdminSiswaController::class, 'downloadSiswa'])->name('download-siswa');
+
     Route::get('/admin-kelas/list/{siswa_guru_nilai}', [App\Http\Controllers\AdminKelasController::class, 'indexList'])->name('admin-kelas.list');
     Route::get('/admin-mata-pelajaran/list/{siswa_guru_nilai}/{kelas_id}', [App\Http\Controllers\AdminMataPelajaranController::class, 'indexList'])->name('admin-mata-pelajaran.list');
 

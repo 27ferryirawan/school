@@ -11,7 +11,7 @@
         <table id="siswa-table" class="siswa-tab" style="width: 100%;">
             <thead>
                 <tr>
-                    <th style="width: 16.6%;" class="sortable" data-column="nip">NIP
+                    <th style="width: 6.6%;" class="sortable" data-column="nip">NIP
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
                     <th style="width: 16.6%;" class="sortable" data-column="nama_guru">Nama Guru
@@ -24,6 +24,9 @@
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
                     <th style="width: 16.6%;" class="sortable" data-column="kelas">Wali Kelas
+                        <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
+                    </th>
+                    <th style="width: 10%;" class="sortable" data-column="sandi">Sandi
                         <img class="sort-icon" src="{{ asset('images/asc.png') }}" alt="Ascending" data-order="asc">
                     </th>
                     <th style="width: 16.6%; text-align: center">Action
@@ -82,6 +85,12 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <img class="editable-icon" src="{{ asset('images/draw.png') }}">
+                            </div>
+                        </td>
+                        <td style="position: relative; text-align: left;">
+                            <div class="editable-com" style="margin-right:10px">
+                                <input disabled type="password" name='sandi' style=" border: none;">
                                 <img class="editable-icon" src="{{ asset('images/draw.png') }}">
                             </div>
                         </td>
@@ -223,6 +232,7 @@
                 'kelas_id': row.find('select[name="kelas-dropdown"]').val(),
                 'id': row.data('resid'),
                 'guru_id': row.data('guruid'),
+                'password': row.find('input[name="sandi"]').val(),
             };
 
             selectedRowsData.push(rowData);
@@ -253,6 +263,7 @@
         $('button[onclick="deleteData(this)"]').css('background-color', '#d9251c')
         $('div.editable-com').css('border-bottom', '');
         $('option').prop('disabled', true);
+        $('input').prop('disabled', true);
         $('select').css('pointer-events', 'none');
         $('button[onclick="editData(this)"]').text('Ubah');
 
@@ -273,6 +284,7 @@
                 row.find('label').attr('contenteditable', true);
                 row.find('.editable-com').css('border-bottom', '1px solid black');
                 row.find('option').prop('disabled', false);
+                row.find('input').prop('disabled', false);
                 row.find('select').css('pointer-events', 'auto');
 
                 $('tr[data-resid="' + resid + '"] img.editable-icon').css('display', 'inline-block');
@@ -314,6 +326,7 @@
         $('button[onclick="deleteData(this)"]').css('background-color', '#d9251c')
         $('div.editable-com').css('border-bottom', '');
         $('option').prop('disabled', true);
+        $('input').prop('disabled', true);
         $('select').css('pointer-events', 'none');
 
         $('button[onclick="cancelEditDelete(this)"]').prop('disabled', true);

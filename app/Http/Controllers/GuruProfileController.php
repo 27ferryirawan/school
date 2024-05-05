@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Guru;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -36,16 +37,28 @@ class GuruProfileController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => 'required|string|max:255',
+            'NIP' => ['required', 'string', 'max:255'],
+            'gender' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'username' => 'required|string|regex:/\w*$/|max:255|unique:users,username',
+            'agama' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
-            'phone_number' => ['required','regex:/^[0-9]{10}$/']
         ]);
     }
 
     public function index(){
-        $user = User::find(Auth::user()->id);
+        // $user = User::find(Auth::user()->id);
+
+        $user = User::select(
+            'users.*',
+            'guru.*',
+            'kelas.nama_kelas'
+        )
+        ->join('guru', 'users.id', '=', 'guru.user_id')
+        ->join('kelas', 'guru.kelas_id', '=', 'kelas.id')
+        ->where('users.id', Auth::user()->id)
+        ->first();
+
         return view('guru_profile', compact('user'));
     }
 
@@ -65,22 +78,31 @@ class GuruProfileController extends Controller
             User::where('id', Auth::user()->id)
             ->update([
                 'name' => $request->name,
-                'email' => $request->email,
-                'username' => $request->username,
-                'password' => Hash::make($request->password),
                 'gender' => $request->gender,
-                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
                 'profile_picture' => $profilePicture,
+            ]);
+
+            Guru::where('user_id', Auth::user()->id)
+            ->update([
+                'NIP' => $request->NIP,
+                'agama' => $request->agama,
             ]);
         }else {
             User::where('id', Auth::user()->id)
             ->update([
                 'name' => $request->name,
-                'email' => $request->email,
-                'username' => $request->username,
                 'gender' => $request->gender,
-                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
                 'profile_picture' => $profilePicture,
+            ]);
+
+            Guru::where('user_id', Auth::user()->id)
+            ->update([
+                'NIP' => $request->NIP,
+                'agama' => $request->agama,
             ]);
         }
 

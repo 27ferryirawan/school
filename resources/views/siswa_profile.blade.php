@@ -64,16 +64,35 @@
                     </div>
 
                     <div class="col mb-2 mx-auto">
-                        <label for="email"
-                            class="row-md-4 row-form-label text-md-end p-1">{{ __('Alamat Email') }}</label>
+                        <label for="agama" class="row-md-4 row-form-label text-md-end p-1">Agama</label>
 
                         <div class="row-md-3">
-                            <input id="email" type="email"
-                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                value="{{ $user->email }}" required autocomplete="email"
-                                style="border-radius:10px; background-color: #F0F0F0;">
 
-                            @error('email')
+                            <select id="agama" class="form-control" name="agama"
+                                style="border-radius:10px; background-color: #F0F0F0;">
+                                <option value="Buddha" @if ($user->agama == 'Buddha') selected @endif>
+                                    Buddha
+                                </option>
+                                <option value="Hindu" @if ($user->agama == 'Hindu') selected @endif>
+                                    Hindu
+                                </option>
+
+                                <option value="Islam" @if ($user->agama == 'Islam') selected @endif>
+                                    Islam
+                                </option>
+                                <option value="Katolik" @if ($user->agama == 'Katolik') selected @endif>
+                                    Katolik
+                                </option>
+
+                                <option value="Khonghucu" @if ($user->agama == 'Khonghucu') selected @endif>
+                                    Khonghucu
+                                </option>
+                                <option value="Kristen" @if ($user->agama == 'Kristen') selected @endif>
+                                    Kristen
+                                </option>
+                            </select>
+
+                            @error('agama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -84,16 +103,15 @@
 
                 <div class="row align-items-center">
                     <div class="col mb-2 mx-auto">
-                        <label for="username"
-                            class="row-md-4 row-form-label text-md-end p-1">{{ __('Username') }}</label>
+                        <label for="NISN" class="row-md-4 row-form-label text-md-end p-1">NISN</label>
 
                         <div class="row-md-3">
-                            <input id="username" type="text"
-                                class="form-control @error('username') is-invalid @enderror" name="username"
-                                value="{{ $user->username }}" required autocomplete="username" autofocus
+                            <input id="NISN" type="text"
+                                class="form-control @error('NISN') is-invalid @enderror" name="NISN"
+                                value="{{ $user->NISN }}" required autocomplete="NISN" autofocus
                                 style="border-radius:10px; background-color: #F0F0F0;">
 
-                            @error('username')
+                            @error('NISN')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -145,21 +163,38 @@
                     </div>
 
                     <div class="col mb-2 mx-auto">
-                        <label for="phone_number"
-                            class="row-md-4 row-form-label text-md-end p-1">{{ __('Nomor Hp') }}</label>
+                        <label for="kelas" class="row-md-4 row-form-label text-md-end p-1">Kelas</label>
 
                         <div class="row-md-3">
-                            <input id="phone_number" type="text"
-                                class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                                value="{{ $user->phone_number }}" autocomplete="phone_number" autofocus
-                                style="border-radius:10px; background-color: #F0F0F0;">
+                            <input id="kelas" type="text"
+                                class="form-control @error('kelas') is-invalid @enderror" name="kelas"
+                                value="{{ $user->nama_kelas }}" autocomplete="kelas" autofocus
+                                style="border-radius:10px; background-color: #F0F0F0;" disabled>
 
-                            @error('phone_number')
+                            @error('kelas')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
+                    </div>
+                </div>
+
+                <div class="col mb-2 mx-auto">
+                    <label for="email"
+                        class="row-md-4 row-form-label text-md-end p-1">{{ __('Alamat Email') }}</label>
+
+                    <div class="row-md-3">
+                        <input id="email" type="email"
+                            class="form-control @error('email') is-invalid @enderror" name="email"
+                            value="{{ $user->email }}" required autocomplete="email"
+                            style="border-radius:10px; background-color: #F0F0F0;">
+
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 

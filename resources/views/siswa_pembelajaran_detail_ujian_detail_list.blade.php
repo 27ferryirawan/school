@@ -115,6 +115,35 @@
         });
     }
 
+    function saveDataTimeOut(ujianJawabanId) {
+
+        $.ajax({
+            url: '/siswa-pembelajaran/detail/finishUjian',
+            method: 'POST',
+            data: {
+                ujian_jawaban_id: ujianJawabanId,
+                _token: '{{ csrf_token() }}'
+            },
+            beforeSend: function() {
+                $('.loading').show();
+            },
+            success: function(response) {
+                document.getElementById("successOrFailedText").innerHTML = "Waktu Habis!";
+                document.getElementById("successOrFailedDescriptionText").innerHTML = "Jawaban sudah dikumpulkan";
+            },
+            error: function(xhr, status, error) {
+                // document.getElementById("successOrFailedText").innerHTML = response.message;
+                // document.getElementById("successOrFailedDescriptionText").innerHTML = response
+                //     .message_description;
+            },
+            complete: function() {
+                $('.loading').hide();
+                successOrFailedModal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            }
+        });
+    }
+
     // Combine tanggalUjian and waktuPengerjaan to create the targetDate
     var targetDate = new Date(tanggalUjian);
     targetDate.setMinutes(targetDate.getMinutes() + waktuPengerjaan);
@@ -135,7 +164,9 @@
 
         if (timeDifference <= 0) {
             clearInterval(timerInterval);
-            $("#timer").html("Countdown expired");
+            $("#timer").html("Waktu Habis");
+
+            saveDataTimeOut({{ $ujianJawaban->id }});
         }
     }, 1000);
 
